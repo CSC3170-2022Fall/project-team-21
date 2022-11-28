@@ -3,13 +3,12 @@
 
 ## Team members read here!
 <!-- This part should be deleted in the submission -->
-This is Li Jiaqi writing to Team 21's team mates, here are some things you need to be cautious about out when collaborating in our group project, and the things that we should do to make our project better.
+This is Li Jiaqi writing to our teammates, here are some things you need to be cautious about out when collaborating in our group project, and the things that we should do to make our project better.
 
 - Because we're **collaborating** instead of working on your own, please synchronize this git repository from time to time by using a `git pull`, or just click on the "synchronize" button at the left bar of vscode.
 
-- Please write good commit message, clearly indicating what you've done. Do not commit unnecessary files or temporary files, like the executable file into the repository.
+- Please write good commit message, clearly indicating what you've done. Do not commit unnecessary files or temporary files.
 
-- If you have any question or do not know about how to collaborate in git, please contact me.
 
 
 There are several timelines everyone should keep in mind:
