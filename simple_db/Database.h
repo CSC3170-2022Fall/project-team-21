@@ -29,5 +29,8 @@ class Database {
         // some commands don't return a table, in that case, return a void table
         Table execute(std::string command);
 
+        // save each table to a file
         void saveDatabase();
+        // save the schema to a file
+        void saveSchema();
 };

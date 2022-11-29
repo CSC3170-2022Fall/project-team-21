@@ -4,14 +4,16 @@
 #include <string>
 #include <vector>
 #include <Row.h>
-#include <Col.h>
+#include <SchemaItem.h>
 
 class Table
 {
 public:
     std::vector<Row> rows;
+    std::vector<SchemaItem> schema;    
+
     // Create a table with the given name and columns
-    Table(std::string name, std::vector<Col> columns);
+    Table(std::string name, std::vector<SchemaItem> schema);
 
     // Function to pretty-print the table in the console
     void printOut();
@@ -20,11 +22,11 @@ public:
     void removeRowAt(int idx);
     // insert new row
     void insert(Row);
+    int getSize();  // just return the size of the rows vector
 
     static Table loadFromFile(std::string fileName);
 
 private:
-    std::vector<Col> columns;
     std::string name;
     void printHeader();
 

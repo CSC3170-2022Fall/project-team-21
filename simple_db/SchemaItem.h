@@ -3,16 +3,19 @@
 
 #include <string>
 
+enum DataType {
+    INT,
+    FLOAT,
+    STRING
+};
+
 // A column in a table
-class Col {
+class SchemaItem {
     public:
-        Col(std::string name, std::string type, std::string value);
         std::string getName();
         std::string getType();
         std::string getValue();
-        void setValue(std::string value);
-    private:
         std::string name;
-        std::string type;
-        std::string value;
+        DataType type;
+        std::string length_restriction;
 };
