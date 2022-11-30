@@ -3,23 +3,18 @@
 #include "Row.h"
 
 // Please modify to make build work
-Row::Row(std::string name, std::string type, std::string value){
+Row::Row(){
+      
+}
+Row::Row(std::vector<std::string> values){
       //
 }
 
-std::string Row::getName(){
+std::vector<std::string> Row::getValues(){
       //
 }
 
-std::string Row::getType(){
-      //
-}
-
-std::string Row::getValue(){
-      //
-}
-
-void Row::setValue(std::string value){
+void Row::setValues(std::vector<std::string> values){
       //
 }
 

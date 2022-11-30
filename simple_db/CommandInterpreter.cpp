@@ -28,7 +28,7 @@ void CommandInterpreter::execute(std::string command){
       // .... more
       if (command == "exit" || command == "q" || command == "quit")
         {
-            break;
+            printf("exit");
         }
         else if (command == "insert")
         {
@@ -44,7 +44,8 @@ void CommandInterpreter::execute(std::string command){
         }
         else
         {
-            cout << "unrecognized command " << command << endl;
+            printf("unrecognized command\n ");
+            //cout << "unrecognized command " << command << endl;
         }
 
 }
