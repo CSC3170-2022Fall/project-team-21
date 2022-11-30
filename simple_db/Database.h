@@ -27,6 +27,7 @@ class Database {
 
         // execute a query, returns the result table
         // some commands don't return a table, in that case, return a void table
+        // invoke `CommandInterpreter` to parse the query
         Table execute(std::string command);
 
         // save each table to a file

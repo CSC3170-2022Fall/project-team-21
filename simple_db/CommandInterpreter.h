@@ -10,7 +10,9 @@ private:
     // split the command into tokens for better processing
     std::vector<std::string> command_tokens;
 public:
-    CommandInterpreter(std::string command);
+    CommandInterpreter();
+
+    void execute(std::string command);
 
     void createTable();
     void exit();

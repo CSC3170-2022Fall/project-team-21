@@ -3,7 +3,7 @@
 #include <vector>
 #include "Table.h"
 #include "Database.h"
- 
+#include "CommandInterpreter.h"
 
 
 
