@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
-#include <Row.h>
-#include <SchemaItem.h>
+#include "Row.h"
+#include "SchemaItem.h"
 #include "Table.h"
 
 Table::Table(){
