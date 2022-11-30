@@ -13,6 +13,7 @@ public:
     std::vector<SchemaItem> schema;    
 
     // Create a table with the given name and columns
+    Table();
     Table(std::string name, std::vector<SchemaItem> schema);
 
     // Function to pretty-print the table in the console
