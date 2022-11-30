@@ -2,17 +2,15 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 // A row in a table
 class Row {
     private:
-        std::string name;
-        std::string type;
-        std::string value;
+        std::vector<std::string> values;
     public:
-        Row(std::string name, std::string type, std::string value);
-        std::string getName();
-        std::string getType();
-        std::string getValue();
-        void setValue(std::string value);
+        Row();
+        Row(std::vector<std::string> values);
+        std::vector<std::string> getValues();
+        void setValues(std::vector<std::string> values);
 };

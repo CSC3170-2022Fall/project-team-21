@@ -8,7 +8,6 @@
  
 class Database {
     private:
-        std::string name;
         std::vector<Table> tables;
         Table voidTable;
 
@@ -18,6 +17,7 @@ class Database {
 
 
     public:
+        std::string name;
         // Create a database with the given name
         // restore all tables from files
         // maybe could **postfix or prefix the file name with the database name** to distinguish which database the table belongs

@@ -5,12 +5,14 @@
 #include <vector>
 #include "Row.h"
 #include "SchemaItem.h"
+#include "Database.h"
 
 class Table
 {
 public:
     std::vector<Row> rows;
-    std::vector<SchemaItem> schema;    
+    std::vector<SchemaItem> schema;   
+    Database *database; // the db it belongs to
 
     // Create a table with the given name and columns
     Table();
@@ -22,14 +24,14 @@ public:
     Row getRowAt(int idx);
     void removeRowAt(int idx);
     // insert new row
-    void insert(Row);
+    void insertAt(Row row, int idx);
     int getSize();  // just return the size of the rows vector
 
     static Table loadFromFile(std::string fileName);
 
 private:
     std::string name;
-    void printHeader();
+    std::string getSchema();
 
 };
 

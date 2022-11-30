@@ -13,9 +13,8 @@ enum DataType {
 class SchemaItem {
     public:
         std::string getName();
-        std::string getType();
-        std::string getValue();
+        std::string getType();  // convert the enum to string
         std::string name;
         DataType type;
-        std::string length_restriction;
+        std::string length_restriction; // well maybe we don't need this
 };
