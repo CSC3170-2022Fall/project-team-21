@@ -2,6 +2,23 @@
 # CSC3170 Course Project
 
 ## Team members read here!
+
+### Task allocation
+Maintainers:
+
+Due date: Dec6 23:59pm. However you should finish it as soon as possible!
+- `Database.cpp`: Yohanes
+
+- `Table.cpp`:  连珈玮 & Yohanes
+
+- `CommandInterpreter.cpp`: 刘起，王茗萱，李珈祺，maybe Yohanes assisting us.
+
+- `Row.cpp`: it is done.
+- `SchemaItem.cpp`: it is done.
+- `main.cpp`: This is how you test your implementation. This is the driver code for the application. You can modify it as you want, but the general structure done.
+
+
+
 <!-- This part should be deleted in the submission -->
 This is Li Jiaqi writing to our teammates, here are some things you need to be cautious about out when collaborating in our group project, and the things that we should do to make our project better.
 

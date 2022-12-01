@@ -8,11 +8,13 @@
  
 class Database {
     private:
+        // tables in this database
         std::vector<Table> tables;
-        Table voidTable;
 
-        // remove a table from the database
-        void removeTable(std::string tableName);
+        // the table that is currently being worked on
+        Table* currentTable;
+
+        CommandInterpreter *interpreter;
 
 
 
@@ -22,16 +24,26 @@ class Database {
         // restore all tables from files
         // maybe could **postfix or prefix the file name with the database name** to distinguish which database the table belongs
         
-        Database();
-        Database(std::string name);
+        Database(CommandInterpreter *interpreter);
+        Database(std::string name, CommandInterpreter *interpreter);
 
-        // execute a query, returns the result table
-        // some commands don't return a table, in that case, return a void table
-        // invoke `CommandInterpreter` to parse the query
-        Table execute(std::string command);
+        Table* getTable(std::string tableName);
+
+        // switch the current table to the given table
+        void switchTable(std::string tableName);
+
+        void addTable(Table table);
+        
+
+        // remove a table from the database
+        void removeTable(std::string tableName);
+        void removeTableAtIdx(int idx);
+
+
+        // just call the CommandInterpreter, groupmates can implement this
+        void execute(std::string command);
 
         // save each table to a file
+        // by repeatedly calling the save on each of tables
         void saveDatabase();
-        // save the schema to a file
-        void saveSchema();
 };
