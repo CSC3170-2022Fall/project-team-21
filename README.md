@@ -54,6 +54,7 @@ Our team consists of the following members, listed in the table below (the team 
 | 123030245  | Please fill in         | Please fill in        |
 | 123020245  |  Please fill in | Please fill in            |
 | 123010249  | Please fill in         | Please fill in            |
+| 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        |
 
 ## Project Specification
 
