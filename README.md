@@ -7,9 +7,9 @@
 Maintainers:
 
 Due date: Dec6 23:59pm. However you should finish it as soon as possible!
-- `Database.cpp`: Johanes
+- `Database.cpp`: Yohanes
 
-- `Table.cpp`:  连珈玮 & Johanes
+- `Table.cpp`:  连珈玮 & Yohanes
 
 - `CommandInterpreter.cpp`: 刘起，王茗萱，李珈祺，maybe Johanes assisting us.
 
