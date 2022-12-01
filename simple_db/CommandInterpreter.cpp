@@ -4,9 +4,14 @@
 #include "CommandInterpreter.h"
 
 
-CommandInterpreter::CommandInterpreter(){
-      //fill in
-      // split the command into tokens by whitespace
+CommandInterpreter::CommandInterpreter(){}
+
+
+void CommandInterpreter::execute(std::string command, Database *db, Table *table){
+      // first convert command to all lowerspace
+      // TODO: write this
+      command = command.tolowercase();
+      // then split the command into tokens by whitespace
       // like in python, string.split(" ")
       // please make it work for any number of whitespace
       //for better processing
@@ -16,9 +21,14 @@ CommandInterpreter::CommandInterpreter(){
       //
       // a ";" in the end is ok, but not required
 
-}
+      if (this->command_tokens[0] == "select")
+      {
+            // first find the index of "from"
+            int idx_of_from;
+            parse(command[idx_of_from:])  // TODO
+      }
+      
 
-void CommandInterpreter::execute(std::string command){
       //fill in
       // invoke the corresponding function based on the first token
       // if the first token is "create", invoke createTable()

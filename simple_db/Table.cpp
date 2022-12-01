@@ -11,13 +11,14 @@ using namespace std;
 
 // Create a new empty table with the name "default"
 Table::Table(){
-
+    this->name = "default"
 }
 
 // need to restore the table from file with the name `name`
 // you need to call `loadfromfile` to restore the table
 Table::Table(std::string name, std::vector<SchemaItem> schema){
-     //
+    this->name = name;
+    this->schema = schema;
 }
 
 // please refer to the format how mysql prints out the table

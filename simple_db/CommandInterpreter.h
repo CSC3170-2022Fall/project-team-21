@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include "Table.h"
 
 class CommandInterpreter
 {
@@ -12,7 +13,10 @@ private:
 public:
     CommandInterpreter();
 
-    void execute(std::string command);
+    void execute(std::string command, Database *db, Table *table);
+
+    // recursive function
+    Table parse(std::string command);
 
     void createTable();
     void exit();

@@ -29,9 +29,9 @@ public:
 
     static Table loadFromFile(std::string fileName);
 
-private:
     std::string name;
     std::string getSchema();
+private:
 
 };
 
