@@ -11,7 +11,7 @@ Due date: Dec6 23:59pm. However you should finish it as soon as possible!
 
 - `Table.cpp`:  连珈玮 & Yohanes
 
-- `CommandInterpreter.cpp`: 刘起，王茗萱，李珈祺，maybe Johanes assisting us.
+- `CommandInterpreter.cpp`: 刘起，王茗萱，李珈祺，maybe Yohanes assisting us.
 
 - `Row.cpp`: it is done.
 - `SchemaItem.cpp`: it is done.
