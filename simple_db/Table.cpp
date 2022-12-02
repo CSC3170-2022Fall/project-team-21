@@ -11,7 +11,7 @@ using namespace std;
 
 // Create a new empty table with the name "default"
 Table::Table(){
-    this->name = "default"
+    this->name = "default";
 }
 
 // need to restore the table from file with the name `name`
@@ -19,11 +19,14 @@ Table::Table(){
 Table::Table(std::string name, std::vector<SchemaItem> schema){
     this->name = name;
     this->schema = schema;
+    this->rows.clear();
 }
 
 // please refer to the format how mysql prints out the table
 void  Table::printOut(){
      //
+
+
 }
 
 // use ofstream to store 
@@ -37,14 +40,18 @@ void Table::saveToFile(std::string fileName){
 
 // Please refer to how to use std::vector
 Row Table::getRowAt(int idx){
-    //
+    return this->rows.at(idx);
 }
 void Table::removeRowAt(int idx){
-    //
+    this->rows.erase(this->rows.begin()+idx);
 }
 
-void Table::insertAt(Row row, int idx){
-   
+void Table::insertLast(Row row){
+   this->rows.push_back(row);
+}
+
+void Table::insertAt(Row row, int idx){  
+   this->rows.insert(this->rows.begin()+idx,row);
 }
     
 
@@ -54,6 +61,7 @@ int Table::getSize(){
 
 Table Table::loadFromFile(std::string fileName){
     // Find a way to do this
+
 
 }
 

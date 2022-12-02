@@ -24,6 +24,7 @@ public:
     Row getRowAt(int idx);
     void removeRowAt(int idx);
     // insert new row
+    void insertLast(Row row);
     void insertAt(Row row, int idx);
     int getSize();  // just return the size of the rows vector
 

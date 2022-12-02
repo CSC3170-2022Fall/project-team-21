@@ -34,15 +34,49 @@ void Database::saveDatabase(){
     
 }
 
-Table* Database::getTable(std::string tableName) {
+Table* Database::getTable(std::string tableName){
     // TODO
+    int idx = -1;
+
+    for (int i = 0; i < this->tables.size(); i++)
+    {
+        if(this->tables[i].name == tableName){
+            idx = i;
+        }
+    }
+    return &this->tables[idx];
+}
+void Database::switchTable(std::string tableName){
+    int idx = -1;
+
+    for (int i = 0; i < this->tables.size(); i++)
+    {
+        if(this->tables[i].name == tableName){
+            idx = i;
+        }
+    }
+    currentTable = &this->tables[idx];
 }
 
+void Database::addTable(Table table){
+    this->tables.push_back(table);
+    
+}
 
 void Database::removeTable(std::string tableName){
-    //TODO
+    int idx = -1;
+
+    for (int i = 0; i < this->tables.size(); i++)
+    {
+        if(this->tables[i].name == tableName){
+            idx = i;
+        }
+    }
+    this->tables.erase(this->tables.begin()+idx);
+
 }
 
-void Database::removeTableAtIdx(int idx) {
-    // TODO
+void Database::removeTableAtIdx(int idx){
+
+    this->tables.erase(this->tables.begin()+idx);
 }
