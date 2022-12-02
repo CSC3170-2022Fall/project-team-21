@@ -67,7 +67,7 @@ Our team consists of the following members, listed in the table below (the team 
 | Student ID | Student Name | GitHub Account (in Email) |
 | ---------- | ------------ | ------------------------- |
 | 120090727  | 李珈祺 🚩      | 120090727@link.cuhk.edu.cn        |
-| 123010345  | Please fill in         | Please fill in          |
+| 123010345  | 刘起         | 120090027@link.cuhk.edu.cn          |
 | 123030245  | Please fill in         | Please fill in        |
 | 123020245  |  Please fill in | Please fill in            |
 | 123010249  | Please fill in         | Please fill in            |
