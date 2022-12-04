@@ -88,3 +88,13 @@ As for Option 2, our topic background specification can be found in [background-
 ## Project Abstract
 
 <!-- TODO -->
+We will choose option3 as our final project. In this project, we will write a miniature relational database management system (DBMS) that stores data tables, one of which consists of several (labeled) rows of information. In addition, our system will include a database query language similar to SQL to extract information from these tables.
+
+We will mainly use C++ to implement our code. To implement the specific database and related methods, we divide it into a number of classes. The specific architecture we will adopt is as follows:
+
+- Row class: serves as the underlying storage unit for information about tables in the database, recording row information.
+- SchemaItem class: records tables’ schemas in the database.
+- Table class: A data structure that stores tables in a database. It contains three attributes, the rows (Row class) to record the row information, the schema (SchemaItem class) to record the schema, and the database (Database class) to record the database which the table belongs. It also contains some methods, such as insert, print, delete.
+- CommandInterpreter class: Used to accept and execute commands. Contains the specific implementation method of the command. (exit, select, help…)
+- Database class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
+
