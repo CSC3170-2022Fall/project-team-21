@@ -98,3 +98,4 @@ We will mainly use C++ to implement our code. To implement the specific database
 - CommandInterpreter class: Used to accept and execute commands. Contains the specific implementation method of the command. (exit, select, help…)
 - Database class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
 
+In the end, our database management system will realize two-way data transfer with .db file , create tables, insert rows into existing tables, print tables and other functions. In addition to this, we will implement Select clauses, which are used in select statements and in create statements. They denote tables whose information is selected from other tables. 
