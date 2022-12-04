@@ -6,17 +6,20 @@
 ### Task allocation
 Maintainers:
 
+Due date: Dec8 23:59pm. However you should finish it as soon as possible!
+- `CommandInterpreter.cpp`: 刘起，杨亮，李珈祺，maybe Yohanes assisting us.
+
 Due date: Dec6 23:59pm. However you should finish it as soon as possible!
 - `Database.cpp`: Yohanes
 
 - `Table.cpp`:  连珈玮 & Yohanes
 
-- `CommandInterpreter.cpp`: 刘起，王茗萱，李珈祺，maybe Yohanes assisting us.
 
 - `Row.cpp`: it is done.
 - `SchemaItem.cpp`: it is done.
 - `main.cpp`: This is how you test your implementation. This is the driver code for the application. You can modify it as you want, but the general structure done.
-
+- `gui/`: Darren. GUI design for our database.
+- Abstract and report: 王茗萱 
 
 
 <!-- This part should be deleted in the submission -->
@@ -64,15 +67,15 @@ Our team consists of the following members, listed in the table below (the team 
 
 <!-- change the info below to be the real case -->
 
-| Student ID | Student Name | GitHub Account (in Email) |
-| ---------- | ------------ | ------------------------- |
-| 120090727  | 李珈祺 🚩      | 120090727@link.cuhk.edu.cn        |
-| 123010345  | 刘起         | 120090027@link.cuhk.edu.cn          |
-| 123030245  | Please fill in         | Please fill in        |
-| 123020245  |  Please fill in | Please fill in            |
-| 123010249  | Please fill in         | Please fill in            |
-| 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        |
-| 120090231  |王茗萱   | 3096968424@qq.com       |
+| Student ID | Student Name | GitHub Account (in Email) | Github Username |
+| ---------- | ------------ | ------------------------- | --------- |
+| 120090727  | 李珈祺 🚩      | 120090727@link.cuhk.edu.cn        | LJQ0727 |
+| 120090027  | 刘起         | 120090027@link.cuhk.edu.cn          | |
+| 123030245  | Please fill in         | Please fill in        | |
+| 123020245  |  Please fill in | Please fill in            | |
+| 123010249  | Please fill in         | Please fill in            | |
+| 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        | |
+| 120090231  |王茗萱   | 3096968424@qq.com       | |
 
 ## Project Specification
 
