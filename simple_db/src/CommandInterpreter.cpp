@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "CommandInterpreter.h"
@@ -17,6 +18,7 @@ void CommandInterpreter::execute(std::string command, Database *db, Table *table
       // like in python, string.split(" ")
       // please make it work for any number of whitespace
       //for better processing
+      std::vector<std::string> v_command = tokenizer(command);
 
       // we assume that each command should be a full command
       // not partial command
@@ -81,4 +83,16 @@ void CommandInterpreter::select(){
 
 }
 
-
+// Segment string into tokens, split by " "
+std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
+{
+    std::stringstream ss(str);
+    std::vector<std::string> tokens;
+    std::string word;
+    while (ss >> word)
+    {
+        tokens.push_back(word);
+    }
+    ss.clear();
+    return (tokens);
+}

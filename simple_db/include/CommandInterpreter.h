@@ -12,13 +12,6 @@ class Database;
 
 class CommandInterpreter
 {
-private:
-    // split the command into tokens for better processing
-    std::vector<std::string> command_tokens;
-    
-
-    
-
 
 
 public:
@@ -34,5 +27,15 @@ public:
     void printTable();
     void select();
     // .... more. This file is harder than others.
+
+private:
+    // split the command into tokens for better processing
+    std::vector<std::string> command_tokens;
+    
+    std::vector<std::string> tokenizer(std::string str);
+
+    
+
+
 };
 
