@@ -68,7 +68,7 @@ Our team consists of the following members, listed in the table below (the team 
 | ---------- | ------------ | ------------------------- |
 | 120090727  | 李珈祺 🚩      | 120090727@link.cuhk.edu.cn        |
 | 123010345  | 刘起         | 120090027@link.cuhk.edu.cn          |
-| 123030245  | Please fill in         | Please fill in        |
+| 119030043  | 连珈玮         | 119030043@link.cuhk.edu.cn        |
 | 123020245  |  Please fill in | Please fill in            |
 | 123010249  | Please fill in         | Please fill in            |
 | 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        |
