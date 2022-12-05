@@ -6,17 +6,20 @@
 ### Task allocation
 Maintainers:
 
+Due date: Dec8 23:59pm. However you should finish it as soon as possible!
+- `CommandInterpreter.cpp`: 刘起，杨亮，李珈祺，maybe Yohanes assisting us.
+
 Due date: Dec6 23:59pm. However you should finish it as soon as possible!
 - `Database.cpp`: Yohanes
 
 - `Table.cpp`:  连珈玮 & Yohanes
 
-- `CommandInterpreter.cpp`: 刘起，王茗萱，李珈祺，maybe Yohanes assisting us.
 
 - `Row.cpp`: it is done.
 - `SchemaItem.cpp`: it is done.
 - `main.cpp`: This is how you test your implementation. This is the driver code for the application. You can modify it as you want, but the general structure done.
-
+- `gui/`: Darren. GUI design for our database.
+- Abstract and report: 王茗萱 
 
 
 <!-- This part should be deleted in the submission -->
@@ -72,6 +75,7 @@ Our team consists of the following members, listed in the table below (the team 
 | 123020245  |  Please fill in | Please fill in            |
 | 123010249  | Please fill in         | Please fill in            |
 | 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        |
+| 120090231  |王茗萱   | 3096968424@qq.com       | |
 
 ## Project Specification
 
@@ -88,3 +92,14 @@ As for Option 2, our topic background specification can be found in [background-
 ## Project Abstract
 
 <!-- TODO -->
+We will choose option3 as our final project. In this project, we will write a miniature relational database management system (DBMS) that stores data tables, one of which consists of several (labeled) rows of information. In addition, our system will include a database query language similar to SQL to extract information from these tables.
+
+We will mainly use C++ to implement our code. To implement the specific database and related methods, we divide it into a number of classes. The specific architecture we will adopt is as follows:
+
+- Row class: serves as the underlying storage unit for information about tables in the database, recording row information.
+- SchemaItem class: records tables’ schemas in the database.
+- Table class: A data structure that stores tables in a database. It contains three attributes, the rows (Row class) to record the row information, the schema (SchemaItem class) to record the schema, and the database (Database class) to record the database which the table belongs. It also contains some methods, such as insert, print, delete.
+- CommandInterpreter class: Used to accept and execute commands. Contains the specific implementation method of the command. (exit, select, help…)
+- Database class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
+
+In the end, our database management system will realize two-way data transfer with .db file , create tables, insert rows into existing tables, print tables and other functions. In addition to this, we will implement Select clauses, which are used in select statements and in create statements. They denote tables whose information is selected from other tables. 
