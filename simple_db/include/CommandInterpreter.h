@@ -4,6 +4,11 @@
 #include <string>
 #include <vector>
 #include "Table.h"
+#include "Database.h"
+
+class Table;
+class Database;
+
 
 class CommandInterpreter
 {

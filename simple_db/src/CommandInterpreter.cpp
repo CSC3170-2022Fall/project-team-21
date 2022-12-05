@@ -11,7 +11,7 @@ void CommandInterpreter::execute(std::string command, Database *db, Table *table
       // first convert command to all lowerspace
       // TODO: write this
 
-      command = command.tolowercase();
+      // command = command.tolowercase(); // @FIXME: std::string has no member named "tolowercase"
 
       // then split the command into tokens by whitespace
       // like in python, string.split(" ")
