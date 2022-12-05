@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <vector>
 #include "Row.h"
@@ -25,6 +26,21 @@ Table::Table(std::string name, std::vector<SchemaItem> schema){
 // please refer to the format how mysql prints out the table
 void  Table::printOut(){
      //
+     cout << "----------------------------------------------------";
+     for(int i = 0; i < this->schema.size();i++){
+        cout << this->schema[i].getName() << "  |  ";
+     }
+     cout << "\n" << "----------------------------------------------------";
+     for(int i = 0; i<this->rows.size();i++){
+        std::vector<std::string> values = this->rows[i].getValues();
+        for(int j=0; j<values.size();j++){
+            cout << values[j] << "  |  ";
+        }
+        cout << "\n";
+
+
+     }
+     cout << "----------------------------------------------------";
 
 
 }
