@@ -10,7 +10,9 @@ CommandInterpreter::CommandInterpreter(){}
 void CommandInterpreter::execute(std::string command, Database *db, Table *table){
       // first convert command to all lowerspace
       // TODO: write this
+
       command = command.tolowercase();
+
       // then split the command into tokens by whitespace
       // like in python, string.split(" ")
       // please make it work for any number of whitespace
@@ -25,7 +27,7 @@ void CommandInterpreter::execute(std::string command, Database *db, Table *table
       {
             // first find the index of "from"
             int idx_of_from;
-            parse(command[idx_of_from:])  // TODO
+            // parse(command[idx_of_from:])  // TODO
       }
       
 

@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 #include "Table.h"
+#include "CommandInterpreter.h"
 
+class Table; 
+class CommandInterpreter; 
  
 class Database {
     private:

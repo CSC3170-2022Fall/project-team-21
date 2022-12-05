@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include "Table.h"
 #include "CommandInterpreter.h"
 #include "Database.h"
 

@@ -5,9 +5,6 @@
 #include "Database.h"
 #include "CommandInterpreter.h"
 
-
-
-
 Database::Database(CommandInterpreter *interpreter){
     this->interpreter = interpreter;
     this->name = "default";

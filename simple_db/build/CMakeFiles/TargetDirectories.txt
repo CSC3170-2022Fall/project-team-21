@@ -1,0 +1,3 @@
+/mnt/c/Users/10498/github-classroom/CSC3170-2022Fall/project-team-21/simple_db/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/10498/github-classroom/CSC3170-2022Fall/project-team-21/simple_db/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/10498/github-classroom/CSC3170-2022Fall/project-team-21/simple_db/build/CMakeFiles/simple_db.dir
