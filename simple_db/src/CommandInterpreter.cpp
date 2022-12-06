@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "CommandInterpreter.h"
+#include <algorithm>
 
 
 CommandInterpreter::CommandInterpreter(){}
@@ -91,6 +92,8 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
     std::string word;
     while (ss >> word)
     {
+        // convert word to lowercase
+        std::transform(word.begin(), word.end(), word.begin(), ::tolower);
         tokens.push_back(word);
     }
     ss.clear();
