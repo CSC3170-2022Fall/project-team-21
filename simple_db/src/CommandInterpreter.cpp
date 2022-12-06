@@ -10,12 +10,7 @@ CommandInterpreter::CommandInterpreter(){}
 
 
 void CommandInterpreter::execute(std::string command, Database *db, Table *table){
-      // first convert command to all lowerspace
-      // TODO: write this
-
-      // command = command.tolowercase(); // @FIXME: std::string has no member named "tolowercase"
-
-      // then split the command into tokens by whitespace
+      // split the command into tokens by whitespace
       // like in python, string.split(" ")
       // please make it work for any number of whitespace
       //for better processing
@@ -32,40 +27,30 @@ void CommandInterpreter::execute(std::string command, Database *db, Table *table
             int idx_of_from;
             // parse(command[idx_of_from:])  // TODO
       }
-      
-
-      //fill in
-      // invoke the corresponding function based on the first token
-      // if the first token is "create", invoke createTable()
-      // if the first token is "exit", invoke exit()
-      // if the first token is "print", invoke printTable()
-      // if the first token is "select", invoke select()
-      // .... more
-      if (command == "exit" || command == "q" || command == "quit")
-        {
-            printf("exit");
-        }
-        else if (command == "insert")
-        {
-            printf("inserting...\n");
-        }
-        else if (command == "select")
-        {
-            printf("selecting...\n");
-        }
-        else if (command == "help")
-        {
-            printf("Help message here\n");
-        }
-        else
-        {
-            printf("unrecognized command\n ");
-            //cout << "unrecognized command " << command << endl;
-        }
+      else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
+      {
+          // first save to file, then return
+          return;
+      }
+      else if (v_command[0] == "insert")
+      {
+        // call the insert handler
+          printf("inserting...\n");
+      }
+      else if (v_command[0] == "help")
+      {
+          printf("Help message here\n");
+      }
+      else
+      {
+          printf("unrecognized command\n ");
+          //cout << "unrecognized command " << command << endl;
+      }
 
 }
 
 // should use each function for one type of command
+// please add the parameters as you want, maybe the Database object pointer
 void CommandInterpreter::createTable(){
       //fill in
 
