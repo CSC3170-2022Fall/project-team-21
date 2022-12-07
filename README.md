@@ -1,15 +1,13 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9475714&assignment_repo_type=AssignmentRepo)
 # CSC3170 Course Project
 
-## Team members read here!
-
-### Task allocation
+## Task allocation for team members
 Maintainers:
 
-Due date: Dec8 23:59pm. However you should finish it as soon as possible!
+Due date: Dec11 23:59pm. However you should finish it as soon as possible!
 - `CommandInterpreter.cpp`: 刘起，杨亮，李珈祺，maybe Yohanes assisting us.
 
-Due date: Dec6 23:59pm. However you should finish it as soon as possible!
+Due date: Dec11 23:59pm. However you should finish it as soon as possible!
 - `Database.cpp`: Yohanes
 
 - `Table.cpp`:  连珈玮 & Yohanes
@@ -18,10 +16,11 @@ Due date: Dec6 23:59pm. However you should finish it as soon as possible!
 - `Row.cpp`: it is done.
 - `SchemaItem.cpp`: it is done.
 - `main.cpp`: This is how you test your implementation. This is the driver code for the application. You can modify it as you want, but the general structure done.
-- `gui/`: Darren. GUI design for our database.
+- `gui/`: Darren. Tentative GUI design and survey for our database.
+- `testing/`: Yohanes. Provide test cases for our DB and also for demo.
 - Abstract and report: 王茗萱 
 
-
+## Message to our team members
 <!-- This part should be deleted in the submission -->
 This is Li Jiaqi writing to our teammates, here are some things you need to be cautious about out when collaborating in our group project, and the things that we should do to make our project better.
 
@@ -46,12 +45,6 @@ There are several timelines everyone should keep in mind:
 As you can see we should finish most things, including our program before December 11, so hurry up!!!
 
 
-### Workload allocation, and the things related to our project
-I am working on an initial version of the database. Still updating.
-
-
-
-
 ## Project Overall Description
 
 This is our implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ). For details of the project, you can refer to [project-description.md](project-description.md). In this project, we will utilize what we learned in the lectures and tutorials in the course, and implement either one of the following major jobs:
@@ -67,15 +60,15 @@ Our team consists of the following members, listed in the table below (the team 
 
 <!-- change the info below to be the real case -->
 
-| Student ID | Student Name | GitHub Account (in Email) |
-| ---------- | ------------ | ------------------------- |
-| 120090727  | 李珈祺 🚩      | 120090727@link.cuhk.edu.cn        |
-| 123010345  | 刘起         | 120090027@link.cuhk.edu.cn          |
-| 119030043  | 连珈玮         | 119030043@link.cuhk.edu.cn        |
-| 123020245  |  Please fill in | Please fill in            |
-| 123010249  | Please fill in         | Please fill in            |
-| 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        |
-| 120090231  |王茗萱   | 3096968424@qq.com       | |
+| Student ID | Student Name | Email | Github Username |
+| ---------- | ------------ | ------------------------- | -----------------------|
+| 120090727  | 李珈祺 🚩      | 120090727@link.cuhk.edu.cn        |LJQ0727|
+| 123010345  | 刘起         | 120090027@link.cuhk.edu.cn          |LittleShaco|
+| 119030043  | 连珈玮         | 119030043@link.cuhk.edu.cn        |jlianxm|
+| 120090874  |  杨亮 | 120090874@link.cuhk.edu.cn            | YangBright|
+| 120040022  | Darren Boesono         | 120040022@link.cuhk.edu.cn            | dboesono|
+| 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        | YohanesJames|
+| 120090231  |王茗萱   | 3096968424@qq.com       | helloworldlgu|
 
 ## Project Specification
 
@@ -96,10 +89,10 @@ We will choose option3 as our final project. In this project, we will write a mi
 
 We will mainly use C++ to implement our code. To implement the specific database and related methods, we divide it into a number of classes. The specific architecture we will adopt is as follows:
 
-- Row class: serves as the underlying storage unit for information about tables in the database, recording row information.
-- SchemaItem class: records tables’ schemas in the database.
-- Table class: A data structure that stores tables in a database. It contains three attributes, the rows (Row class) to record the row information, the schema (SchemaItem class) to record the schema, and the database (Database class) to record the database which the table belongs. It also contains some methods, such as insert, print, delete.
-- CommandInterpreter class: Used to accept and execute commands. Contains the specific implementation method of the command. (exit, select, help…)
-- Database class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
+- `Row` class: serves as the underlying storage unit for information about tables in the database, recording row information.
+- `SchemaItem` class: records tables’ schemas in the database.
+- `Table` class: A data structure that stores tables in a database. It contains three attributes, the rows (`Row` class) to record the row information, the schema (`SchemaItem` class) to record the schema, and the database (`Database` class) to record the database which the table belongs. It also contains some methods, such as insert, print, delete.
+- `CommandInterpreter` class: Used to accept and execute commands. Contains the specific implementation method of the command. (exit, select, help…)
+- `Database` class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
 
 In the end, our database management system will realize two-way data transfer with .db file , create tables, insert rows into existing tables, print tables and other functions. In addition to this, we will implement Select clauses, which are used in select statements and in create statements. They denote tables whose information is selected from other tables. 
