@@ -4,6 +4,9 @@
 #include "Table.h"
 #include "Database.h"
 #include "CommandInterpreter.h"
+#include <direct.h>
+//#include <stdlib.h>
+//#include <stdio.h>
 
 Database::Database(CommandInterpreter *interpreter){
     this->interpreter = interpreter;
@@ -23,11 +26,22 @@ void Database::execute(std::string command){
 void Database::saveDatabase(){
     // TODO: first create the directory for the database,
     // then **change directory** to it
-    for (int i = 0; i < this->tables.size(); i++)
+    const char * nm = this->name.c_str();
+     if( _mkdir(strcat("\\",nm)) == 0 )
+   {
+      printf("Directory '\\%c' was successfully created\n",*nm );
+      //system( "dir \\"+ this->name );
+      for (int i = 0; i < this->tables.size(); i++)
     {
         std::string fname = this->tables[i].name;
         this->tables[i].saveToFile(fname);
     }
+   }
+   else
+      printf( "Problem creating directory '\\%c'\n",*nm );
+
+
+    
     
 }
 
