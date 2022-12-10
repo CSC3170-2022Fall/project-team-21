@@ -27,6 +27,7 @@ public:
 
     void createTable();
     void exit();
+    void load(std::vector<std::string> v_command);
     void printTable();
     Table select();
     // .... more. This file is harder than others.

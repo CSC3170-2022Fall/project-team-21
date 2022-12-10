@@ -23,7 +23,7 @@ void CommandInterpreter::execute(std::string command, Database *db){
       //
       // a ";" in the end is ok, but not required
 
-      if (this->command_tokens[0] == "select")
+      if (v_command[0] == "select")
       {
             // first find the index of "from"
             int idx_of_from;
@@ -38,6 +38,11 @@ void CommandInterpreter::execute(std::string command, Database *db){
       {
         // call the insert handler
           printf("inserting...\n");
+      }
+      else if(v_command[0] == "load")
+      {
+            printf("load...\n");
+            this->load(v_command);
       }
       else if (v_command[0] == "help")
       {
@@ -61,6 +66,16 @@ void CommandInterpreter::exit(){
       //fill in
 
 }
+
+void CommandInterpreter::load(std::vector<std::string> v_command){
+      //fill in
+      string fileName;
+      fileName = v_command[1].substr(0, v_command[1].length()-1);
+      Table tableTemp;
+      tableTemp = tableTemp.loadFromFile(fileName);
+      this->database->addTable(tableTemp);
+}
+
 
 void CommandInterpreter::printTable(){
       //fill in
