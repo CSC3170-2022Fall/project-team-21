@@ -15,6 +15,9 @@ class CommandInterpreter
 
 
 public:
+
+    Database * database;
+
     CommandInterpreter();
 
     void execute(std::string command, Database *db);
@@ -34,7 +37,7 @@ private:
     
     std::vector<std::string> tokenizer(std::string str);
 
-    Database * database;
+    
 
 
 };
