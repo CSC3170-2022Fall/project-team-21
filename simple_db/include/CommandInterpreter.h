@@ -26,10 +26,11 @@ public:
     Table parse(std::string command);
 
     void createTable();
-    void exit();
+    void exitCommand();
     void load(std::vector<std::string> v_command);
     void printTable();
     Table select();
+    void insertCommand(std::vector<std::string> *v_command);
     // .... more. This file is harder than others.
 
 private:

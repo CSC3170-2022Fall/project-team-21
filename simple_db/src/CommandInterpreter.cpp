@@ -32,11 +32,12 @@ void CommandInterpreter::execute(std::string command, Database *db){
       else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
       {
           // first save to file, then return
-          return;
+          exitCommand();
       }
-      else if (v_command[0] == "insert")
+      else if (v_command[0] == "insert" && v_command[1] == "into")
       {
         // call the insert handler
+        insertCommand();
           printf("inserting...\n");
       }
       else if(v_command[0] == "load")
@@ -50,10 +51,27 @@ void CommandInterpreter::execute(std::string command, Database *db){
       }
       else
       {
-          printf("unrecognized command\n ");
+          printf("unrecognized command, please try again\n ");
           //cout << "unrecognized command " << command << endl;
       }
 
+}
+
+void CommandInterpreter::insertCommand(std::vector<std::string> *v_command){
+      // insert to <table_name> values <value1>, <value2>, ...
+      string tableName = v_command->at(2);
+      // if tablename contains brackets, ignore them
+      if(tableName[tableName.length()-1] == ')'){
+            tableName = tableName.substr(0, tableName.find_first_of('('));
+      }
+      Table *target_table = this->database->getTable(tableName);
+
+      vector<string> values;
+      for(int i = 4; i < v_command->size(); i++){
+            values.push_back(v_command->at(i));
+      }
+      Row newRow = Row(values);
+      target_table->insertLast(newRow);
 }
 
 // should use each function for one type of command
@@ -62,9 +80,9 @@ void CommandInterpreter::createTable(){
       //fill in
 
 }
-void CommandInterpreter::exit(){
-      //fill in
-
+void CommandInterpreter::exitCommand(){
+      cout << "Bye!" << endl;
+      exit(0);
 }
 
 void CommandInterpreter::load(std::vector<std::string> v_command){
