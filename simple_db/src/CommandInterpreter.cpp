@@ -9,7 +9,7 @@
 CommandInterpreter::CommandInterpreter(){}
 
 
-void CommandInterpreter::execute(std::string command, Database *db, Table *table){
+void CommandInterpreter::execute(std::string command, Database *db){
       // split the command into tokens by whitespace
       // like in python, string.split(" ")
       // please make it work for any number of whitespace

@@ -17,7 +17,7 @@ class CommandInterpreter
 public:
     CommandInterpreter();
 
-    void execute(std::string command, Database *db, Table *table);
+    void execute(std::string command, Database *db);
 
     // recursive function
     Table parse(std::string command);

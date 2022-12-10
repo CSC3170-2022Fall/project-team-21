@@ -19,7 +19,7 @@ Database::Database(std::string name, CommandInterpreter *interpreter){
 }
 
 void Database::execute(std::string command){
-    this->interpreter->execute(command, this, this->currentTable);
+    this->interpreter->execute(command, this);
 }
 
 

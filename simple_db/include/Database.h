@@ -14,8 +14,8 @@ class Database {
         // tables in this database
         std::vector<Table> tables;
 
-        // the table that is currently being worked on
-        Table* currentTable;
+        // // the table that is currently being worked on
+        // Table* currentTable;
 
         CommandInterpreter *interpreter;
 
