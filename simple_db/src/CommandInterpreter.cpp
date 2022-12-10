@@ -5,6 +5,7 @@
 #include "CommandInterpreter.h"
 #include <algorithm>
 
+using namespace std;
 
 CommandInterpreter::CommandInterpreter(){}
 
@@ -64,7 +65,7 @@ void CommandInterpreter::printTable(){
       //fill in
 
 }
-void CommandInterpreter::select(){
+Table CommandInterpreter::select(){
       //fill in
 
 }
