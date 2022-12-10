@@ -10,12 +10,14 @@
 
 Database::Database(CommandInterpreter *interpreter){
     this->interpreter = interpreter;
+    this->interpreter->database = this;
     this->name = "default";
 }
 
 Database::Database(std::string name, CommandInterpreter *interpreter){
     this->name = name;
     this->interpreter = interpreter;
+    this->interpreter->database = this;
 }
 
 void Database::execute(std::string command){

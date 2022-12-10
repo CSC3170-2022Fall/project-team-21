@@ -25,7 +25,7 @@ public:
     void createTable();
     void exit();
     void printTable();
-    void select();
+    Table select();
     // .... more. This file is harder than others.
 
 private:
@@ -34,7 +34,7 @@ private:
     
     std::vector<std::string> tokenizer(std::string str);
 
-    
+    Database * database;
 
 
 };

@@ -7,7 +7,8 @@
 
 using namespace std;
 
-CommandInterpreter::CommandInterpreter(){}
+CommandInterpreter::CommandInterpreter(){
+}
 
 
 void CommandInterpreter::execute(std::string command, Database *db){
