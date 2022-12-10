@@ -18,16 +18,17 @@ void CommandInterpreter::execute(std::string command, Database *db){
       //for better processing
       std::vector<std::string> v_command = tokenizer(command);
 
-      // we assume that each command should be a full command
-      // not partial command
-      //
-      // a ";" in the end is ok, but not required
 
       if (v_command[0] == "select")
       {
             // first find the index of "from"
             int idx_of_from;
             // parse(command[idx_of_from:])  // TODO
+      }
+      else if (v_command[0] == "create" && v_command[1] == "table")
+      {
+            // call the create table handler
+            createTable(&v_command);
       }
       else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
       {
@@ -43,14 +44,17 @@ void CommandInterpreter::execute(std::string command, Database *db){
       {
             this->load(v_command);
       }
+      else if (v_command[0] == "print")
+      {
+            printTable(&v_command);
+      }
       else if (v_command[0] == "help")
       {
           printf("Help message here\n");
       }
       else
       {
-          printf("Invalid command, please try again\n ");
-          //cout << "unrecognized command " << command << endl;
+          printf("Invalid command, please try again.\n");
       }
 
 }
@@ -74,8 +78,33 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command){
 
 // should use each function for one type of command
 // please add the parameters as you want, maybe the Database object pointer
-void CommandInterpreter::createTable(){
-      //fill in
+void CommandInterpreter::createTable(std::vector<std::string> *v_command){
+      string tableName = v_command->at(2);
+      vector<SchemaItem> schema;
+
+      int i = 4;
+      while (i < v_command->size()) {
+            string schemaItem = v_command->at(i);
+            DataType schemaType;
+            string schemaName;
+            // if schemaItem contains brackets
+            if(schemaItem[schemaItem.length()-1] == ')'){
+                  schemaName = schemaItem.substr(0, schemaItem.find('('));
+                schemaType = SchemaItem::getTypeFromString(schemaItem.substr(
+                  schemaItem.find('(')+1, schemaItem.find(')') - schemaItem.find('(') - 1
+                ));
+            } else {
+                schemaType = SchemaItem::getTypeFromString(
+                  v_command->at(++i)
+                );
+                schemaName = schemaItem;
+            }
+            SchemaItem newSchemaItem = SchemaItem();
+            newSchemaItem.name = schemaName;
+            newSchemaItem.type = schemaType;
+            schema.push_back(newSchemaItem);
+            i++;
+      }
 
 }
 void CommandInterpreter::exitCommand(){
@@ -93,9 +122,10 @@ void CommandInterpreter::load(std::vector<std::string> v_command){
 }
 
 
-void CommandInterpreter::printTable(){
-      //fill in
-
+void CommandInterpreter::printTable(std::vector<std::string> *v_command){
+      string target_table_name = v_command->at(1);
+      Table *target_table = this->database->getTable(target_table_name);
+      target_table->printOut();
 }
 Table CommandInterpreter::select(){
       //fill in

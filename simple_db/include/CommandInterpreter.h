@@ -25,10 +25,10 @@ public:
     // recursive function
     Table parse(std::string command);
 
-    void createTable();
+    void createTable(std::vector<std::string> *v_command);
     void exitCommand();
     void load(std::vector<std::string> v_command);
-    void printTable();
+    void printTable(std::vector<std::string> *v_command);
     Table select();
     void insertCommand(std::vector<std::string> *v_command);
     // .... more. This file is harder than others.

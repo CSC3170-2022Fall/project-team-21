@@ -23,4 +23,15 @@ std::string SchemaItem::getType(){
      }
 }
 
-
+DataType SchemaItem::getTypeFromString(std::string type){
+     if(type == "INT"){
+         return INT;
+     }
+     if(type == "FLOAT"){
+         return FLOAT;
+     }
+     if(type == "STRING"){
+         return STRING;
+     }
+     return STRING;
+}
