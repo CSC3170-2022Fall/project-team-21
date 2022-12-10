@@ -126,6 +126,8 @@ Table Table::loadFromFile(std::string fileName){
         }
         stringIntoTable += c;
     }
+    
+    rows.pop_back();
     tableOut.rows = rows;
     tableOut.schema = schema;
 
