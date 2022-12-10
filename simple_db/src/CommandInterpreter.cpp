@@ -37,7 +37,7 @@ void CommandInterpreter::execute(std::string command, Database *db){
       else if (v_command[0] == "insert" && v_command[1] == "into")
       {
         // call the insert handler
-        insertCommand();
+        insertCommand(&v_command);
           printf("inserting...\n");
       }
       else if(v_command[0] == "load")
