@@ -4,6 +4,7 @@
 #include "Row.h"
 #include "SchemaItem.h"
 #include "Table.h"
+#include <fstream>
 
 using namespace std;
 
@@ -77,8 +78,58 @@ int Table::getSize(){
 
 Table Table::loadFromFile(std::string fileName){
     // Find a way to do this
+    string path = "test/" + fileName + ".db.txt";
+    ifstream inFile;
+    inFile.open(path, ios::in);
 
 
+    Table tableOut;
+    tableOut.name = fileName;
+    vector<Row> rows;
+    
+    vector<SchemaItem> schema;  
+    string stringIntoTable = "";
+    char c;
+    int line = 0;
+    while( (c = inFile.get()) != EOF)
+    {
+        if(c == '\n'){
+            if(line == 0){
+                SchemaItem item;
+                item.name = stringIntoTable;
+                item.type = STRING;
+                schema.push_back(item);
+            }
+            else{
+                rows[line-1].values.push_back(stringIntoTable);
+            }
+            vector<std::string> rowTemp;
+            Row temp(rowTemp);
+            rows.push_back(temp);
+            stringIntoTable = "";
+            line++;
+            continue;
+        }
+        if(c == ','){
+            if(line == 0){
+                SchemaItem item;
+                item.name = stringIntoTable;
+                item.type = STRING;
+                schema.push_back(item);
+            }
+            else{
+                rows[line-1].values.push_back(stringIntoTable);
+            }
+
+            stringIntoTable = "";
+            continue;
+        }
+        stringIntoTable += c;
+    }
+    tableOut.rows = rows;
+    tableOut.schema = schema;
+
+    return tableOut;
 }
 
 
