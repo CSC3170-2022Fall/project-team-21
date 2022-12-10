@@ -38,11 +38,9 @@ void CommandInterpreter::execute(std::string command, Database *db){
       {
         // call the insert handler
         insertCommand(&v_command);
-          printf("inserting...\n");
       }
       else if(v_command[0] == "load")
       {
-            printf("load...\n");
             this->load(v_command);
       }
       else if (v_command[0] == "help")
@@ -51,7 +49,7 @@ void CommandInterpreter::execute(std::string command, Database *db){
       }
       else
       {
-          printf("unrecognized command, please try again\n ");
+          printf("Invalid command, please try again\n ");
           //cout << "unrecognized command " << command << endl;
       }
 
@@ -86,12 +84,12 @@ void CommandInterpreter::exitCommand(){
 }
 
 void CommandInterpreter::load(std::vector<std::string> v_command){
-      //fill in
-      string fileName;
-      fileName = v_command[1].substr(0, v_command[1].length()-1);
+      string tableName;
+      tableName = v_command[1].substr(0, v_command[1].length()-1);
       Table tableTemp;
-      tableTemp = tableTemp.loadFromFile(fileName);
+      tableTemp = tableTemp.loadFromFile(tableName, this->database->name);
       this->database->addTable(tableTemp);
+      cout << "Successfully loaded table: " << v_command[1] << endl;
 }
 
 

@@ -28,7 +28,7 @@ public:
     void insertAt(Row row, int idx);
     int getSize();  // just return the size of the rows vector
 
-    static Table loadFromFile(std::string fileName);
+    static Table loadFromFile(std::string fileName, std::string databaseName);
 
     std::string name;
     std::string getSchema();

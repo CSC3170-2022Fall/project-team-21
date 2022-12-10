@@ -91,15 +91,15 @@ int Table::getSize(){
     return this->rows.size();
 } 
 
-Table Table::loadFromFile(std::string fileName){
+Table Table::loadFromFile(std::string tableName, std::string databaseName){
     // Find a way to do this
-    string path = "test/" + fileName + ".db.txt";
+    string path = databaseName + "/" + tableName + ".db";
     ifstream inFile;
     inFile.open(path, ios::in);
 
 
     Table tableOut;
-    tableOut.name = fileName;
+    tableOut.name = tableName;
     vector<Row> rows;
     
     vector<SchemaItem> schema;  
