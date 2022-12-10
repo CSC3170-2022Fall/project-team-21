@@ -52,9 +52,24 @@ void  Table::printOut(){
 void Table::saveToFile(std::string fileName){
     // well, just find a way to make the database name as a directory,
     // and store the table in the directory
-   string path = this->database->name + "/" + this->name + ".txt";
-}
+    string path = this->database->name + "/" + this->name + ".db.txt";
 
+    ofstream onFile(path);
+
+    for(int i = 0; i<this->schema.size()-1; i++){
+        onFile<<this->schema[i].name<<";";
+    }
+    onFile<<this->schema[this->schema.size()-1].name<<endl;
+
+    for(int i = 0; i<this->rows.size(); i++){
+        for(int j = 0; j<this->rows[i].values.size()-1; j++){
+            onFile<<this->rows[i].values[j]<<";";  
+        }
+        onFile<<this->rows[i].values[this->rows[i].values.size()-1]<<endl; 
+    }
+
+    onFile.close();
+}
 // Please refer to how to use std::vector
 Row Table::getRowAt(int idx){
     return this->rows.at(idx);
@@ -126,7 +141,7 @@ Table Table::loadFromFile(std::string fileName){
         }
         stringIntoTable += c;
     }
-    
+
     rows.pop_back();
     tableOut.rows = rows;
     tableOut.schema = schema;
