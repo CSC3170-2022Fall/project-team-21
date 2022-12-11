@@ -17,21 +17,22 @@ int main()
 
     while (true)
     {
-        printf("simpleDB> ");
+        printf("> ");
         string command;
-        cin >> command;
+        getline(cin, command);
 
         // allow these simple commands to not have a semicolon
         if (command == "quit" || command == "exit" || command == "h" || command == "help" || command == "q")
         {
-            db.execute(command);
+            db.execute(string(command) + ";");
             continue;
         }
         while (command.find(';') == string::npos)
         {
-            printf("     ...> ");
+            printf("> ");
+            fflush(stdout);
             string temp;
-            cin >> temp;
+            getline(cin, temp);
             command += " " + temp;
         }
         db.execute(command);
