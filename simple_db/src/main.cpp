@@ -24,7 +24,7 @@ int main()
         // allow these simple commands to not have a semicolon
         if (command == "quit" || command == "exit" || command == "h" || command == "help" || command == "q")
         {
-            db.execute(string(command) + ";");
+            db.execute(string(command));
             continue;
         }
         while (true)
