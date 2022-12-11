@@ -200,11 +200,117 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
       }
 }
 
-Table CommandInterpreter::select()
-{
-      // fill in
-      printf("Search results:\n");
+Table CommandInterpreter::select(std::vector<std::string> v_command){
+      //fill in
+      Table result;
+      vector<Row> rowsRusult;
+      vector<SchemaItem> schemaRusult;   
+
+      int fromIndex;
+      for(int i = 1; i<v_command.size(); i++){
+            if(v_command[i].find("from") != string::npos){
+                  fromIndex = i;
+                  break;
+            }
+      }
+      int whereIndex = -1;
+      for(int i = v_command.size()-1; i>=0; i--){
+            if(v_command[i].find("where") != string::npos){
+                  whereIndex = i;
+                  break;
+            }
+      }
+
+
+      Table tableSource;
+      if((whereIndex - fromIndex == 3) || ((v_command.size()-fromIndex == 3) && (whereIndex==-1)) ){ // natural inner product
+            string tableName1 = v_command[fromIndex+1];
+            string tableName2 = v_command[fromIndex+2];
+            if(tableName1.find(',') != string::npos){
+                  tableName1 = tableName1.substr(0, tableName1.length()-1);
+            }
+            tableSource = naturalInnerProduct(tableName1, tableName2);
+      }
+      else if((whereIndex - fromIndex == 2) ||  ((v_command.size()-fromIndex == 2) && (whereIndex==-1)) ){ // one table
+            string tableName1 = v_command[fromIndex+1];
+            if(tableName1.find(',') != string::npos){
+                  tableName1 = tableName1.substr(0, tableName1.length()-1);
+            }
+            tableSource = *(this->database->getTable(tableName1));
+      }
+      else if((whereIndex - fromIndex > 3) ||  ((v_command.size()-fromIndex > 3) && (whereIndex==-1)) ){ // recursive
+            vector<string> input;
+            for(int i = fromIndex+1; i<whereIndex; i++){
+                  string temp = v_command[i];
+                  if(temp.find(')') != string::npos){
+                        temp = temp.substr(0, temp.length()-1);
+                  }
+                  input.push_back(temp);
+            }
+            tableSource = select(input);
+      }
+
+      vector<int> inputSchemaIndex;
+      if(v_command[1] == "*"){
+            for(int j = 0; j<tableSource.schema.size(); j++){
+                  inputSchemaIndex.push_back(j);
+                  SchemaItem sctemp;
+                  sctemp = tableSource.schema[j];
+                  schemaRusult.push_back(sctemp);
+            }
+      }
+      else{
+            for(int i = 0; i<fromIndex-1; i++){
+                  string schemaName;
+                  schemaName = v_command[i+1];
+                  if(schemaName.find(',') != string::npos){
+                        schemaName = schemaName.substr(0, schemaName.length()-1);
+                  }
+                  for(int j = 0; j<tableSource.schema.size(); j++){
+                        if(schemaName == tableSource.schema[j].name){
+                              inputSchemaIndex.push_back(j);
+                              SchemaItem sctemp;
+                              sctemp = tableSource.schema[j];
+                              schemaRusult.push_back(sctemp);
+                        }
+                  }
+            }
+      }
+
+
+      if(whereIndex == -1){
+            for(int i = 0; i<tableSource.rows.size(); i++){
+                  Row tempR;
+                  for(int j = 0; j<inputSchemaIndex.size(); j++){
+                        tempR.values.push_back(tableSource.rows[i].values[inputSchemaIndex[j]]);
+                  }
+                  rowsRusult.push_back(tempR);
+            }
+      }
+      else{
+            vector<string> conditionVector;
+            for(int i = whereIndex+1; i<v_command.size(); i++){
+                  conditionVector.push_back(v_command[i]);
+            }
+
+            for(int i = 0; i<tableSource.rows.size(); i++){
+                  if(testCondition(tableSource.schema, tableSource.rows[i], conditionVector)){
+                        Row tempR;
+                        for(int j = 0; j<inputSchemaIndex.size(); j++){
+                              tempR.values.push_back(tableSource.rows[i].values[inputSchemaIndex[j]]);
+                        }
+                        rowsRusult.push_back(tempR);
+                  }
+                  
+            }
+      }
+
+      result.rows = rowsRusult;
+      result.schema = schemaRusult;
+
+      return result;
 }
+
 
 /* 
 guess the input of the user,
@@ -387,4 +493,170 @@ int CommandInterpreter::lcs(string a, string b)
       }
 
       return arr[n - 1][m - 1]; // 返回最长公共子字符串长度.
+}
+
+
+bool CommandInterpreter::testCondition(vector<SchemaItem> schema ,Row theRow, std::vector<std::string> conditionVector){
+      bool result = false;
+      
+      string schName = conditionVector[0];
+      string opration = conditionVector[1];
+      string schValue = conditionVector[2];
+
+      if(schValue.find(',') != string::npos){
+            schValue = schValue.substr(0, schValue.length()-2);
+      }
+      if(schValue.find('\'') != string::npos){
+            schValue = schValue.substr(1, schValue.length()-2);
+      }
+      if(schValue.find('\"') != string::npos){
+            schValue = schValue.substr(1, schValue.length()-2);
+      }
+
+
+      if(opration == "="){
+            for(int i = 0; i<schema.size(); i++){
+                  if((schema[i].name == schName) && (theRow.values[i] == schValue)){
+                        result = true;
+                        break;
+                  }
+            }
+      }
+      else if(opration == "<"){
+            for(int i = 0; i<schema.size(); i++){
+                  if((schema[i].name == schName) && (theRow.values[i] < schValue)){
+                        result = true;
+                        break;
+                  }
+            }
+      }
+      else if(opration == "<="){
+            for(int i = 0; i<schema.size(); i++){
+                  if((schema[i].name == schName) && (theRow.values[i] <= schValue)){
+                        result = true;
+                        break;
+                  }
+            }
+      }
+      else if(opration == ">"){
+            for(int i = 0; i<schema.size(); i++){
+                  if((schema[i].name == schName) && (theRow.values[i] > schValue)){
+                        result = true;
+                        break;
+                  }
+            }
+      }
+      else if(opration == ">="){
+            for(int i = 0; i<schema.size(); i++){
+                  if((schema[i].name == schName) && (theRow.values[i] >= schValue)){
+                        result = true;
+                        break;
+                  }
+            }
+      }
+      else if(opration == "!="){
+            for(int i = 0; i<schema.size(); i++){
+                  if((schema[i].name == schName) && (theRow.values[i] != schValue)){
+                        result = true;
+                        break;
+                  }
+            }
+      }
+
+
+      int andIndex = -1;
+      int orIndex = -1;
+      for(int i = 0; i<conditionVector.size(); i++){
+            if(conditionVector[i] == "and"){
+                  andIndex = i;
+                  break;
+            }
+            if(conditionVector[i] == "or"){
+                  orIndex = i;
+                  break;
+            }
+      }
+
+      if(andIndex != -1){
+            vector<string> conIn;
+            for(int i = 4; i<conditionVector.size(); i++){
+                  conIn.push_back(conditionVector[i]);
+            }
+            return (result&&testCondition(schema, theRow, conIn));
+      }
+      else if(orIndex != -1){
+            vector<string> conIn;
+            for(int i = 4; i<conditionVector.size(); i++){
+                  conIn.push_back(conditionVector[i]);
+            }
+            return (result||testCondition(schema, theRow, conIn));
+      }
+      else if((andIndex == -1) && (orIndex == -1)){
+            return result;
+      }
+}
+
+
+Table CommandInterpreter::naturalInnerProduct(std::string tableName1, std::string tableName2){
+      Table result;
+      vector<Row> rowsRusult;
+      vector<SchemaItem> schemaRusult;   
+
+      Table * table1;
+      Table * table2;
+
+      if(this->database->getTable(tableName1)->rows.size() > this->database->getTable(tableName2)->rows.size()){
+            table1 = this->database->getTable(tableName1);
+            table2 = this->database->getTable(tableName2);
+      }
+      else{
+            table1 = this->database->getTable(tableName2);
+            table2 = this->database->getTable(tableName1);
+      }
+
+      int sameSch[2];
+      for(int i = 0; i<table1->schema.size(); i++){
+            for(int j = 0; j<table2->schema.size(); j++){
+                  if(table1->schema[i].name == table2->schema[j].name){
+                        sameSch[0] = i;
+                        sameSch[1] = j;
+                        break;
+                  }
+            }
+      }
+
+      for(int i = 0; i<table1->schema.size(); i++){
+            SchemaItem itemTemp;
+            itemTemp.name = table1->schema[i].name;
+            itemTemp.type = table1->schema[i].type;
+            schemaRusult.push_back(itemTemp);
+      }
+      for(int i = 0; i<table2->schema.size(); i++){
+            if(i == sameSch[1]) continue;
+            SchemaItem itemTemp;
+            itemTemp.name = table2->schema[i].name;
+            itemTemp.type = table2->schema[i].type;
+            schemaRusult.push_back(itemTemp);
+      }
+
+      for(int i = 0; i<table1->rows.size(); i++){
+            Row rowTemp;
+            for(int j = 0; j<table2->rows.size(); j++){
+                  if(table1->rows[i].values[sameSch[0]] == table2->rows[j].values[sameSch[1]]){
+                        for(int m = 0; m<table1->rows[i].values.size(); m++){
+                              rowTemp.values.push_back(table1->rows[i].values[m]);
+                        }
+                        for(int m = 0; m<table2->rows[j].values.size(); m++){
+                              if(m == sameSch[1]) continue;
+                              rowTemp.values.push_back(table2->rows[j].values[m]);
+                        }
+                  }
+            }
+            rowsRusult.push_back(rowTemp);
+      }
+
+      result.rows = rowsRusult;
+      result.schema = schemaRusult;
+
+      return result;
 }

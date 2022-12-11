@@ -26,12 +26,16 @@ public:
     void exitCommand();
     void load(std::vector<std::string> v_command);
     void printTable(std::vector<std::string> *v_command);
-    Table select();
+    Table select(std::vector<std::string> v_command);
     void insertCommand(std::vector<std::string> *v_command);
     // .... more. This file is harder than others.
     void guessUserInput(std::vector<std::string> v_command);
     void Spelling_error_correction(std::vector<std::string> *v_command);
     int lcs(std::string a, std::string b);
+
+    Table naturalInnerProduct(std::string tableName1, std::string tableName2);
+    bool testCondition(std::vector<SchemaItem> schema ,Row theRow, std::vector<std::string> conditionVector);
+
 
 private:
     // split the command into tokens for better processing
