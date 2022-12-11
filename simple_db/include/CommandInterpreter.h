@@ -31,7 +31,7 @@ public:
     // .... more. This file is harder than others.
     void guessUserInput(std::vector<std::string> v_command);
     void Spelling_error_correction(std::vector<std::string> *v_command);
-    int lcs(string a, string b);
+    int lcs(std::string a, std::string b);
 
 private:
     // split the command into tokens for better processing
