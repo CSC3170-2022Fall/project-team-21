@@ -12,7 +12,8 @@ int main()
 {
     CommandInterpreter interpreter;
     Database db("db", &interpreter);
-    printf("Welcome to Team 21's DB! Type SQL commands or 'help' or 'h' to get help, 'quit' or 'exit' to exit\n");
+    printf("Welcome to Team 21's DB! Type SQL commands or 'help' or 'h' to get help, 'quit' or 'q' to exit\n");
+    printf("Note: All SQL commands should end with a semicolon (;)\n");
 
     while (true)
     {
@@ -21,7 +22,7 @@ int main()
         cin >> command;
 
         // allow these simple commands to not have a semicolon
-        if (command == "quit" || command == "exit" || command == "h" || command == "help")
+        if (command == "quit" || command == "exit" || command == "h" || command == "help" || command == "q")
         {
             db.execute(command);
             continue;

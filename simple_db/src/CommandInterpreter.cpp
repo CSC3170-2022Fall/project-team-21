@@ -54,17 +54,17 @@ void CommandInterpreter::execute(std::string command, Database *db)
       }
       else if (v_command[0] == "help" || v_command[0] == "h")
       {
-            printf("Help message here. List of all SQL commands we support:\n");
-            printf("create table <table name> (<column name>);\n");
-            printf("create table <table name> as <select clause>;\n");
-            printf("load <table name>;\n");
-            printf("store <table name>;\n");
-            printf("insert into <table name> values <literal>;\n");
-            printf("print <table name>;'\n");
-            printf("quit;\n");
-            printf("exit;\n");
-            printf("select <column name> from <table name> <conditional clause>;\n");
-            printf("select <column name> from <table name1>,<table name2> <conditional clause>;\n");
+            printf("    Help message here. List of all SQL commands we support:\n");
+            printf("    create table <table name> (<column name>);\n");
+            printf("    create table <table name> as <select clause>;\n");
+            printf("    load <table name>;\n");
+            printf("    store <table name>;\n");
+            printf("    insert into <table name> values <literal>;\n");
+            printf("    print <table name>;'\n");
+            printf("    quit;\n");
+            printf("    exit;\n");
+            printf("    select <column name> from <table name> <conditional clause>;\n");
+            printf("    select <column name> from <table name1>,<table name2> <conditional clause>;\n");
       }
       else if (v_command[0] == "/*") // do nothing if user input a comment
       {
@@ -73,7 +73,8 @@ void CommandInterpreter::execute(std::string command, Database *db)
       else
       {
             printf("Invalid command, please try again.\n");
-            guessUserInput(v_command); // guess the input of the user
+            Spelling_error_correction(&v_command);
+            // guessUserInput(v_command); // guess the input of the user
             // 也可以使用Spelling_error_correction实现拼写错误的改正与纠错。
       }
 }
