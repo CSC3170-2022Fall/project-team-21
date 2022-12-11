@@ -17,6 +17,7 @@ CommandInterpreter::CommandInterpreter()
 
 void CommandInterpreter::execute(std::string command, Database *db)
 {
+      this->database = db;
       // split the command into tokens by whitespace
       // like in python, string.split(" ")
       // please make it work for any number of whitespace
@@ -47,11 +48,6 @@ void CommandInterpreter::execute(std::string command, Database *db)
                   printf("Error: Unknown command. Type 'help' or 'h' to get help.\n");
             }
       }
-      else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
-      {
-            // first save to file, then return
-            exitCommand();
-      }
       else if (v_command[0] == "insert" && v_command[1] == "into")
       {
             // call the insert handler
@@ -64,6 +60,11 @@ void CommandInterpreter::execute(std::string command, Database *db)
       else if (v_command[0] == "print")
       {
             printTable(&v_command);
+      }
+      else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
+      {
+            // first save to file, then return
+            exitCommand();
       }
       else if (v_command[0] == "help" || v_command[0] == "h")
       {
@@ -85,8 +86,8 @@ void CommandInterpreter::execute(std::string command, Database *db)
       }
       else
       {
-            printf("Invalid command, please try again.\n");
             Spelling_error_correction(&v_command);
+            // printf("Invalid command, please try again.\n");
             // guessUserInput(v_command); // guess the input of the user
             // 也可以使用Spelling_error_correction实现拼写错误的改正与纠错。
       }
@@ -145,8 +146,16 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
             v_command->at(v_command->size() - 1) = v_command->at(v_command->size() - 1).substr(0, v_command->at(v_command->size() - 1).length() - 2);
       }
       
+      // strip the comma
+      for (int i = 3; i < v_command->size(); i++)
+      {
+            if (v_command->at(i)[v_command->at(i).length() - 1] == ',')
+            {
+                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+            }
+      }
 
-      int i = 4;
+      int i = 3;
       while (i < v_command->size())
       {
             string schemaItem = v_command->at(i);
@@ -171,6 +180,8 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
             schema.push_back(newSchemaItem);
             i++;
       }
+      Table newTable = Table(tableName, schema);
+      this->database->addTable(newTable);
 }
 void CommandInterpreter::exitCommand()
 {
@@ -371,7 +382,8 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
             if (word != " ") tokens.push_back(word);
       }
       ss.clear();
-      tokens[tokens.size()-1] = tokens[tokens.size()-1].substr(0, tokens[tokens.size()-1].length()-1);
+      // we've removed the ; in main.cpp, so we don't need to remove it here
+      // tokens[tokens.size()-1] = tokens[tokens.size()-1].substr(0, tokens[tokens.size()-1].length()-1);
       return (tokens);
 }
 

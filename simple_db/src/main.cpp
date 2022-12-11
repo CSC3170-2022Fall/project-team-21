@@ -27,8 +27,13 @@ int main()
             db.execute(string(command) + ";");
             continue;
         }
-        while (command.find(';') == string::npos)
+        while (true)
         {
+            if (command.find(';') != string::npos)
+            {
+                command = command.substr(0, command.find(';'));
+                break;
+            }
             printf("> ");
             fflush(stdout);
             string temp;
