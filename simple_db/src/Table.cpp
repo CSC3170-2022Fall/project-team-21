@@ -30,26 +30,21 @@ perhaps should be consistent with the table in the ucb project
 */ 
 void  Table::printOut(){
      //
-     //cout << "----------------------------------------------------"<<endl;
-    //  for(int i = 0; i < this->schema.size();i++){
-    //     cout << this->schema[i].getName() << "  |  ";
-    //  }
-     //cout << "\n" << "----------------------------------------------------"<<endl;
-     cout << "Contents of " << this->name << ":" << endl;
+     cout << "----------------------------------------------------"<<endl;
+     for(int i = 0; i < this->schema.size();i++){
+        cout << this->schema[i].getName() << "  |  ";
+     }
+     cout << "\n" << "----------------------------------------------------"<<endl;
      for(int i = 0; i<this->rows.size();i++){
         std::vector<std::string> values = this->rows[i].getValues();
         for(int j=0; j<values.size();j++){
-            cout << values[j] << "  ";
+            cout << values[j] << "  |  ";
         }
         cout << "\n";
 
 
      }
-<<<<<<< HEAD
-    //  cout << "----------------------------------------------------";
-=======
      cout << "----------------------------------------------------"<<endl;
->>>>>>> 48c6d21eaef3616f23941de46048b9b4008c4cd6
 
 
 }
@@ -101,7 +96,7 @@ int Table::getSize(){
 
 Table Table::loadFromFile(std::string tableName, std::string databaseName){
     // Find a way to do this
-    string path = databaseName + "/" + tableName + ".db";
+    string path = databaseName + "/" + tableName + ".db.txt";
     ifstream inFile;
     inFile.open(path, ios::in);
 
@@ -154,7 +149,7 @@ Table Table::loadFromFile(std::string tableName, std::string databaseName){
     tableOut.rows = rows;
     tableOut.schema = schema;
 
-    inFil.close();
+    inFile.close();
 
     return tableOut;
 }
