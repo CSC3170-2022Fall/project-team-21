@@ -4,6 +4,7 @@
 #include <vector>
 #include "CommandInterpreter.h"
 #include <algorithm>
+#include <map>
 
 #ifndef INT_MIN
 #define INT_MIN -2147483648
@@ -95,19 +96,84 @@ void CommandInterpreter::execute(std::string command, Database *db)
 
 void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 {
+      /*
+      INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+      VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+      */
       // insert to <table_name> values <value1>, <value2>, ...
       string tableName = v_command->at(2);
-      // if tablename contains brackets, ignore them
-      if (tableName[tableName.length() - 1] == ')')
-      {
-            tableName = tableName.substr(0, tableName.find_first_of('('));
+      // strip the brackets
+      if (v_command->at(3) == "(") {
+            v_command->erase(v_command->begin() + 3);
       }
-      Table *target_table = this->database->getTable(tableName);
-
-      vector<string> values;
-      for (int i = 4; i < v_command->size(); i++)
+      if (v_command->at(3)[0] == '(')
       {
-            values.push_back(v_command->at(i));
+            v_command->at(3) = v_command->at(3).substr(1);
+      }
+      if (v_command->at(v_command->size() - 1) == ")")
+      {
+            v_command->erase(v_command->end() - 1);
+      }
+      for (int i = 0; i < v_command->size(); i++)
+      {
+            if (v_command->at(i)[v_command->at(i).length() - 1] == ')')
+            {
+                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+            }
+      }
+
+      // strip the comma
+      for (int i = 0; i < v_command->size(); i++)
+      {
+            if (v_command->at(i)[v_command->at(i).length() - 1] == ',')
+            {
+                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+            }
+      }
+
+      // strip the quotation marks
+      for (int i = 0; i < v_command->size(); i++)
+      {
+            if (v_command->at(i)[0] == '\'')
+            {
+                  v_command->at(i) = v_command->at(i).substr(1);
+            }
+            if (v_command->at(i)[v_command->at(i).length() - 1] == '\'')
+            {
+                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+            }
+      }
+
+      Table *target_table = this->database->getTable(tableName);
+      if (target_table == NULL) {
+            printf("Error: Table %s does not exist.\n", tableName.c_str());
+            return;
+      }
+
+      vector<SchemaItem> schema = target_table->schema;
+      // create a mapping between the column name and the index in the schema
+      map<string, int> schema_map;
+      for (int i = 0; i < schema.size(); i++)
+      {
+            schema_map[schema[i].name] = i;
+      }
+
+      
+      vector<string> values(schema.size(), "NULL");
+
+      // get the pos of "values" or "VALUES"
+      int pos = 0;
+      for (int i = 0; i < v_command->size(); i++)
+      {
+            if (v_command->at(i) == "values" || v_command->at(i) == "VALUES")
+            {
+                  pos = i;
+                  break;
+            }
+      }
+      for (int i = pos+1; i < v_command->size(); i++)
+      {
+            values[schema_map[v_command->at(i)]] = v_command->at(i);
       }
       Row newRow = Row(values);
       target_table->insertLast(newRow);
