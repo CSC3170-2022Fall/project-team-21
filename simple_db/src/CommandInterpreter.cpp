@@ -46,13 +46,23 @@ void CommandInterpreter::execute(std::string command, Database *db)
             }
             else
             {
-                  printf("Error: Unknown command. Type 'help' or 'h' to get help.\n");
+                  Spelling_error_correction(&v_command);
             }
       }
-      else if (v_command[0] == "insert" && v_command[1] == "into")
+      else if (v_command[0] == "insert")
       {
-            // call the insert handler
-            insertCommand(&v_command);
+            // convert the second token to lowercase
+            std::transform(v_command[1].begin(), v_command[1].end(), v_command[1].begin(), ::tolower);
+
+            if (v_command[1] == "into")
+            {
+                  // call the insert handler
+                  insertCommand(&v_command);
+            }
+            else
+            {
+                  Spelling_error_correction(&v_command);
+            }
       }
       else if (v_command[0] == "load")
       {
@@ -102,25 +112,6 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
       */
       // insert to <table_name> values <value1>, <value2>, ...
       string tableName = v_command->at(2);
-      // strip the brackets
-      if (v_command->at(3) == "(") {
-            v_command->erase(v_command->begin() + 3);
-      }
-      if (v_command->at(3)[0] == '(')
-      {
-            v_command->at(3) = v_command->at(3).substr(1);
-      }
-      if (v_command->at(v_command->size() - 1) == ")")
-      {
-            v_command->erase(v_command->end() - 1);
-      }
-      for (int i = 0; i < v_command->size(); i++)
-      {
-            if (v_command->at(i)[v_command->at(i).length() - 1] == ')')
-            {
-                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
-            }
-      }
 
       // strip the comma
       for (int i = 0; i < v_command->size(); i++)
@@ -131,14 +122,25 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
             }
       }
 
-      // strip the quotation marks
+      // strip the brackets
       for (int i = 0; i < v_command->size(); i++)
       {
-            if (v_command->at(i)[0] == '\'')
+            if (v_command->at(i) == "(")
+            {
+                  v_command->erase(v_command->begin() + i);
+            }
+            if (v_command->at(i) == ")")
+            {
+                  v_command->erase(v_command->begin() + i);
+            }
+      }
+      for (int i = 0; i < v_command->size(); i++)
+      {
+            if (v_command->at(i)[0] == '(')
             {
                   v_command->at(i) = v_command->at(i).substr(1);
             }
-            if (v_command->at(i)[v_command->at(i).length() - 1] == '\'')
+            if (v_command->at(i)[v_command->at(i).length() - 1] == ')')
             {
                   v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
             }
@@ -151,15 +153,15 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
       }
 
       vector<SchemaItem> schema = target_table->schema;
-      // create a mapping between the column name and the index in the schema
-      map<string, int> schema_map;
-      for (int i = 0; i < schema.size(); i++)
-      {
-            schema_map[schema[i].name] = i;
-      }
+      // // create a mapping between the column name and the index in the schema
+      // map<string, int> schema_map;
+      // for (int i = 0; i < schema.size(); i++)
+      // {
+      //       schema_map[schema[i].name] = i;
+      // }
 
       
-      vector<string> values(schema.size(), "NULL");
+      vector<string> values;
 
       // get the pos of "values" or "VALUES"
       int pos = 0;
@@ -171,11 +173,62 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
                   break;
             }
       }
-      for (int i = pos+1; i < v_command->size(); i++)
+
+      // record the mapping in the sql command, if there is any
+      // map the value idx to the schema name
+      // map<int, string> tmpmap;
+      // if (pos != 3)
+      // {
+      //       for (int i = 3; i < pos; i++)
+      //       {
+      //             values[schema_map[v_command->at(i)]] = v_command->at(i + 1);
+      //       }
+      // }
+      int i = pos+1;
+      while (i < v_command->size())
       {
-            values[schema_map[v_command->at(i)]] = v_command->at(i);
+            // strip the quotation marks, if the quote is not complete, join with the next string
+            // support this case: `insert into schedule values '22100', 'Math abcd', '60 Evans';`
+            if (v_command->at(i)[0] == '\'' && v_command->at(i)[v_command->at(i).length() - 1] != '\'')
+            {
+                  v_command->at(i) = v_command->at(i).substr(1);
+                  while (v_command->at(i)[v_command->at(i).length() - 1] != '\'')
+                  {
+                        v_command->at(i) = v_command->at(i) + " " + v_command->at(i + 1);
+                        v_command->erase(v_command->begin() + i + 1);
+                  }
+                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+            }
+            else if (v_command->at(i)[0] == '\'' && v_command->at(i)[v_command->at(i).length() - 1] == '\'')
+            {
+                  v_command->at(i) = v_command->at(i).substr(1, v_command->at(i).length() - 2);
+            }
+            
+            // repeat for the double quote
+            if (v_command->at(i)[0] == '\"' && v_command->at(i)[v_command->at(i).length() - 1] != '\"')
+            {
+                  v_command->at(i) = v_command->at(i).substr(1);
+                  while (v_command->at(i)[v_command->at(i).length() - 1] != '\"')
+                  {
+                        v_command->at(i) = v_command->at(i) + " " + v_command->at(i + 1);
+                        v_command->erase(v_command->begin() + i + 1);
+                  }
+                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+            }
+            else if (v_command->at(i)[0] == '\"' && v_command->at(i)[v_command->at(i).length() - 1] == '\"')
+            {
+                  v_command->at(i) = v_command->at(i).substr(1, v_command->at(i).length() - 2);
+            }
+
+            values.push_back(v_command->at(i));
+            i++;
       }
       Row newRow = Row(values);
+      if (newRow.values.size() != schema.size())
+      {
+            printf("Error: The number of values does not match the number of columns.\n");
+            return;
+      }
       target_table->insertLast(newRow);
 }
 
@@ -195,23 +248,6 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
       string tableName = v_command->at(2);
       vector<SchemaItem> schema;
 
-      // strip the brackets
-      if (v_command->at(3) == "(") {
-            v_command->erase(v_command->begin() + 3);
-      }
-      if (v_command->at(3)[0] == '(')
-      {
-            v_command->at(3) = v_command->at(3).substr(1, v_command->at(3).length() - 2);
-      }
-      if (v_command->at(v_command->size() - 1) == ")")
-      {
-            v_command->erase(v_command->begin() + v_command->size() - 1);
-      }
-      if (v_command->at(v_command->size() - 1)[v_command->at(v_command->size() - 1).length() - 1] == ')')
-      {
-            v_command->at(v_command->size() - 1) = v_command->at(v_command->size() - 1).substr(0, v_command->at(v_command->size() - 1).length() - 2);
-      }
-      
       // strip the comma
       for (int i = 3; i < v_command->size(); i++)
       {
@@ -219,6 +255,36 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
             {
                   v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
             }
+      }
+
+      // strip the brackets
+      for (int i = 0; i < v_command->size(); i++)
+      {
+            if (v_command->at(i) == "(")
+            {
+                  v_command->erase(v_command->begin() + i);
+            }
+            if (v_command->at(i) == ")")
+            {
+                  v_command->erase(v_command->begin() + i);
+            }
+      }
+      for (int i = 0; i < v_command->size(); i++)
+      {
+            if (v_command->at(i)[0] == '(')
+            {
+                  v_command->at(i) = v_command->at(i).substr(1);
+            }
+            if (v_command->at(i)[v_command->at(i).length() - 1] == ')')
+            {
+                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+            }
+      }
+
+      // delete the "as"
+      if (v_command->at(3) == "as")
+      {
+            v_command->erase(v_command->begin() + 3);
       }
 
       int i = 3;
