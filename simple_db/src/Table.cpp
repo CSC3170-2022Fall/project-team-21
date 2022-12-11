@@ -146,7 +146,7 @@ Table Table::loadFromFile(std::string tableName, std::string databaseName){
     tableOut.rows = rows;
     tableOut.schema = schema;
 
-    inFile.close();
+    inFil.close();
 
     return tableOut;
 }

@@ -32,6 +32,7 @@ public:
     Table select();
     void insertCommand(std::vector<std::string> *v_command);
     // .... more. This file is harder than others.
+    void guessUserInput(std::vector<std::string> v_command);
 
 private:
     // split the command into tokens for better processing
