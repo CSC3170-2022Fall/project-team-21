@@ -18,7 +18,7 @@ Due date: Dec11 23:59pm. However you should finish it as soon as possible!
 - `main.cpp`: This is how you test your implementation. This is the driver code for the application. You can modify it as you want, but the general structure done.
 - `gui/`: Darren. Tentative GUI design and survey for our database.
 - `testing/`: Yohanes. Provide test cases for our DB and also for demo.
-- Abstract and report: 王茗萱 
+- Abstract and report: 杨亮，王茗萱 
 
 ## Message to our team members
 <!-- This part should be deleted in the submission -->

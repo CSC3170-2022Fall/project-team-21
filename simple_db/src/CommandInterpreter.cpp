@@ -48,9 +48,19 @@ void CommandInterpreter::execute(std::string command, Database *db){
       {
             printTable(&v_command);
       }
-      else if (v_command[0] == "help")
+      else if (v_command[0] == "help" || v_command[0] == "h")
       {
-          printf("Help message here\n");
+          printf("Help message here. List of all SQL commands we support:\n");
+          printf("create table <table name> (<column name>);\n");
+          printf("create table <table name> as <select clause>;\n");
+          printf("load <table name>;\n");
+          printf("store <table name>;\n");
+          printf("insert into <table name> values <literal>;\n");
+          printf("print <table name>;'\n");
+          printf("quit;\n");
+          printf("exit;\n");
+          printf("select <column name> from <table name> <conditional clause>;\n");
+          printf("select <column name> from <table name1>,<table name2> <conditional clause>;\n");
       }
       else
       {
