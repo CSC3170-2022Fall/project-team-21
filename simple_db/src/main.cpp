@@ -11,7 +11,7 @@ using namespace std;
 int main()
 {
     CommandInterpreter interpreter;
-    Database db(&interpreter);
+    Database db("db", &interpreter);
     printf("Welcome to Team 21's DB! Type SQL commands or 'help' or 'h' to get help, 'quit' or 'exit' to exit\n");
 
     while (true)
