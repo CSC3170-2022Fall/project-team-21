@@ -141,7 +141,7 @@ void CommandInterpreter::exitCommand()
 void CommandInterpreter::load(std::vector<std::string> v_command)
 {
       string tableName;
-      tableName = v_command[1].substr(0, v_command[1].length() - 1);
+      tableName = v_command[1];
       Table tableTemp;
       tableTemp = tableTemp.loadFromFile(tableName, this->database->name);
       this->database->addTable(tableTemp);
@@ -227,6 +227,7 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
             tokens.push_back(word);
       }
       ss.clear();
+      tokens[tokens.size()-1] = tokens[tokens.size()-1].substr(0, tokens[tokens.size()-1].length()-1);
       return (tokens);
 }
 
