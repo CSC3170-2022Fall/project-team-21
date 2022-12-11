@@ -23,16 +23,29 @@ void CommandInterpreter::execute(std::string command, Database *db)
       // for better processing
       std::vector<std::string> v_command = tokenizer(command);
 
+      // convert the first token to lowercase
+      std::transform(v_command[0].begin(), v_command[0].end(), v_command[0].begin(), ::tolower);
+
+
       if (v_command[0] == "select")
       {
             // first find the index of "from"
             int idx_of_from;
             // parse(command[idx_of_from:])  // TODO
       }
-      else if (v_command[0] == "create" && v_command[1] == "table")
+      else if (v_command[0] == "create")
       {
-            // call the create table handler
-            createTable(&v_command);
+            // convert the second token to lowercase
+            std::transform(v_command[1].begin(), v_command[1].end(), v_command[1].begin(), ::tolower);
+            if (v_command[1] == "table")
+            {
+                  // call the create table handler
+                  createTable(&v_command);
+            }
+            else
+            {
+                  printf("Error: Unknown command. Type 'help' or 'h' to get help.\n");
+            }
       }
       else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
       {
@@ -103,8 +116,28 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 // please add the parameters as you want, maybe the Database object pointer
 void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 {
+      /*
+            CREATE TABLE Persons (
+            PersonID int,
+            LastName varchar(255),
+            FirstName varchar(255),
+            Address varchar(255),
+            City varchar(255)
+            );
+      */
       string tableName = v_command->at(2);
       vector<SchemaItem> schema;
+
+      // strip the brackets
+      if (v_command->at(3)[0] == '(')
+      {
+            v_command->at(3) = v_command->at(3).substr(1, v_command->at(3).length() - 2);
+      }
+      if (v_command->at(v_command->size() - 1)[v_command->at(v_command->size() - 1).length() - 1] == ')')
+      {
+            v_command->at(v_command->size() - 1) = v_command->at(v_command->size() - 1).substr(0, v_command->at(v_command->size() - 1).length() - 2);
+      }
+      
 
       int i = 4;
       while (i < v_command->size())
@@ -141,7 +174,7 @@ void CommandInterpreter::exitCommand()
 void CommandInterpreter::load(std::vector<std::string> v_command)
 {
       string tableName;
-      tableName = v_command[1].substr(0, v_command[1].length() - 1);
+      tableName = v_command[1];
       Table tableTemp;
       tableTemp = tableTemp.loadFromFile(tableName, this->database->name);
       this->database->addTable(tableTemp);
@@ -222,16 +255,18 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
       std::string word;
       while (ss >> word)
       {
-            // convert word to lowercase
-            std::transform(word.begin(), word.end(), word.begin(), ::tolower);
             tokens.push_back(word);
       }
       ss.clear();
+      tokens[tokens.size()-1] = tokens[tokens.size()-1].substr(0, tokens[tokens.size()-1].length()-1);
       return (tokens);
 }
 
 void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_command)
 {
+      cout << "Error: Unknown command. Type 'help' or 'h' to get help.\n";
+
+
       // 这个函数用来与lcs函数共同完成对于拼写错误的改正与纠错，注意，它只能纠错第一个单词！具体方法见lcs函数注释。
       std::string a = v_command->at(0);
       std::string b = "select";
@@ -289,10 +324,6 @@ void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_c
       {
             cout << "You might be trying to help" << endl;
             // printf("Help message here\n");
-      }
-      else
-      {
-            printf("Invalid command, please try again.\n");
       }
 }
 
