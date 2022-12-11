@@ -129,9 +129,16 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
       vector<SchemaItem> schema;
 
       // strip the brackets
+      if (v_command->at(3) == "(") {
+            v_command->erase(v_command->begin() + 3);
+      }
       if (v_command->at(3)[0] == '(')
       {
             v_command->at(3) = v_command->at(3).substr(1, v_command->at(3).length() - 2);
+      }
+      if (v_command->at(v_command->size() - 1) == ")")
+      {
+            v_command->erase(v_command->begin() + v_command->size() - 1);
       }
       if (v_command->at(v_command->size() - 1)[v_command->at(v_command->size() - 1).length() - 1] == ')')
       {
@@ -255,7 +262,7 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
       std::string word;
       while (ss >> word)
       {
-            tokens.push_back(word);
+            if (word != " ") tokens.push_back(word);
       }
       ss.clear();
       tokens[tokens.size()-1] = tokens[tokens.size()-1].substr(0, tokens[tokens.size()-1].length()-1);
