@@ -147,7 +147,12 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 {
       string target_table_name = v_command->at(1);
       Table *target_table = this->database->getTable(target_table_name);
-      target_table->printOut();
+      if (target_table != NULL){
+            target_table->printOut();
+      }
+      else{       //we cannot find the table we want to print in the database
+            cout << "Error: Cannot find the table: " << target_table_name << endl;
+      }
 }
 
 Table CommandInterpreter::select()
@@ -156,9 +161,11 @@ Table CommandInterpreter::select()
       printf("Search results:\n");
 }
 
-/* guess the input of the user,
+/* 
+guess the input of the user,
 for example, if user make a typo: "crate table",
-the databse system will ask the user whether he/she means "create table"*/
+the databse system will ask the user whether he/she means "create table"
+*/
 void CommandInterpreter::guessUserInput(std::vector<std::string> v_command)
 {
       string input;
