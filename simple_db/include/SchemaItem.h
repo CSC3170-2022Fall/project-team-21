@@ -19,4 +19,6 @@ class SchemaItem {
         std::string name;
         DataType type;
         std::string length_restriction; // well maybe we don't need this
+
+        static DataType getTypeFromString(std::string type);
 };

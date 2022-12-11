@@ -4,15 +4,18 @@
 #include <string>
 #include <vector>
 #include "Table.h"
+#include "CommandInterpreter.h"
 
+class Table; 
+class CommandInterpreter; 
  
 class Database {
     private:
         // tables in this database
         std::vector<Table> tables;
 
-        // the table that is currently being worked on
-        Table* currentTable;
+        // // the table that is currently being worked on
+        // Table* currentTable;
 
         CommandInterpreter *interpreter;
 
