@@ -5,6 +5,10 @@
 #include "CommandInterpreter.h"
 #include <algorithm>
 
+#ifndef INT_MIN
+#define INT_MIN -2147483648
+#endif
+
 using namespace std;
 
 CommandInterpreter::CommandInterpreter()
