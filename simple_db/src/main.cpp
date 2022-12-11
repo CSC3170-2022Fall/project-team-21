@@ -16,11 +16,19 @@ int main()
 
     while (true)
     {
-        printf("> ");
+        printf("simpleDB> ");
         string command;
         cin >> command;
+
+        // allow these simple commands to not have a semicolon
+        if (command == "quit" || command == "exit" || command == "h" || command == "help")
+        {
+            db.execute(command);
+            continue;
+        }
         while (command.find(';') == string::npos)
         {
+            printf("     ...> ");
             string temp;
             cin >> temp;
             command += " " + temp;
