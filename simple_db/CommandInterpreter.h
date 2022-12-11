@@ -30,7 +30,7 @@ public:
     void insertCommand(std::vector<std::string> *v_command);
     void Spelling_error_correction(std::vector<std::string> *v_command);
     int lcs(string a, string b);
-    // .... more. This file is harder than others.
+    // .... more. This file is harder than others
 
 private:
     // split the command into tokens for better processing

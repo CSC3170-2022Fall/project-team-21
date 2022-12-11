@@ -222,7 +222,7 @@ void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_c
 
 int CommandInterpreter::lcs(string a, string b)
 {
-      // 计算a，b最长公共子字符串长度
+      // 计算a，b最长公共子字符串长度。
       // 这个函数经过测试没有问题
       int n = a.length();
       int m = b.length();
