@@ -48,13 +48,29 @@ void CommandInterpreter::execute(std::string command, Database *db)
       {
             printTable(&v_command);
       }
-      else if (v_command[0] == "help")
+      else if (v_command[0] == "help" || v_command[0] == "h")
       {
-            printf("Help message here\n");
+            printf("Help message here. List of all SQL commands we support:\n");
+            printf("create table <table name> (<column name>);\n");
+            printf("create table <table name> as <select clause>;\n");
+            printf("load <table name>;\n");
+            printf("store <table name>;\n");
+            printf("insert into <table name> values <literal>;\n");
+            printf("print <table name>;'\n");
+            printf("quit;\n");
+            printf("exit;\n");
+            printf("select <column name> from <table name> <conditional clause>;\n");
+            printf("select <column name> from <table name1>,<table name2> <conditional clause>;\n");
+      }
+      else if (v_command[0] == "/*") // do nothing if user input a comment
+      {
+            printf("");
       }
       else
       {
-            Spelling_error_correction(&v_command);
+            printf("Invalid command, please try again.\n");
+            guessUserInput(v_command); // guess the input of the user
+            // 也可以使用Spelling_error_correction实现拼写错误的改正与纠错。
       }
 }
 
@@ -124,7 +140,7 @@ void CommandInterpreter::load(std::vector<std::string> v_command)
       Table tableTemp;
       tableTemp = tableTemp.loadFromFile(tableName, this->database->name);
       this->database->addTable(tableTemp);
-      cout << "Successfully loaded table: " << v_command[1] << endl;
+      cout << "Loaded " << v_command[1] << ".db" << endl; // 跟ucb那个输出格式一致吧:loaded students.db
 }
 
 void CommandInterpreter::printTable(std::vector<std::string> *v_command)
@@ -133,9 +149,57 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
       Table *target_table = this->database->getTable(target_table_name);
       target_table->printOut();
 }
+
 Table CommandInterpreter::select()
 {
       // fill in
+      printf("Search results:\n");
+}
+
+/* guess the input of the user,
+for example, if user make a typo: "crate table",
+the databse system will ask the user whether he/she means "create table"*/
+void CommandInterpreter::guessUserInput(std::vector<std::string> v_command)
+{
+      string input;
+      input = v_command[0].substr(0, 2);
+      if (input == "cr")
+      {
+            printf("Do you mean command 'create table'?\n");
+      }
+      else if (input == "lo")
+      {
+            printf("Do you mean command 'load'?\n");
+      }
+      else if (input == "st")
+      {
+            printf("Do you mean command 'store'?\n");
+      }
+      else if (input == "in")
+      {
+            printf("Do you mean command 'insert into'?\n");
+      }
+      else if (input == "pr")
+      {
+            printf("Do you mean command 'print'?\n");
+      }
+      else if (input == "qu")
+      {
+            printf("Do you mean command 'quit'?\n");
+      }
+      else if (input == "ex")
+      {
+            printf("Do you mean command 'exit'?\n");
+      }
+      else if (input == "se")
+      {
+            printf("Do you mean command 'select'?\n");
+      }
+      else if (input == "//")
+      {
+            printf("Do you want to make comments? Please use '/*' to begin with your commands.\n");
+      }
+      printf("Type in 'help' or 'h' for more help.\n");
 }
 
 // Segment string into tokens, split by " "
@@ -186,33 +250,33 @@ void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_c
       }
       else if (a2 >= 3)
       {
-            cout << "You might be trying to creat";
-            createTable(&v_command);
+            cout << "You might be trying to creat" << endl;
+            // createTable(&v_command);
       }
       else if (a3 >= 3)
       {
-            cout << "You might be trying to exit";
-            exitCommand();
+            cout << "You might be trying to exit" << endl;
+            // exitCommand();
       }
       else if (a4 >= 4)
       {
-            cout << "You might be trying to insert";
-            insertCommand(&v_command);
+            cout << "You might be trying to insert" << endl;
+            // insertCommand(&v_command);
       }
       else if (a5 >= 3)
       {
-            cout << "You might be trying to load";
-            this->load(v_command);
+            cout << "You might be trying to load" << endl;
+            // this->load(v_command);
       }
       else if (a6 >= 3)
       {
-            cout << "You might be trying to print";
-            printTable(&v_command);
+            cout << "You might be trying to print" << endl;
+            // printTable(&v_command);
       }
       else if (a7 >= 3)
       {
-            cout << "You might be trying to help";
-            printf("Help message here\n");
+            cout << "You might be trying to help" << endl;
+            // printf("Help message here\n");
       }
       else
       {
@@ -272,5 +336,5 @@ int CommandInterpreter::lcs(string a, string b)
             }
       }
 
-      return arr[n - 1][m - 1]; // 返回最长公共子字符串长度
+      return arr[n - 1][m - 1]; // 返回最长公共子字符串长度.
 }
