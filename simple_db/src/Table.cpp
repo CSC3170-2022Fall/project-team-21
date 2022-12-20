@@ -96,7 +96,7 @@ int Table::getSize(){
 
 Table Table::loadFromFile(std::string tableName, std::string databaseName){
     // Find a way to do this
-    string path = databaseName + "/" + tableName + ".db.txt";
+    string path = databaseName + "/" + tableName + ".db";
     ifstream inFile;
     inFile.open(path, ios::in);
 

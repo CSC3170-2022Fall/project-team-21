@@ -33,6 +33,8 @@ void CommandInterpreter::execute(std::string command, Database *db)
       {
             // first find the index of "from"
             int idx_of_from;
+            Table tb = select(v_command);
+            tb.printOut();
             // parse(command[idx_of_from:])  // TODO
       }
       else if (v_command[0] == "create")
