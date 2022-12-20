@@ -157,6 +157,8 @@ Table Table::loadFromFile(std::string tableName, std::string databaseName){
 
     inFile.close();
 
+    printf("Table %s loaded from file %s\n", tableName.c_str(), path.c_str());
+
     return tableOut;
 }
 

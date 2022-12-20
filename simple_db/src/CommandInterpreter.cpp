@@ -25,6 +25,11 @@ void CommandInterpreter::execute(std::string command, Database *db)
       // for better processing
       std::vector<std::string> v_command = tokenizer(command);
 
+      if (v_command.size() == 0)
+      {
+            return;
+      }
+
       // convert the first token to lowercase
       std::transform(v_command[0].begin(), v_command[0].end(), v_command[0].begin(), ::tolower);
 
@@ -377,7 +382,6 @@ void CommandInterpreter::load(std::vector<std::string> v_command)
       Table tableTemp;
       tableTemp = tableTemp.loadFromFile(tableName, this->database->name);
       this->database->addTable(tableTemp);
-      cout << "Loaded " << v_command[1] << ".db" << endl; // 跟ucb那个输出格式一致吧:loaded students.db
 }
 
 void CommandInterpreter::printTable(std::vector<std::string> *v_command)
