@@ -89,6 +89,7 @@ Table* Database::getTable(std::string tableName){
 // }
 
 void Database::addTable(Table table){
+    table.database = this;
     this->tables.push_back(table);
     
 }

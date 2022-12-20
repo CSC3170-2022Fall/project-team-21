@@ -81,6 +81,10 @@ void CommandInterpreter::execute(std::string command, Database *db)
       {
             this->load(v_command);
       }
+      else if (v_command[0] == "store")
+      {
+            this->store(&v_command);
+      }
       else if (v_command[0] == "print")
       {
             printTable(&v_command);
@@ -115,6 +119,19 @@ void CommandInterpreter::execute(std::string command, Database *db)
             // guessUserInput(v_command); // guess the input of the user
             // 也可以使用Spelling_error_correction实现拼写错误的改正与纠错。
       }
+}
+
+void CommandInterpreter::store(std::vector<std::string> *v_command)
+{
+      // store <table name>;
+      string tableName = v_command->at(1);
+      Table* tb = this->database->getTable(tableName);
+      if (tb == NULL)
+      {
+            printf("Table %s does not exist.\n", tableName.c_str());
+            return;
+      }
+      tb->saveToFile(tb->name);
 }
 
 void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)

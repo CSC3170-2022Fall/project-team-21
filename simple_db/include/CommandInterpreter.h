@@ -26,6 +26,7 @@ public:
     void deleteTable(std::vector<std::string> *v_command);
     void exitCommand();
     void load(std::vector<std::string> v_command);
+    void store(std::vector<std::string> *v_command);
     void printTable(std::vector<std::string> *v_command);
     Table select(std::vector<std::string> v_command);
     void insertCommand(std::vector<std::string> *v_command);

@@ -34,7 +34,7 @@ int main()
                 command = command.substr(0, command.find(';'));
                 break;
             }
-            printf("> ");
+            printf("  ");
             fflush(stdout);
             string temp;
             getline(cin, temp);

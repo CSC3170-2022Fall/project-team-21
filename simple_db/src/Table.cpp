@@ -55,18 +55,18 @@ void  Table::printOut(){
 void Table::saveToFile(std::string fileName){
     // well, just find a way to make the database name as a directory,
     // and store the table in the directory
-    string path = this->database->name + "/" + this->name + ".db.txt";
+    string path = this->database->name + "_" + this->name + ".db";
 
     ofstream onFile(path);
 
     for(int i = 0; i<this->schema.size()-1; i++){
-        onFile<<this->schema[i].name<<";";
+        onFile<<this->schema[i].name<<",";
     }
     onFile<<this->schema[this->schema.size()-1].name<<endl;
 
     for(int i = 0; i<this->rows.size(); i++){
         for(int j = 0; j<this->rows[i].values.size()-1; j++){
-            onFile<<this->rows[i].values[j]<<";";  
+            onFile<<this->rows[i].values[j]<<",";  
         }
         onFile<<this->rows[i].values[this->rows[i].values.size()-1]<<endl; 
     }
@@ -96,9 +96,15 @@ int Table::getSize(){
 
 Table Table::loadFromFile(std::string tableName, std::string databaseName){
     // Find a way to do this
-    string path = databaseName + "/" + tableName + ".db";
+    string path = databaseName + "_" + tableName + ".db";
     ifstream inFile;
     inFile.open(path, ios::in);
+
+    if (inFile.is_open() == false)
+    {
+        cout << "Error: File not found" << endl;
+        return Table();
+    }
 
 
     Table tableOut;
