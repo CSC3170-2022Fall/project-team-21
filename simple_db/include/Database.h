@@ -11,8 +11,6 @@ class CommandInterpreter;
  
 class Database {
     private:
-        // tables in this database
-        std::vector<Table> tables;
 
         // // the table that is currently being worked on
         // Table* currentTable;
@@ -22,6 +20,8 @@ class Database {
 
 
     public:
+        // tables in this database
+        std::vector<Table> tables;
         std::string name;
         // Create a database with the given name
         // restore all tables from files

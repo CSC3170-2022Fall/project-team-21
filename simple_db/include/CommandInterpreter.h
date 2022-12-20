@@ -23,6 +23,7 @@ public:
     Table parse(std::string command);
 
     void createTable(std::vector<std::string> *v_command);
+    void deleteTable(std::vector<std::string> *v_command);
     void exitCommand();
     void load(std::vector<std::string> v_command);
     void printTable(std::vector<std::string> *v_command);

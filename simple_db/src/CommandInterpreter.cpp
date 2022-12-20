@@ -50,6 +50,17 @@ void CommandInterpreter::execute(std::string command, Database *db)
             {
                   Spelling_error_correction(&v_command);
             }
+      } 
+      else if (v_command[0] == "delete")
+      {
+            if (v_command[1] == "table") 
+            {
+                  deleteTable(&v_command);
+            }
+            else
+            {
+                  Spelling_error_correction(&v_command);
+            }
       }
       else if (v_command[0] == "insert")
       {
@@ -234,6 +245,25 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
       target_table->insertLast(newRow);
 }
 
+void CommandInterpreter::deleteTable(std::vector<std::string> *v_command) 
+{
+      // sample: delete table students;
+      string tableName = v_command->at(2);
+      int idx = -1;
+
+      for (int i = 0; i < this->database->tables.size(); i++)
+      {
+            if(this->database->tables[i].name == tableName){
+                  idx = i;
+                  this->database->tables.erase(this->database->tables.begin()+idx);
+                  return;
+            }
+      }
+      if (idx != -1){      //the table we search is found
+            printf("The target table does not exist in this database.\n");
+      }
+}
+
 // should use each function for one type of command
 // please add the parameters as you want, maybe the Database object pointer
 void CommandInterpreter::createTable(std::vector<std::string> *v_command)
@@ -271,17 +301,17 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
                   v_command->erase(v_command->begin() + i);
             }
       }
-      for (int i = 0; i < v_command->size(); i++)
-      {
-            if (v_command->at(i)[0] == '(')
-            {
-                  v_command->at(i) = v_command->at(i).substr(1);
-            }
-            if (v_command->at(i)[v_command->at(i).length() - 1] == ')')
-            {
-                  v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
-            }
-      }
+      // for (int i = 0; i < v_command->size(); i++)
+      // {
+      //       if (v_command->at(i)[0] == '(')
+      //       {
+      //             v_command->at(i) = v_command->at(i).substr(1);
+      //       }
+      //       if (v_command->at(i)[v_command->at(i).length() - 1] == ')')
+      //       {
+      //             v_command->at(i) = v_command->at(i).substr(0, v_command->at(i).length() - 1);
+      //       }
+      // }
 
       // delete the "as"
       if (v_command->at(3) == "as")
