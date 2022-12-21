@@ -1,4 +1,38 @@
-We plan to add GUI layer to our cpp program. It will be implemented in Qt C++. 
-Most of the things will be compatible with the command-line one.
-Darren is now learning about Qt C++.
-This is tentative and is an incremental work. Let me know if you lack in time.
+# What is Qt creator?
+Qt Creator is a cross-platform integrated development environment (IDE) that is part of the Qt framework. It is designed to enable the development of desktop, mobile, and embedded applications with GUI and is used to create applications for various platforms using the C++ programming language.
+
+One of the key features of Qt Creator is its support for the Qt framework, which provides a set of libraries and tools for building graphical user interfaces (GUIs) and other applications. The Qt framework includes a range of GUI widgets, such as buttons, menus, and dialog boxes, that can be used to create a user-friendly interface for a database application.
+
+Qt Creator also provides a range of tools and features that can be useful when developing a database application, such as:
+
+* A visual editor for designing the layout of the user interface
+* A debugger for finding and fixing errors in the code
+* A code editor with syntax highlighting and code completion
+* A project manager for organizing files and resources
+* Integration with version control systems, such as Git
+
+By using Qt Creator, fellow developers can take advantage of these tools and features to create a professional-quality GUI for their database implementation. Developers can also use the visual editor to design the layout of the user interface, and then use the code editor to implement the logic for interacting with the database. The debugger can also help find and fix any errors in the code, and the project manager can help keep files organized.
+
+# Basic steps on designing the GUI
+Here are the steps on how to use Qt Creator to design a GUI for a database application in C++:
+
+1. Install Qt Creator on your computer. You can download the latest version of Qt Creator from the Qt website (https://www.qt.io/download).
+
+2. Open Qt Creator and create a new project. Select "C++" as the language and "Qt Widgets Application" as the project template.
+![Alt text](screenshots/ss_qt_widget_app.jpg)
+3. Design the layout of your user interface using the visual editor. You can use the various GUI widgets provided by the Qt framework, such as buttons, labels, and tables, to create the layout of your application.
+
+4. Add logic to your application by implementing event handlers for the various GUI widgets. For example, you can implement a "add" or "run" button that inserts data into the database when clicked and run specified query, respectively.
+
+5. Connect your GUI to the source code of the project for implementing the functionality of the implemented database management system.
+
+6. Test your application by running it in Qt Creator. You can start writing queries described in the project description. Furthermore, You can also use the debugger to find and fix any errors in the code, and use the project manager to organize your files and resources.
+
+# Building the GUI
+1. Query Command Line
+![Alt text](screenshots/ss_query_tab.jpg)
+This UI design allows user to type in their queries that is available from the project's source code and it will return the result table. Users will write queries will write their queries in the first big white box and the executed query will return a result table in the second box. For example when using a select statement using a specified conditional clause will return a new (unnamed) table
+consisting of the named columns from the given table from all rows that satisfy the condition clause.
+2. Loading Student Data
+![Alt text](screenshots/ss_load_student.jpg)
+In this UI, users will able to add students to the database. Student information includes their first and last name, student roll number, semester entered, year entered, and their major. Users can either view, delete, add students to the database. 
