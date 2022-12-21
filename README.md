@@ -96,3 +96,9 @@ We will mainly use C++ to implement our code. To implement the specific database
 - `Database` class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
 
 In the end, our database management system will realize two-way data transfer with .db file , create tables, insert rows into existing tables, print tables and other functions. In addition to this, we will implement Select clauses, which are used in select statements and in create statements. They denote tables whose information is selected from other tables. 
+
+## Project Report
+
+In this project, our group creates a miniature relational database management system (DBMS) similar to UCB CS61B, Fall 2014 project. Moreover, we adopt identical commands with the query language in SQL for extracting information from the tables. Our group decided to make our own structure. We divide the codes into five classes such as CommandInterpreter, Database, Row, SchemaItem, and Table.
+
+Each class has some functionalities. First of all, the class Row consists of getValues and setValues. SchemaItem consists of getName, getType, and getTypeFromString. Class Table will use both row and SchemaItem class. The class table will consist of row operations like getting, removing, and inserting the row. Furthermore, it is also used to print, load, and save the table. This table class will be used to construct the database class. The database class has several functionalities: add, remove, and get a table. Moreover, it also has functions to execute and save the database. For the CommandInterpreter, it is used to interpret the user input and execute the command to produce the desired result. It covers some standard syntaxes similar to SQL, such as create, delete, insert, load, store, print, and many more. Furthermore, it also has some additional features like guessing the user input.
