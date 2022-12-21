@@ -38,6 +38,7 @@ void CommandInterpreter::execute(std::string command, Database *db)
       {
             // first find the index of "from"
             int idx_of_from;
+            printf("Search results:\n");
             Table tb = select(v_command);
             tb.printOut();
             // parse(command[idx_of_from:])  // TODO
@@ -389,6 +390,7 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
       string target_table_name = v_command->at(1);
       Table *target_table = this->database->getTable(target_table_name);
       if (target_table != NULL){
+            printf("Contents of %s\n", target_table_name);
             target_table->printOut();
       }
       else{       //we cannot find the table we want to print in the database
@@ -574,8 +576,6 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
 
 void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_command)
 {
-      cout << "Error: Unknown command. Type 'help' or 'h' to get help.\n";
-
 
       // 这个函数用来与lcs函数共同完成对于拼写错误的改正与纠错，注意，它只能纠错第一个单词！具体方法见lcs函数注释。
       std::string a = v_command->at(0);
@@ -587,8 +587,8 @@ void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_c
       std::string g = "print";
       std::string h = "help";
       // 有新的操作时就再往后加
-      std::string i = "select";
-      std::string j = "select";
+      // std::string i = "select";
+      // std::string j = "select";
 
       int a1 = lcs(a, b);
       int a2 = lcs(a, c);
@@ -598,41 +598,43 @@ void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_c
       int a6 = lcs(a, g);
       int a7 = lcs(a, h);
 
+      printf("    Error: Invalid command. Please try again.\n");
+
       if (a1 >= 4)
       {
-            cout << "You might be trying to select";
+            cout << "    Do you want to type in command 'select table'?" << endl;
             // first find the index of "from"
             int idx_of_from;
             // parse(command[idx_of_from:])  // TODO
       }
       else if (a2 >= 3)
       {
-            cout << "You might be trying to creat" << endl;
+            cout << "    Do you want to type in command 'create table'?" << endl;
             // createTable(&v_command);
       }
       else if (a3 >= 3)
       {
-            cout << "You might be trying to exit" << endl;
+            cout << "    Do you want to type in command 'exit'?" << endl;
             // exitCommand();
       }
       else if (a4 >= 4)
       {
-            cout << "You might be trying to insert" << endl;
+            cout << "    Do you want to type in command 'insert into'?" << endl;
             // insertCommand(&v_command);
       }
       else if (a5 >= 3)
       {
-            cout << "You might be trying to load" << endl;
+            cout << "    Do you want to type in command 'load'?" << endl;
             // this->load(v_command);
       }
       else if (a6 >= 3)
       {
-            cout << "You might be trying to print" << endl;
+            cout << "    Do you want to type in command 'print'?" << endl;
             // printTable(&v_command);
       }
       else if (a7 >= 3)
       {
-            cout << "You might be trying to help" << endl;
+            cout << "    Do you want to type in command 'help'?" << endl;
             // printf("Help message here\n");
       }
 }
