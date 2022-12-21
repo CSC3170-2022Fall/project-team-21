@@ -39,7 +39,8 @@ void  Table::printOut(){
 
     // pretty print the table using iomanip
     vector<int> colWidth;
-    // set the width of each column by the length of the longest string in the column
+    // set the width of each column by the length of the longest string in the column as well as the schema'
+
     for(int i = 0; i < this->schema.size();i++){
         int maxLength = this->schema[i].getName().length();
         for(int j = 0; j < this->rows.size(); j++){
@@ -49,6 +50,21 @@ void  Table::printOut(){
         }
         colWidth.push_back(maxLength);
     }
+
+    // print out the schema
+    cout << "    "; 
+    for(int i = 0; i < this->schema.size();i++){
+        cout << setw(colWidth[i]) << setfill(' ')  << this->schema[i].getName() << "  ";
+    }
+
+    int total_width = 0;
+    for(int i = 0; i < colWidth.size(); i++){
+        total_width += colWidth[i]+2;
+    }
+    cout << '\n';
+    cout << "    ";
+    cout << setw(total_width) << setfill('-') << ' ';
+    cout << '\n';
 
     // print out the row
      for(int i = 0; i<this->rows.size();i++){

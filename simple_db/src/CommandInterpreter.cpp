@@ -116,7 +116,7 @@ void CommandInterpreter::execute(std::string command, Database *db)
       }
       else if (v_command[0] == "/*") // do nothing if user input a comment
       {
-            printf("");
+            
       }
       else
       {
