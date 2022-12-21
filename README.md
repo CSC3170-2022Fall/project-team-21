@@ -17,15 +17,15 @@ Our team consists of the following members, listed in the table below (the team 
 
 <!-- change the info below to be the real case -->
 
-| Student ID | Student Name | Email | Github Username |
-| ---------- | ------------ | ------------------------- | -----------------------|
-| 120090727  | 李珈祺 🚩      | 120090727@link.cuhk.edu.cn        |LJQ0727|
-| 123010345  | 刘起         | 120090027@link.cuhk.edu.cn          |LittleShaco|
-| 119030043  | 连珈玮         | 119030043@link.cuhk.edu.cn        |jlianxm|
-| 120090874  |  杨亮 | 120090874@link.cuhk.edu.cn            | bright |
-| 120040022  | Darren Boesono         | 120040022@link.cuhk.edu.cn            | dboesono|
-| 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn        | YohanesJames|
-| 120090231  |王茗萱   | 3096968424@qq.com       | helloworldlgu|
+| Student ID | Student Name   | Email                          | Github Username |
+| :----------: | :--------------: | :------------------------------: | :----------------:|
+| 120090727  | 李珈祺 🚩        | 120090727@link.cuhk.edu.cn     | LJQ0727          |
+| 120090027  | 刘起            |    120090027@link.cuhk.edu.cn  | LittleShaco      |
+| 119030043  | 连珈玮          | 119030043@link.cuhk.edu.cn     | jlianxm          |
+| 120090874  | 杨亮            | 120090874@link.cuhk.edu.cn     | yangbright-2001 |
+| 120040022  | Darren Boesono | 120040022@link.cuhk.edu.cn     | dboesono        |
+| 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn     | YohanesJames    |
+| 120090231  |王茗萱           | 3096968424@qq.com              | helloworldlgu   |
 
 ### Task allocation for team members
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
