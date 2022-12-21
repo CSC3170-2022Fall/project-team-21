@@ -1,3 +1,6 @@
 .vscode/
 .github/
 build/
+simple_db/build/
+testing_/build/
+testing_/bin/
