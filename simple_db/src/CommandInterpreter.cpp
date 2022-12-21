@@ -390,7 +390,7 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
       string target_table_name = v_command->at(1);
       Table *target_table = this->database->getTable(target_table_name);
       if (target_table != NULL){
-            printf("Contents of %s\n", target_table_name);
+            printf("Contents of %s\n", target_table->name.c_str());
             target_table->printOut();
       }
       else{       //we cannot find the table we want to print in the database

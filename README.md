@@ -65,6 +65,9 @@ In the end, our database management system will realize two-way data transfer wi
 
 ## Additional Features
 ### Errorneous command correction
+### Crash prevention
+When a file is not present when loaded, 
+When a table is not present
 ### GUI
 <!-- Please fill in  -->
 

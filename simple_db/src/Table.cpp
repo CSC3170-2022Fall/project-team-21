@@ -5,6 +5,7 @@
 #include "SchemaItem.h"
 #include "Table.h"
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -35,12 +36,27 @@ void  Table::printOut(){
     //     cout << this->schema[i].getName() << "  |  ";
     //  }
     //  cout << "\n" << "----------------------------------------------------"<<endl;
+
+    // pretty print the table using iomanip
+    vector<int> colWidth;
+    // set the width of each column by the length of the longest string in the column
+    for(int i = 0; i < this->schema.size();i++){
+        int maxLength = this->schema[i].getName().length();
+        for(int j = 0; j < this->rows.size(); j++){
+            if(this->rows[j].values[i].length() > maxLength){
+                maxLength = this->rows[j].values[i].length();
+            }
+        }
+        colWidth.push_back(maxLength);
+    }
+
+    // print out the row
      for(int i = 0; i<this->rows.size();i++){
         cout << "    ";  //
         std::vector<std::string> values = this->rows[i].getValues();
         for(int j=0; j<values.size();j++){
             // cout << values[j] << "  |  ";
-            cout << values[j] << "  ";
+            cout << setw(colWidth[j]) << setfill(' ')  << values[j] << "  ";
         }
         cout << "\n";
 
@@ -159,7 +175,7 @@ Table Table::loadFromFile(std::string tableName, std::string databaseName){
 
     inFile.close();
 
-    printf("Table %s loaded from file %s\n", tableName.c_str(), path.c_str());
+    printf("Loaded %s.db\n", tableName.c_str());
 
     return tableOut;
 }
