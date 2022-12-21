@@ -54,7 +54,7 @@ void CommandInterpreter::execute(std::string command, Database *db)
             }
             else
             {
-                  Spelling_error_correction(&v_command);
+                  spellingErrorCorrection(&v_command);
             }
       } 
       else if (v_command[0] == "delete")
@@ -65,7 +65,7 @@ void CommandInterpreter::execute(std::string command, Database *db)
             }
             else
             {
-                  Spelling_error_correction(&v_command);
+                  spellingErrorCorrection(&v_command);
             }
       }
       else if (v_command[0] == "insert")
@@ -80,7 +80,7 @@ void CommandInterpreter::execute(std::string command, Database *db)
             }
             else
             {
-                  Spelling_error_correction(&v_command);
+                  spellingErrorCorrection(&v_command);
             }
       }
       else if (v_command[0] == "load")
@@ -120,10 +120,10 @@ void CommandInterpreter::execute(std::string command, Database *db)
       }
       else
       {
-            Spelling_error_correction(&v_command);
+            spellingErrorCorrection(&v_command);
             // printf("Invalid command, please try again.\n");
             // guessUserInput(v_command); // guess the input of the user
-            // 也可以使用Spelling_error_correction实现拼写错误的改正与纠错。
+            // 也可以使用spellingErrorCorrection实现拼写错误的改正与纠错。
       }
 }
 
@@ -588,7 +588,7 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
       return (tokens);
 }
 
-void CommandInterpreter::Spelling_error_correction(std::vector<std::string> *v_command)
+void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_command)
 {
 
       // 这个函数用来与lcs函数共同完成对于拼写错误的改正与纠错，注意，它只能纠错第一个单词！具体方法见lcs函数注释。
