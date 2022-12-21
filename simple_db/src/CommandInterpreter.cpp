@@ -857,3 +857,48 @@ Table CommandInterpreter::naturalInnerProduct(std::string tableName1, std::strin
 
       return result;
 }
+
+void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
+{
+      string tableName = v_command[2];
+      Table tableSours;
+      tableSours = *(this->database->getTable(tableName));
+
+      int whereIndex = -1;
+      for(int i = v_command.size()-1; i>=0; i--){
+            if(v_command[i].find("where") != string::npos){
+                  whereIndex = i;
+                  break;
+            }
+      }
+
+
+      if(whereIndex == -1){
+            while(tableSours.rows.size() > 0){
+                  tableSours.rows.pop_back();
+            }
+      }
+      else{
+            vector<string> conditionVector;
+            for(int i = whereIndex+1; i<v_command.size(); i++){
+                  conditionVector.push_back(v_command[i]);
+            }
+
+            vector<Row>::iterator itor;
+            for (itor = tableSours.rows.begin(); itor != tableSours.rows.end(); ){
+                  if(testCondition(tableSours.schema, *itor, conditionVector))
+                  {
+                        itor=tableSours.rows.erase(itor);
+                  }
+                  else
+                  {
+                        itor++;
+                  } 
+            }
+
+      }
+
+      this->database->removeTable(tableName);
+      this->database->addTable(tableSours);
+}
+
