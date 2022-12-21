@@ -8,6 +8,9 @@ This is our implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ
 - [ ] **Application with Database System(s)**
 - [x] **Implementation of a Database System**
 
+In this project, our group creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original Java language templates in the [CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for the files and use different data structures as we see fit in the C++ language. 
+
+
 ## Team Members
 
 Our team consists of the following members, listed in the table below (the team leader is shown in the first row, and is marked with 🚩 behind his/her name):
@@ -27,34 +30,45 @@ Our team consists of the following members, listed in the table below (the team 
 ### Task allocation for team members
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
 
-## Project Specification
+## Building and running the project
+We use `CMake` to build our project, which allows our Databse implementation to have cross-platform support. 
 
-<!-- You should remove the terms/sentence that is not necessary considering your option/branch/difficulty choice -->
+To build from the source, first ensure you've changed into the `simple_db` directory where the `CMakeLists.txt` is located.
 
-After thorough discussion, our team made the choice and the specification information is listed below:
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
 
-- Our option choice is: **Option 3**
-<!-- - Our branch choice is: **Branch 1**
-- The difficulty level is: **Normal**
+To run the executable file, inside the `build/` folder there would be a simple_db file, launch that file by typing `./simple_db` would launch the command-line program.
 
-As for Option 2, our topic background specification can be found in [background-specification.md](background-specification.md). -->
+## Project File structure
 
-## Project Abstract
-
-We will choose option3 as our final project. In this project, we will write a miniature relational database management system (DBMS) that stores data tables, one of which consists of several (labeled) rows of information. In addition, our system will include a database query language similar to SQL to extract information from these tables.
-
-We will mainly use C++ to implement our code. To implement the specific database and related methods, we divide it into a number of classes. The specific architecture we will adopt is as follows:
+The source codes for our Database Command-line implementation is located in the `simple_db` directory. Inside this directory, our header files are included in the `include` folder, and our `cpp` source files are included in the `src` folder. Here are the classes we have defined and their descriptions, with the class names same as the file names:
 
 - `Row` class: serves as the underlying storage unit for information about tables in the database, recording row information.
 - `SchemaItem` class: records tables’ schemas in the database.
 - `Table` class: A data structure that stores tables in a database. It contains three attributes, the rows (`Row` class) to record the row information, the schema (`SchemaItem` class) to record the schema, and the database (`Database` class) to record the database which the table belongs. It also contains some methods, such as insert, print, delete.
 - `CommandInterpreter` class: Used to accept and execute commands. Contains the specific implementation method of the command. (exit, select, help…)
 - `Database` class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
+`main.cpp`: This is the driver code for the application.
+
+## Implementation details
+Each class has some functionalities. First of all, the class Row consists of getValues and setValues. SchemaItem consists of getName, getType, and getTypeFromString. Class Table will use both row and SchemaItem class. The class table will consist of row operations like getting, removing, and inserting the row. Furthermore, it is also used to print, load, and save the table. This table class will be used to construct the database class. The database class has several functionalities: add, remove, and get a table. Moreover, it also has functions to execute and save the database. For the CommandInterpreter, it is used to interpret the user input and execute the command to produce the desired result. It covers some standard syntaxes similar to SQL, such as create, delete, insert, load, store, print, and many more. Furthermore, it also has some additional features like guessing the user input.
 
 In the end, our database management system will realize two-way data transfer with .db file , create tables, insert rows into existing tables, print tables and other functions. In addition to this, we will implement Select clauses, which are used in select statements and in create statements. They denote tables whose information is selected from other tables. 
 
-## Project Report
+## Project Demo
+<!-- include screenshots -->
 
-In this project, our group creates a miniature relational database management system (DBMS) similar to UCB CS61B, Fall 2014 project. Moreover, we adopt identical commands with the query language in SQL for extracting information from the tables. Our group decided to make our own structure. We divide the codes into five classes such as CommandInterpreter, Database, Row, SchemaItem, and Table.
+## Additional Features
+### Errorneous command correction
+### GUI
+<!-- Please fill in  -->
 
-Each class has some functionalities. First of all, the class Row consists of getValues and setValues. SchemaItem consists of getName, getType, and getTypeFromString. Class Table will use both row and SchemaItem class. The class table will consist of row operations like getting, removing, and inserting the row. Furthermore, it is also used to print, load, and save the table. This table class will be used to construct the database class. The database class has several functionalities: add, remove, and get a table. Moreover, it also has functions to execute and save the database. For the CommandInterpreter, it is used to interpret the user input and execute the command to produce the desired result. It covers some standard syntaxes similar to SQL, such as create, delete, insert, load, store, print, and many more. Furthermore, it also has some additional features like guessing the user input.
+
+
+
+
