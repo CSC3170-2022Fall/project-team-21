@@ -33,7 +33,7 @@ public:
     void insertCommand(std::vector<std::string> *v_command);
     // .... more. This file is harder than others.
     void guessUserInput(std::vector<std::string> v_command);
-    void Spelling_error_correction(std::vector<std::string> *v_command);
+    void spellingErrorCorrection(std::vector<std::string> *v_command);
     int lcs(std::string a, std::string b);
 
     Table naturalInnerProduct(std::string tableName1, std::string tableName2);
