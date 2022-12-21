@@ -12,4 +12,4 @@ These tests themselves can be made a demo for a simple university database conta
 
 Our typical test starts first with the `create table` command by pasting all lines in the `create_table.sql` file into the CLI. Then, we can insert data by pasting all lines in the `insert_into.sql`. At any time, we can examine a table by using `print table <table_name>` or `select * from <table_name>`.
 
-Further to the tests listed here, we have also tester various commands such that even under some incorrect commands or accessing tables that do not exist, our program won't crash.
+Further to the tests listed here, we have also tested various commands such that even under some incorrect commands or accessing tables that do not exist, our program won't crash.

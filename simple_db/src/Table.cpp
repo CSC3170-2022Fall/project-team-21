@@ -26,25 +26,27 @@ Table::Table(std::string name, std::vector<SchemaItem> schema){
 
 // please refer to the format how mysql prints out the table
 /*
-perhaps should be consistent with the table in the ucb project
+we make it to be consistent with the table in the ucb project
 */ 
 void  Table::printOut(){
      //
-     cout << "----------------------------------------------------"<<endl;
-     for(int i = 0; i < this->schema.size();i++){
-        cout << this->schema[i].getName() << "  |  ";
-     }
-     cout << "\n" << "----------------------------------------------------"<<endl;
+    //  cout << "----------------------------------------------------"<<endl;
+    //  for(int i = 0; i < this->schema.size();i++){
+    //     cout << this->schema[i].getName() << "  |  ";
+    //  }
+    //  cout << "\n" << "----------------------------------------------------"<<endl;
      for(int i = 0; i<this->rows.size();i++){
+        cout << "    ";  //
         std::vector<std::string> values = this->rows[i].getValues();
         for(int j=0; j<values.size();j++){
-            cout << values[j] << "  |  ";
+            // cout << values[j] << "  |  ";
+            cout << values[j] << "  ";
         }
         cout << "\n";
 
 
      }
-     cout << "----------------------------------------------------"<<endl;
+     //cout << "----------------------------------------------------"<<endl;
 
 
 }
