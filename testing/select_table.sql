@@ -10,9 +10,16 @@ select SID from enrolled where CCN = '22100';
 
 select SID from enrolled where CCN = '22101' and Grade != 'A';
 
-select students.Name, schedule.Name, Grade;
+select SID from enrolled where Grade = 'B' or Grade = 'A';
 
-select CCN, Name from  schedule where Room = '60 Evans';
+/* Test the result of natural inner join of two tables */
+select * from students, enrolled;
 
-select SID, Name from students where Age >=20;
+SELECT Name, Grade, SID from students, enrolled where Major = "CSC";
+
+select CCN, Room from schedule where Name = "Math";
+
+select CCN, Room from enrolled, students where CCN = '22100';
+
+select SID, Name from students where Age >= 20;
 

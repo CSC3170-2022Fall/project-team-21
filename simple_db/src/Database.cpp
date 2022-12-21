@@ -69,7 +69,12 @@ Table* Database::getTable(std::string tableName){
             idx = i;
         }
     }
-    return &this->tables[idx];
+    if (idx != -1){      //the table we search is found
+        return &this->tables[idx];
+    }
+    else{       //the table we search is not found
+        return NULL;
+    }
 }
 // void Database::switchTable(std::string tableName){
 //     int idx = -1;
@@ -84,6 +89,7 @@ Table* Database::getTable(std::string tableName){
 // }
 
 void Database::addTable(Table table){
+    table.database = this;
     this->tables.push_back(table);
     
 }

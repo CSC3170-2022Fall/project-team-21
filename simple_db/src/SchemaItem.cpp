@@ -2,7 +2,7 @@
 #include <string>
 #include "SchemaItem.h"
 
-
+#include <algorithm>
 
 std::string SchemaItem::getName(){
      return this->name;
@@ -24,14 +24,19 @@ std::string SchemaItem::getType(){
 }
 
 DataType SchemaItem::getTypeFromString(std::string type){
-     if(type == "INT"){
+     // convert type to uppercase
+        std::transform(type.begin(), type.end(), type.begin(), ::toupper);
+     if(type == "INT" || type == "INTEGER" || type == "(INT)" || type == "(INTEGER)"){
          return INT;
      }
-     if(type == "FLOAT"){
+     if(type == "FLOAT" || type == "DOUBLE" || type == "(FLOAT)" || type == "(DOUBLE)" \
+     || type == "NUMERIC" || type == "(NUMERIC)"){
          return FLOAT;
      }
-     if(type == "STRING"){
+     if(type == "STRING" || type == "VARCHAR" \
+     || type == "(STRING)" || type.find("CHAR") != std::string::npos){
          return STRING;
      }
-     return STRING;
+     printf("unknown type: %s\n", type.c_str());
+    return STRING;
 }
