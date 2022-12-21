@@ -342,6 +342,20 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
             v_command->erase(v_command->begin() + 3);
       }
 
+      if (v_command->at(3) == "select")
+      {
+            // create v_command copy starting from 4
+            vector<string> v_command_copy;
+            for (int i = 3; i < v_command->size(); i++)
+            {
+                  v_command_copy.push_back(v_command->at(i));
+            }
+            Table tb = select(v_command_copy);
+            tb.name = tableName;
+            this->database->tables.push_back(tb);
+            return;
+      }
+
       int i = 3;
       while (i < v_command->size())
       {

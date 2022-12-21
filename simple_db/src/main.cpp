@@ -34,6 +34,10 @@ int main()
                 command = command.substr(0, command.find(';'));
                 break;
             }
+            if ((command[command.length() - 1] == '/' && command[command.length()-2] == '*'))
+            {
+                break;
+            }
             printf("> ");
             fflush(stdout);
             string temp;

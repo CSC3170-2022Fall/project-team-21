@@ -36,7 +36,6 @@ We use `CMake` to build our project, which allows our Databse implementation to 
 To build from the source, first ensure you've changed into the `simple_db` directory where the `CMakeLists.txt` is located.
 
 ```bash
-mkdir build
 cd build
 cmake ..
 make
@@ -62,6 +61,7 @@ In the end, our database management system will realize two-way data transfer wi
 
 ## Project Demo
 <!-- include screenshots -->
+![schemas](images/schemas_demo.png)
 
 ## Additional Features
 ### Errorneous command correction

@@ -4,7 +4,6 @@ How to build:
 First ensure you've cd into this folder.
 
 ```bash
-mkdir build
 cd build
 cmake ..
 make
