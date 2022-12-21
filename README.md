@@ -62,9 +62,9 @@ In the end, our database management system will realize two-way data transfer wi
 ## Command Specifications
 
 - SQL
-    - `create table <table_name> <attr1>(<type1>), <attr2>(<type2>...)`: basic SQL
-    - `insert into <table_name> values ...`: basic SQL
-    - `select`: basic SQL query
+    - create new table: `create table <table_name> <attr1>(<type1>), <attr2>(<type2>...)`
+    - insert data into table: `insert into <table_name> values ...`
+    - query: 
         - select all attributes from table: `select * from <table_name>`
         - select explicit attributes from table: `select <attr1>, <attr2>... from <table_name>`
         - select with conditions: `select <attr1>, <attr2>... from <table_name> where <condition>`
@@ -77,9 +77,9 @@ In the end, our database management system will realize two-way data transfer wi
     - `load <table_name>`: load the table from disk storage to the database. If the table is not availble on disk, print out error.
     - `store <table_name>`: store the table onto disk, such that it could be brought back by using the load command. If there is no such table, print out error.
 - Miscellaneous
-    - `print table <table_name>`: print out all content of the table. If there is no such table, print out error.
+    - `print <table_name>`: print out all content of the table. If there is no such table, print out error.
     - `quit` or `q` or `exit`
-    - `help`
+    - `help`: print out help message
 
 
 ### Additional commands
