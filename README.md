@@ -59,6 +59,32 @@ Each class has some functionalities. First of all, the class Row consists of get
 
 In the end, our database management system will realize two-way data transfer with .db file , create tables, insert rows into existing tables, print tables and other functions. In addition to this, we will implement Select clauses, which are used in select statements and in create statements. They denote tables whose information is selected from other tables. 
 
+## Command Specifications
+
+- SQL
+    - `create table <table_name> <attr1>(<type1>), <attr2>(<type2>...)`: basic SQL
+    - `insert into <table_name> values ...`: basic SQL
+    - `select`: basic SQL query
+        - select all attributes from table: `select * from <table_name>`
+        - select explicit attributes from table: `select <attr1>, <attr2>... from <table_name>`
+        - select with conditions: `select <attr1>, <attr2>... from <table_name> where <condition>`
+        - select with and/on connected conditions: `select <attr1>, <attr2>... from <table_name> where <condition1> and/or <condition2>`
+        - select from multiple tables (achieving natural inner join): `select <attr1>, <attr2>... from <table_name1>, <table_name2>... where <condition1> and/or <condition2>`
+    - delete table: `delete table <table_name>`
+    - delete row: `delete from <table_name> where <condition>`
+    - delete all rows but preserve the empty table: `delete from <table_name>`
+- IO
+    - `load <table_name>`: load the table from disk storage to the database. If the table is not availble on disk, print out error.
+    - `store <table_name>`: store the table onto disk, such that it could be brought back by using the load command. If there is no such table, print out error.
+- Miscellaneous
+    - `print table <table_name>`: print out all content of the table. If there is no such table, print out error.
+    - `quit` or `q` or `exit`
+    - `help`
+
+
+### Additional commands
+Switch database
+
 ## Project Demo
 <!-- include screenshots -->
 ![schemas](images/schemas_demo.png)
