@@ -853,9 +853,11 @@ Table CommandInterpreter::naturalInnerProduct(std::string tableName1, std::strin
       }
 
       for(int i = 0; i<table1->rows.size(); i++){
+            int cri = 0;
             Row rowTemp;
             for(int j = 0; j<table2->rows.size(); j++){
                   if(table1->rows[i].values[sameSch[0]] == table2->rows[j].values[sameSch[1]]){
+                        cri = 1;
                         for(int m = 0; m<table1->rows[i].values.size(); m++){
                               rowTemp.values.push_back(table1->rows[i].values[m]);
                         }
@@ -865,7 +867,9 @@ Table CommandInterpreter::naturalInnerProduct(std::string tableName1, std::strin
                         }
                   }
             }
-            rowsRusult.push_back(rowTemp);
+            if(cri == 1){
+                  rowsRusult.push_back(rowTemp);
+            } 
       }
 
       result.rows = rowsRusult;
