@@ -47,9 +47,8 @@ We use `CMake` to build our project, which allows our Databse implementation to 
 - To run the unit test, go to the `build/testing/unit_test` folder, run:
     ```bash
     make
-    ./
+    ./simple_db_test
     ```
-
 
 ## Project File structure
 
