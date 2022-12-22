@@ -130,7 +130,7 @@ int Table::getSize(){
 
 Table Table::loadFromFile(std::string tableName, std::string databaseName){
     // Find a way to do this
-    string path = databaseName + "_" + tableName + ".db";
+    string path = "../../testing/database/" + databaseName + "_" + tableName + ".db";
     ifstream inFile;
     inFile.open(path, ios::in);
 
@@ -139,7 +139,6 @@ Table Table::loadFromFile(std::string tableName, std::string databaseName){
         cout << "Error: File not found" << endl;
         return Table();
     }
-
 
     Table tableOut;
     tableOut.name = tableName;
