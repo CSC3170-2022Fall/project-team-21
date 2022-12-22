@@ -1,1 +1,0 @@
-This is a simple testing framework.
