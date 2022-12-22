@@ -12,11 +12,15 @@ int main()
 {
     CommandInterpreter interpreter;
     Database db("db", &interpreter);
+    
+    std::vector<std::string> v_command;
+
     printf("Welcome to Team 21's DB! Type SQL commands or 'help' or 'h' to get help, 'quit' or 'q' to exit\n");
     printf("Note: All SQL commands should end with a semicolon (;)\n");
 
     while (true)
     {
+        v_command.clear();
         printf("> ");
         string command;
         getline(cin, command);
@@ -24,28 +28,30 @@ int main()
         // allow these simple commands to not have a semicolon
         if (command == "quit" || command == "exit" || command == "h" || command == "help" || command == "q")
         {
-            db.execute(string(command));
+            v_command.push_back(command);
+            db.execute(v_command);
             continue;
         }
 
         while (true)
         {
-
-            if (command.find(';') != string::npos)
-            {
-                command = command.substr(0, command.find(';'));
-                break;
-            }
-
             if ((command[command.length() - 1] == '/' && command[command.length() - 2] == '*'))
             {
                 break;
             }
 
-            if (command.length() != 0)
+
+            if (command.length() == 0)
             {
-                std::cout << "length == 0" << std::endl;
-                continue;
+                break;
+            }
+
+
+            if (command.find(';') != string::npos)
+            {
+                command = command.substr(0, command.find(';'));
+
+                break;
             }
 
 
@@ -58,7 +64,8 @@ int main()
             command += " " + temp;
         }
 
-        db.execute(command);
+        db.execute(v_command);
+
     }
 
     return 0;
