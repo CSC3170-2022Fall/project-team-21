@@ -2,5 +2,5 @@
 .github/
 build/
 simple_db/build/
-testing_/build/
-testing_/bin/
+testing/unit_test/build/
+testing/unit_test/bin/
