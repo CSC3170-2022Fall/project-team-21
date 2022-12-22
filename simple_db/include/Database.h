@@ -44,7 +44,7 @@ class Database {
 
 
         // just call the CommandInterpreter, groupmates can implement this
-        void execute(std::string command);
+        void execute(std::vector<std::string> v_command);
 
         // save each table to a file
         // by repeatedly calling the save on each of tables

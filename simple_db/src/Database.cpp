@@ -22,8 +22,8 @@ Database::Database(std::string name, CommandInterpreter *interpreter){
     this->interpreter->database = this;
 }
 
-void Database::execute(std::string command){
-    this->interpreter->execute(command, this);
+void Database::execute(std::vector<std::string> v_command){
+    this->interpreter->execute(v_command, this);
 }
 
 

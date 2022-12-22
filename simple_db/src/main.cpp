@@ -27,25 +27,37 @@ int main()
             db.execute(string(command));
             continue;
         }
+
         while (true)
         {
+
             if (command.find(';') != string::npos)
             {
                 command = command.substr(0, command.find(';'));
                 break;
             }
-            
-            if ((command[command.length() - 1] == '/' && command[command.length()-2] == '*'))
+
+            if ((command[command.length() - 1] == '/' && command[command.length() - 2] == '*'))
             {
                 break;
             }
+
+            if (command.length() != 0)
+            {
+                std::cout << "length == 0" << std::endl;
+                continue;
+            }
+
+
             printf("You need to have a semicolumn(;) at the end of your input. Please input again.\n");
             printf("> ");
             fflush(stdout);
+
             string temp;
             getline(cin, temp);
             command += " " + temp;
         }
+
         db.execute(command);
     }
 

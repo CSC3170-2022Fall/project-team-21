@@ -17,10 +17,11 @@ public:
 
     CommandInterpreter();
 
-    void execute(std::string command, Database *db);
+    void execute(std::vector<std::string> v_command, Database *db);
 
     // recursive function
-    Table parse(std::string command);
+    // Table parse(std::string command);
+    int CommandInterpreter::checkTokenNumber(vector<std::string> v_command);
 
     void createTable(std::vector<std::string> *v_command);
     void deleteTable(std::vector<std::string> *v_command);
@@ -40,10 +41,10 @@ public:
     Table naturalInnerProduct(std::string tableName1, std::string tableName2);
     bool testCondition(std::vector<SchemaItem> schema ,Row theRow, std::vector<std::string> conditionVector);
 
+    std::vector<std::string> tokenizer(std::string str);
 
 private:
     // split the command into tokens for better processing
     std::vector<std::string> command_tokens;
 
-    std::vector<std::string> tokenizer(std::string str);
 };
