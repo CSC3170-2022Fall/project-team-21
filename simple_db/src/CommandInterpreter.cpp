@@ -346,6 +346,7 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 
 void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
 {
+
 	// sample: delete table students;
 	string tableName = v_command->at(2);
 	int idx = -1;
@@ -479,11 +480,18 @@ void CommandInterpreter::exitCommand()
 
 void CommandInterpreter::load(std::vector<std::string> v_command)
 {
-	string tableName;
-	tableName = v_command[1];
-	Table tableTemp;
-	tableTemp = tableTemp.loadFromFile(tableName, this->database->name);
-	this->database->addTable(tableTemp);
+	if (v_command.size() > 1)
+	{
+		string tableName;
+		tableName = v_command[1];
+		Table tableTemp;
+		tableTemp = tableTemp.loadFromFile(tableName, this->database->name);
+		this->database->addTable(tableTemp);
+	}
+	else
+	{
+		cout << "Error: Please give the name of the table" << endl;
+	}
 }
 
 void CommandInterpreter::printTable(std::vector<std::string> *v_command)
