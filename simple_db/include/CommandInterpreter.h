@@ -18,10 +18,11 @@ public:
     CommandInterpreter();
 
     void execute(std::vector<std::string> v_command, Database *db);
+    bool getInputCommand(std::vector<std::string> &v_command, bool command_continue);
 
     // recursive function
     // Table parse(std::string command);
-    int CommandInterpreter::checkTokenNumber(vector<std::string> v_command);
+    int checkTokenNumber(std::vector<std::string> v_command);
 
     void createTable(std::vector<std::string> *v_command);
     void deleteTable(std::vector<std::string> *v_command);
