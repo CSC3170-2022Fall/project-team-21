@@ -21,8 +21,6 @@ public:
     bool getInputCommand(std::vector<std::string> &v_command, bool command_continue);
 
     // recursive function
-    // Table parse(std::string command);
-    int checkTokenNumber(std::vector<std::string> v_command);
 
     void createTable(std::vector<std::string> *v_command);
     void deleteTable(std::vector<std::string> *v_command);

@@ -179,37 +179,6 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	}
 }
 
-int CommandInterpreter::checkTokenNumber(vector<std::string> v_command)
-{
-	if (v_command[0] == "select")
-	{
-	}
-	else if (v_command[0] == "create")
-	{
-	}
-	else if (v_command[0] == "delete")
-	{
-	}
-	else if (v_command[0] == "insert")
-	{
-	}
-	else if (v_command[0] == "load")
-	{
-	}
-	else if (v_command[0] == "store")
-	{
-	}
-	else if (v_command[0] == "print")
-	{
-	}
-	else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
-	{
-	}
-	else if (v_command[0] == "help" || v_command[0] == "h")
-	{
-	}
-}
-
 // Segment string into tokens, split by " "
 std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
 {
@@ -230,14 +199,21 @@ std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
 void CommandInterpreter::store(std::vector<std::string> *v_command)
 {
 	// store <table name>;
-	string tableName = v_command->at(1);
-	Table *tb = this->database->getTable(tableName);
-	if (tb == NULL)
+	if (v_command->size() > 1)
 	{
-		printf("Table %s does not exist.\n", tableName.c_str());
-		return;
+		string tableName = v_command->at(1);
+		Table *tb = this->database->getTable(tableName);
+		if (tb == NULL)
+		{
+			printf("Table %s does not exist.\n", tableName.c_str());
+			return;
+		}
+		tb->saveToFile(tb->name);
 	}
-	tb->saveToFile(tb->name);
+	else
+	{
+		cout << "Error: Please give the name of the table" << endl;
+	}
 }
 
 void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
@@ -526,7 +502,8 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 		{ // we cannot find the table we want to print in the database
 			cout << "Error: Cannot find the table: " << target_table_name << endl;
 		}
-	} else
+	}
+	else
 	{
 		cout << "Error: Please give the name of the table" << endl;
 	}
