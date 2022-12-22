@@ -34,10 +34,12 @@ int main()
                 command = command.substr(0, command.find(';'));
                 break;
             }
+            
             if ((command[command.length() - 1] == '/' && command[command.length()-2] == '*'))
             {
                 break;
             }
+            printf("You need to have a semicolumn(;) at the end of your input. Please input again.\n");
             printf("> ");
             fflush(stdout);
             string temp;
