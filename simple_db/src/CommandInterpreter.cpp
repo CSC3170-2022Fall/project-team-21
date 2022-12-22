@@ -318,17 +318,10 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
       */
       string tableName = v_command->at(2);
 
-      int idx = -1;
-
-      for (int i = 0; i < this->database->tables.size(); i++)
-      {
-            if(this->database->tables[i].name == tableName){
-                  idx = i;
-                  break;
-            }
-      }
-      if (idx != -1){      //the table name already exists
-            printf("Error: The table name ('%s') you want to create already exists in this database.\n", tableName);
+      //name already exists
+      Table *target_table = this->database->getTable(tableName);
+      if (target_table != NULL) {
+            printf("Error: The name of the table you want to create already exists in this database.\n", tableName.c_str());
             return;
       }
 
@@ -443,6 +436,17 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
       }
 }
 
+int CommandInterpreter::findTable(string tableName){
+      Table *target_table = this->database->getTable(tableName);
+      if (target_table != NULL) {  //找不到这个table
+            printf("Error: The name of the table you want to create already exists in this database.\n", tableName.c_str());
+            return 0;
+      }
+      else{
+            return 1;
+      }
+}
+
 Table CommandInterpreter::select(std::vector<std::string> v_command){
       //fill in
       Table result;
@@ -463,7 +467,6 @@ Table CommandInterpreter::select(std::vector<std::string> v_command){
                   break;
             }
       }
-
 
       Table tableSource;
       if((whereIndex - fromIndex == 3) || ((v_command.size()-fromIndex == 3) && (whereIndex==-1)) ){ // natural inner product
@@ -796,7 +799,7 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
       int a5 = lcs(a, f);
       int a6 = lcs(a, g);
       int a7 = lcs(a, h);
-      int a8 = lcs(a, i);
+      // int a8 = lcs(a, i);
 
       printf("    Error: Invalid command. Please try again.\n");
 
@@ -837,11 +840,11 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
             cout << "    Do you want to type in command 'help'?" << endl;
             // printf("Help message here\n");
       }
-      else if (a8 >= 1)
+      else if ((a == "/") || (a == "//") || (a == "#"))
       {
            cout << "    Do you want to write comments? Please use '/*' to begin with your comments.\n" << endl; 
       }
-      cout << "Type in 'help' or 'h' for more help." << endl;
+      cout << "   Type in 'help' or 'h' for more help." << endl;
 }
 
 int CommandInterpreter::lcs(string a, string b)

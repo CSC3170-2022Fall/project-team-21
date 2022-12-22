@@ -76,6 +76,7 @@ Table* Database::getTable(std::string tableName){
         return NULL;
     }
 }
+
 // void Database::switchTable(std::string tableName){
 //     int idx = -1;
 
