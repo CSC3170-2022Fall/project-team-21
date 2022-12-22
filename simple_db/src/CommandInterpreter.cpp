@@ -61,16 +61,13 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 				}
 
 				// no ; found: part of the command
-				printf("> ");
-				getline(cin, command);
-				vector<std::string> tmp_v_command;
 				command_continue = true;
+				vector<std::string> tmp_v_command;
 				tmp_v_command = tokenizer(command);
 				v_command.insert(v_command.end(), tmp_v_command.begin(), tmp_v_command.end());
-
-				// printf("You need to have a semicolumn(;) at the end of your input. Please input again.\n");
+				printf("> ");
+				getline(cin, command);
 				
-				// fflush(stdout);
 			}
 		}
 	}
@@ -156,11 +153,6 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	}
 	else if (v_command[0] == "print")
 	{
-		// if (v_command.len)
-		// {
-
-		// }
-
 		printTable(&v_command);
 	}
 	else if (v_command[0] == "exit" || v_command[0] == "q" || v_command[0] == "quit")
