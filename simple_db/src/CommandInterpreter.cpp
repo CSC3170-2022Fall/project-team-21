@@ -48,6 +48,8 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 					{ // complete command
 						command = command.substr(0, command.find(';'));
 						v_command = tokenizer(command);
+
+						// if (v_command)
 					}
 					else
 					{ // incomplete command: the last line
@@ -67,7 +69,6 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 				v_command.insert(v_command.end(), tmp_v_command.begin(), tmp_v_command.end());
 				printf("> ");
 				getline(cin, command);
-				
 			}
 		}
 	}
@@ -76,16 +77,8 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 }
 
 void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
-// void CommandInterpreter::execute(std::string command, Database *db)
 {
 	this->database = db;
-	// std::vector<std::string> v_command = tokenizer(command);
-
-	// for (int i = 0; i < v_command.size(); i++) {
-	//       cout << v_command[i] << " ";
-	// }
-
-	// cout << endl;
 
 	if (v_command.size() == 0)
 	{
@@ -519,17 +512,23 @@ void CommandInterpreter::load(std::vector<std::string> v_command)
 
 void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 {
-	string target_table_name = v_command->at(1);
-	Table *target_table = this->database->getTable(target_table_name);
-
-	if (target_table != NULL)
+	if (v_command->size() > 1)
 	{
-		printf("Contents of %s\n", target_table->name.c_str());
-		target_table->printOut();
-	}
-	else
-	{ // we cannot find the table we want to print in the database
-		cout << "Error: Cannot find the table: " << target_table_name << endl;
+		string target_table_name = v_command->at(1);
+		Table *target_table = this->database->getTable(target_table_name);
+
+		if (target_table != NULL)
+		{
+			printf("Contents of %s\n", target_table->name.c_str());
+			target_table->printOut();
+		}
+		else
+		{ // we cannot find the table we want to print in the database
+			cout << "Error: Cannot find the table: " << target_table_name << endl;
+		}
+	} else
+	{
+		cout << "Error: Please give the name of the table" << endl;
 	}
 }
 
