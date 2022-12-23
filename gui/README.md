@@ -44,10 +44,11 @@ In this GUI, the user can interact with interface in the following steps:
 * Last Name: Input the last name of the specified students. For example, if the user wants to input the student "Jason Knowles", the user will input "Jason" in the First Name section and "Knowles" in the Last Name section.
 * Student ID: The user may input the unique roll ID of a specified student.
 * Sem Enter: Users will input the semester when the specified student has entered. Users will input either "F" or "S" in the section ("S" refers to summer and "F" refers to Fall)
-* Year Enter: The user may input the year where the specifed student has been enrolled to the unversity
+* Year Enter: The user may input the year where the specified student has been enrolled to the university
 * Major: the user will input the abbreviated major name of a specific student. For example, if a student majors in Electrical Engineering & Computer Science, then the user will type in "EECS" in the major section.
 * Add: When the user clicks the "Add" button it will add the specified student to the database.
 * Add: When the user clicks the "Add" button it will add the specified student to the database.
 * Delete: When the user clicks the "Delete" button it will remove the specified student from the database.
 * View: When the user clicks the "View" button it will output the unique row of from the database containing the student's information.
 # Further Improvement
+These GUIs can be added to the backend of the command-line interface and can be a further improvement of this project.
