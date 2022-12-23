@@ -67,6 +67,7 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 				vector<std::string> tmp_v_command;
 				tmp_v_command = tokenizer(command);
 				v_command.insert(v_command.end(), tmp_v_command.begin(), tmp_v_command.end());
+                        printf("The input must end with a semicolon(;). Please input again.\n");
 				printf("> ");
 				getline(cin, command);
 			}
@@ -155,7 +156,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	}
 	else if (v_command[0] == "help" || v_command[0] == "h")
 	{
-		printf("    Help message here. List of all SQL commands we support:\n");
+		printf("Help message here. List of all SQL commands we support:\n");
 		printf("    create table <table name> (<column name>);\n");
 		printf("    create table <table name> as <select clause>;\n");
 		printf("    load <table name>;\n");
@@ -958,53 +959,53 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	int a5 = lcs(a, f);
 	int a6 = lcs(a, g);
 	int a7 = lcs(a, h);
-	// int a8 = lcs(a, i);
+	int a8 = lcs(a, i);
 
-	printf("    Error: Invalid command. Please try again.\n");
+	printf("Error: Invalid command. Please try again.\n");
 
 	if (a1 >= 4)
 	{
-		cout << "    Do you want to type in command 'select table'?" << endl;
+		cout << "Do you want to type in command 'select table'?" << endl;
 		// first find the index of "from"
 		int idx_of_from;
 		// parse(command[idx_of_from:])  // TODO
 	}
 	else if (a2 >= 3)
 	{
-		cout << "    Do you want to type in command 'create table'?" << endl;
+		cout << "Do you want to type in command 'create table'?" << endl;
 		// createTable(&v_command);
 	}
 	else if (a3 >= 3)
 	{
-		cout << "    Do you want to type in command 'exit'?" << endl;
+		cout << "Do you want to type in command 'exit'?" << endl;
 		// exitCommand();
 	}
 	else if (a4 >= 4)
 	{
-		cout << "    Do you want to type in command 'insert into'?" << endl;
+		cout << "Do you want to type in command 'insert into'?" << endl;
 		// insertCommand(&v_command);
 	}
 	else if (a5 >= 3)
 	{
-		cout << "    Do you want to type in command 'load'?" << endl;
+		cout << "Do you want to type in command 'load'?" << endl;
 		// this->load(v_command);
 	}
 	else if (a6 >= 3)
 	{
-		cout << "    Do you want to type in command 'print'?" << endl;
+		cout << "Do you want to type in command 'print'?" << endl;
 		// printTable(&v_command);
 	}
 	else if (a7 >= 3)
 	{
-		cout << "    Do you want to type in command 'help'?" << endl;
+		cout << "Do you want to type in command 'help'?" << endl;
 		// printf("Help message here\n");
 	}
-	else if ((a == "/") || (a == "//") || (a == "#"))
+	// else if ((a == "/") || (a == "//") || (a == "#"))
+      else if (a8 >= 1)
 	{
-		cout << "    Do you want to write comments? Please use '/*' to begin with your comments.\n"
-			 << endl;
+		cout << "Do you want to write comments? Please use '/*' to begin with your comments, and '*/' to end your comments."<< endl;
 	}
-	cout << "   Type in 'help' or 'h' for more help." << endl;
+	cout << "Type in 'help' or 'h' for more help." << endl;
 }
 
 int CommandInterpreter::lcs(string a, string b)
