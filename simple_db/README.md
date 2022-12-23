@@ -1,11 +1,2 @@
 # Our Database
-How to build: 
-
-To run the executable file, goto the `../build/simple_db` folder, run:
-
-```bash
-make
-./simple_db
-```
-
-Inside the `build/` folder there would be a simple_db file, launch that file by `./simple_db` would be ok.
+This is our command-line implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ). For details of the project and how to build from source, you can refer to [project-description.md](../project-description.md) and [README.md](../README.md).

@@ -62,11 +62,12 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 					break;
 				}
 
-				// no ; found: part of the command
+				// no ; found: part of the command, support multiline input
 				command_continue = true;
 				vector<std::string> tmp_v_command;
 				tmp_v_command = tokenizer(command);
 				v_command.insert(v_command.end(), tmp_v_command.begin(), tmp_v_command.end());
+                        // printf("The input must end with a semicolon(;). Please input again.\n");
 				printf("> ");
 				getline(cin, command);
 			}
@@ -116,6 +117,10 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		{
 			deleteTable(&v_command);
 		}
+            else if (v_command[1] == "from")
+		{
+			deleteRow(v_command);
+		}
 		else
 		{
 			spellingErrorCorrection(&v_command);
@@ -155,7 +160,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	}
 	else if (v_command[0] == "help" || v_command[0] == "h")
 	{
-		printf("    Help message here. List of all SQL commands we support:\n");
+		printf("Help message here. List of all SQL commands we support:\n");
 		printf("    create table <table name> (<column name>);\n");
 		printf("    create table <table name> as <select clause>;\n");
 		printf("    load <table name>;\n");
@@ -164,6 +169,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		printf("    print <table name>;'\n");
 		printf("    quit;\n");
 		printf("    exit;\n");
+            printf("    delete from <table name> (<conditional clause>)\n");
 		printf("    select <column name> from <table name> <conditional clause>;\n");
 		printf("    select <column name> from <table name1>,<table name2> <conditional clause>;\n");
 	}
@@ -205,10 +211,11 @@ void CommandInterpreter::store(std::vector<std::string> *v_command)
 		Table *tb = this->database->getTable(tableName);
 		if (tb == NULL)
 		{
-			printf("Table %s does not exist.\n", tableName.c_str());
+			printf("Error: Table %s does not exist.\n", tableName.c_str());
 			return;
 		}
 		tb->saveToFile(tb->name);
+            printf("Store process completed.\n");
 	}
 	else
 	{
@@ -342,6 +349,7 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 		return;
 	}
 	target_table->insertLast(newRow);
+      printf("Insert process completed.\n");
 }
 
 void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
@@ -357,12 +365,13 @@ void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
 		{
 			idx = i;
 			this->database->tables.erase(this->database->tables.begin() + idx);
+                  cout << "Table " << tableName << " has been deleted" << endl;
 			return;
 		}
 	}
 	if (idx == -1)
 	{ // the table we search is not found
-		printf("Error: The target table does not exist in this database.\n");
+		cout << "Error: The table " << tableName << " does not exist in this database." << endl;
 	}
 }
 
@@ -378,14 +387,15 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		  Address varchar(255),
 		  City varchar(255)
 		  );
-	*/
+	*/	
+
 	string tableName = v_command->at(2);
 
 	// name already exists
 	Table *target_table = this->database->getTable(tableName);
 	if (target_table != NULL)
 	{
-		printf("Error: The name of the table you want to create already exists in this database.\n", tableName.c_str());
+	      cout << "Error: The name of the table (" << tableName << ") already exists in this database."<< endl;
 		return;
 	}
 
@@ -441,6 +451,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		Table tb = select(v_command_copy);
 		tb.name = tableName;
 		this->database->tables.push_back(tb);
+            printf("Table has been created.\n");
 		return;
 	}
 
@@ -471,6 +482,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 	}
 	Table newTable = Table(tableName, schema);
 	this->database->addTable(newTable);
+      cout << "Table " << tableName << " has been created." << endl;
 }
 void CommandInterpreter::exitCommand()
 {
@@ -503,12 +515,12 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 
 		if (target_table != NULL)
 		{
-			printf("Contents of %s\n", target_table->name.c_str());
+			printf("Contents of %s:\n", target_table->name.c_str());
 			target_table->printOut();
 		}
 		else
 		{ // we cannot find the table we want to print in the database
-			cout << "Error: Cannot find the table: " << target_table_name << endl;
+			cout << "Error: Cannot find table " << target_table_name << " in the database." << endl;
 		}
 	}
 	else
@@ -520,9 +532,9 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 int CommandInterpreter::findTable(string tableName)
 {
 	Table *target_table = this->database->getTable(tableName);
-	if (target_table != NULL)
+	if (target_table == NULL)
 	{ // 找不到这个table
-		printf("Error: The name of the table you want to create already exists in this database.\n", tableName.c_str());
+		//printf("Error: The name of the table you want to search does not exist in this database.\n", tableName.c_str());
 		return 0;
 	}
 	else
@@ -882,6 +894,14 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 {
 	string tableName = v_command[2];
 	Table tableSours;
+
+      int find = findTable(tableName);
+
+      if (find == 0){ //找不到这个表
+            cout << "Error: The table " << tableName <<  " does not exist in the database" << endl;
+            return;
+      }
+
 	tableSours = *(this->database->getTable(tableName));
 
 	int whereIndex = -1;
@@ -925,6 +945,7 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 
 	this->database->removeTable(tableName);
 	this->database->addTable(tableSours);
+      printf("Delete row process completed.\n");
 }
 
 /*
@@ -946,7 +967,8 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	std::string h = "help";
 	// 有新的操作时就再往后加
 	std::string i = "/*";
-	// std::string j = "select";
+	std::string j = "quit";
+      std::string k = "delete";
 
 	int a1 = lcs(a, b);
 	int a2 = lcs(a, c);
@@ -955,53 +977,63 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	int a5 = lcs(a, f);
 	int a6 = lcs(a, g);
 	int a7 = lcs(a, h);
-	// int a8 = lcs(a, i);
+	int a8 = lcs(a, i);
+      int a9 = lcs(a, j);
+      int a10 = lcs(a, k);
 
-	printf("    Error: Invalid command. Please try again.\n");
+	printf("Error: Invalid command. Please try again.\n");
 
 	if (a1 >= 4)
 	{
-		cout << "    Do you want to type in command 'select table'?" << endl;
+		cout << "Do you want to type in command 'select table'?" << endl;
 		// first find the index of "from"
 		int idx_of_from;
 		// parse(command[idx_of_from:])  // TODO
 	}
-	else if (a2 >= 3)
+	else if (a2 >= 4)
 	{
-		cout << "    Do you want to type in command 'create table'?" << endl;
+		cout << "Do you want to type in command 'create table'?" << endl;
 		// createTable(&v_command);
 	}
 	else if (a3 >= 3)
 	{
-		cout << "    Do you want to type in command 'exit'?" << endl;
+		cout << "Do you want to type in command 'exit'?" << endl;
 		// exitCommand();
 	}
 	else if (a4 >= 4)
 	{
-		cout << "    Do you want to type in command 'insert into'?" << endl;
+		cout << "Do you want to type in command 'insert into'?" << endl;
 		// insertCommand(&v_command);
 	}
 	else if (a5 >= 3)
 	{
-		cout << "    Do you want to type in command 'load'?" << endl;
+		cout << "Do you want to type in command 'load'?" << endl;
 		// this->load(v_command);
 	}
 	else if (a6 >= 3)
 	{
-		cout << "    Do you want to type in command 'print'?" << endl;
+		cout << "Do you want to type in command 'print'?" << endl;
 		// printTable(&v_command);
 	}
 	else if (a7 >= 3)
 	{
-		cout << "    Do you want to type in command 'help'?" << endl;
+		cout << "Do you want to type in command 'help'?" << endl;
 		// printf("Help message here\n");
 	}
-	else if ((a == "/") || (a == "//") || (a == "#"))
+	// else if ((a == "/") || (a == "//") || (a == "#"))
+      else if (a8 >= 1)
 	{
-		cout << "    Do you want to write comments? Please use '/*' to begin with your comments.\n"
-			 << endl;
+		cout << "Do you want to write comments? Please use '/*' to begin with your comments, and '*/' to end your comments."<< endl;
 	}
-	cout << "   Type in 'help' or 'h' for more help." << endl;
+      else if (a9 >= 3)
+	{
+		cout << "Do you want to type in command 'quit'?" << endl;
+	}
+      else if (a10 >= 4)
+	{
+		cout << "Do you want to type in command 'delete table' or 'delete from'?" << endl;
+	}
+	cout << "Type in 'help' or 'h' for more help." << endl;
 }
 
 int CommandInterpreter::lcs(string a, string b)

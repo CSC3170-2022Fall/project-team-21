@@ -30,13 +30,91 @@ Our team consists of the following members, listed in the table below (the team 
 ### Task allocation for team members
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
 
-## Building and running the project
-We use `CMake` to build our project, which allows our Databse implementation to have cross-platform support. 
+## Project overall structure
+```bash
+. (root)
+├── CMakeLists.txt
+├── gui
+│   ├── Query_GUI
+│   │   ├── CMakeLists.txt
+│   │   ├── CMakeLists.txt.user
+│   │   ├── main.cpp
+│   │   ├── mainwindow.cpp
+│   │   ├── mainwindow.h
+│   │   └── mainwindow.ui
+│   ├── README.md
+│   ├── database_gui
+│   │   ├── CMakeLists.txt
+│   │   ├── CMakeLists.txt.user
+│   │   ├── main.cpp
+│   │   ├── mainwindow.cpp
+│   │   ├── mainwindow.h
+│   │   └── mainwindow.ui
+│   └── screenshots
+│       ├── ss_load_student.jpg
+│       ├── ss_qt_widget_app.jpg
+│       └── ss_query_tab.jpg
+├── project-description.md
+├── report
+│   ├── 3170proj_2.pptx
+│   └── images
+│       └── schemas_demo.png
+├── simple_db
+│   ├── CMakeLists.txt
+│   ├── README.md
+│   ├── include
+│   │   ├── CommandInterpreter.h
+│   │   ├── Conditions.h
+│   │   ├── Database.h
+│   │   ├── Row.h
+│   │   ├── SchemaItem.h
+│   │   └── Table.h
+│   └── src
+│       ├── CommandInterpreter.cpp
+│       ├── Conditions.cpp
+│       ├── Database.cpp
+│       ├── Row.cpp
+│       ├── SchemaItem.cpp
+│       ├── Table.cpp
+│       └── main.cpp
+├── task-allocation.md
+└── testing
+    ├── README.md
+    ├── create_table.sql
+    ├── database
+    │   ├── db_enrolled.db
+    │   ├── db_schedule.db
+    │   └── db_students.db
+    ├── delete_row.sql
+    ├── delete_table.sql
+    ├── demo_script.sql
+    ├── insert_into.sql
+    ├── load_table.sql
+    ├── print_table.sql
+    ├── select_table.sql
+    ├── store_table.sql
+    └── unit_test
+        ├── CMakeLists.txt
+        ├── Lib
+        │   └── redbud
+        │       ├── io
+        │       │   └── color.h
+        │       └── platform.h
+        ├── README.md
+        ├── test.cpp
+        └── test.h
+```
 
-- To build from the source, run:
+## Building and running the project
+We use `CMake` to build our project, which allows our Databsse implementation to have cross-platform support. (Ignore those warnings)
+
+- To build from the source, please go to the root directory, then run:
     ```bash
     mkdir build && cd build
     cmake ..
+    make
+    cd simple_db
+    ./simple_db
     ```
 
 - To run the executable file, goto the `build/simple_db` folder, run:

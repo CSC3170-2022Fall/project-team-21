@@ -7,7 +7,6 @@ using namespace std;
 
 
 
-
 Conditions::Conditions(/* args */){
     cout << "condition constructor";
     // fill in

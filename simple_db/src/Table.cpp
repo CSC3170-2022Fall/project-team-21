@@ -30,17 +30,11 @@ Table::Table(std::string name, std::vector<SchemaItem> schema){
 we make it to be consistent with the table in the ucb project
 */ 
 void  Table::printOut(){
-     //
-    //  cout << "----------------------------------------------------"<<endl;
-    //  for(int i = 0; i < this->schema.size();i++){
-    //     cout << this->schema[i].getName() << "  |  ";
-    //  }
-    //  cout << "\n" << "----------------------------------------------------"<<endl;
 
     // pretty print the table using iomanip
     vector<int> colWidth;
-    // set the width of each column by the length of the longest string in the column as well as the schema'
 
+    // set the width of each column by the length of the longest string in the column as well as the schema'
     for(int i = 0; i < this->schema.size();i++){
         int maxLength = this->schema[i].getName().length();
         for(int j = 0; j < this->rows.size(); j++){
@@ -89,7 +83,8 @@ void  Table::printOut(){
 void Table::saveToFile(std::string fileName){
     // well, just find a way to make the database name as a directory,
     // and store the table in the directory
-    string path = this->database->name + "_" + this->name + ".db";
+    // string path = this->database->name + "_" + this->name + ".db";
+    string path = "../../testing/database/" + this->database->name + "_" + this->name + ".db";
 
     ofstream onFile(path);
 
