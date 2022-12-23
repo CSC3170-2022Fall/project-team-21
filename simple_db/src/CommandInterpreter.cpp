@@ -379,6 +379,9 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		  City varchar(255)
 		  );
 	*/
+
+	
+
 	string tableName = v_command->at(2);
 
 	// name already exists
