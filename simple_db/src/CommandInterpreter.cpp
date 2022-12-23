@@ -62,7 +62,7 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 					break;
 				}
 
-				// no ; found: part of the command
+				// no ; found: part of the command, support multiline input
 				command_continue = true;
 				vector<std::string> tmp_v_command;
 				tmp_v_command = tokenizer(command);
@@ -117,6 +117,10 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		{
 			deleteTable(&v_command);
 		}
+            else if (v_command[1] == "from")
+		{
+			deleteRow(v_command);
+		}
 		else
 		{
 			spellingErrorCorrection(&v_command);
@@ -165,6 +169,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		printf("    print <table name>;'\n");
 		printf("    quit;\n");
 		printf("    exit;\n");
+            printf("    delete from <table name> (<conditional clause>)\n");
 		printf("    select <column name> from <table name> <conditional clause>;\n");
 		printf("    select <column name> from <table name1>,<table name2> <conditional clause>;\n");
 	}
@@ -206,10 +211,11 @@ void CommandInterpreter::store(std::vector<std::string> *v_command)
 		Table *tb = this->database->getTable(tableName);
 		if (tb == NULL)
 		{
-			printf("Table %s does not exist.\n", tableName.c_str());
+			printf("Error: Table %s does not exist.\n", tableName.c_str());
 			return;
 		}
 		tb->saveToFile(tb->name);
+            printf("Store process completed.\n");
 	}
 	else
 	{
@@ -343,6 +349,7 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 		return;
 	}
 	target_table->insertLast(newRow);
+      printf("Insert process completed.\n");
 }
 
 void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
@@ -358,12 +365,13 @@ void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
 		{
 			idx = i;
 			this->database->tables.erase(this->database->tables.begin() + idx);
+                  cout << "Table " << tableName << " has been deleted" << endl;
 			return;
 		}
 	}
 	if (idx == -1)
 	{ // the table we search is not found
-		printf("Error: The target table does not exist in this database.\n");
+		cout << "Error: The table " << tableName << " does not exist in this database." << endl;
 	}
 }
 
@@ -379,9 +387,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		  Address varchar(255),
 		  City varchar(255)
 		  );
-	*/
-
-	
+	*/	
 
 	string tableName = v_command->at(2);
 
@@ -389,7 +395,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 	Table *target_table = this->database->getTable(tableName);
 	if (target_table != NULL)
 	{
-		printf("Error: The name of the table you want to create already exists in this database.\n", tableName.c_str());
+	      cout << "Error: The name of the table (" << tableName << ") already exists in this database."<< endl;
 		return;
 	}
 
@@ -445,6 +451,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		Table tb = select(v_command_copy);
 		tb.name = tableName;
 		this->database->tables.push_back(tb);
+            printf("Table has been created.\n");
 		return;
 	}
 
@@ -475,6 +482,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 	}
 	Table newTable = Table(tableName, schema);
 	this->database->addTable(newTable);
+      cout << "Table " << tableName << " has been created." << endl;
 }
 void CommandInterpreter::exitCommand()
 {
@@ -507,12 +515,12 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 
 		if (target_table != NULL)
 		{
-			printf("Contents of %s\n", target_table->name.c_str());
+			printf("Contents of %s:\n", target_table->name.c_str());
 			target_table->printOut();
 		}
 		else
 		{ // we cannot find the table we want to print in the database
-			cout << "Error: Cannot find the table: " << target_table_name << endl;
+			cout << "Error: Cannot find table " << target_table_name << " in the database." << endl;
 		}
 	}
 	else
@@ -524,9 +532,9 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 int CommandInterpreter::findTable(string tableName)
 {
 	Table *target_table = this->database->getTable(tableName);
-	if (target_table != NULL)
+	if (target_table == NULL)
 	{ // 找不到这个table
-		printf("Error: The name of the table you want to create already exists in this database.\n", tableName.c_str());
+		//printf("Error: The name of the table you want to search does not exist in this database.\n", tableName.c_str());
 		return 0;
 	}
 	else
@@ -886,6 +894,14 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 {
 	string tableName = v_command[2];
 	Table tableSours;
+
+      int find = findTable(tableName);
+
+      if (find == 0){ //找不到这个表
+            cout << "Error: The table " << tableName <<  " does not exist in the database" << endl;
+            return;
+      }
+
 	tableSours = *(this->database->getTable(tableName));
 
 	int whereIndex = -1;
@@ -929,6 +945,7 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 
 	this->database->removeTable(tableName);
 	this->database->addTable(tableSours);
+      printf("Delete row process completed.\n");
 }
 
 /*
@@ -1014,7 +1031,7 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	}
       else if (a10 >= 4)
 	{
-		cout << "Do you want to type in command 'delete table'?" << endl;
+		cout << "Do you want to type in command 'delete table' or 'delete from'?" << endl;
 	}
 	cout << "Type in 'help' or 'h' for more help." << endl;
 }
