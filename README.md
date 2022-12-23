@@ -31,7 +31,7 @@ Our team consists of the following members, listed in the table below (the team 
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
 
 ## Building and running the project
-We use `CMake` to build our project, which allows our Databse implementation to have cross-platform support. 
+We use `CMake` to build our project, which allows our Databsse implementation to have cross-platform support. 
 
 - To build from the source, run:
     ```bash
