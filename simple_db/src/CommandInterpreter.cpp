@@ -950,7 +950,8 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	std::string h = "help";
 	// 有新的操作时就再往后加
 	std::string i = "/*";
-	// std::string j = "select";
+	std::string j = "quit";
+      std::string k = "delete";
 
 	int a1 = lcs(a, b);
 	int a2 = lcs(a, c);
@@ -960,6 +961,8 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	int a6 = lcs(a, g);
 	int a7 = lcs(a, h);
 	int a8 = lcs(a, i);
+      int a9 = lcs(a, j);
+      int a10 = lcs(a, k);
 
 	printf("Error: Invalid command. Please try again.\n");
 
@@ -970,7 +973,7 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 		int idx_of_from;
 		// parse(command[idx_of_from:])  // TODO
 	}
-	else if (a2 >= 3)
+	else if (a2 >= 4)
 	{
 		cout << "Do you want to type in command 'create table'?" << endl;
 		// createTable(&v_command);
@@ -1004,6 +1007,14 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
       else if (a8 >= 1)
 	{
 		cout << "Do you want to write comments? Please use '/*' to begin with your comments, and '*/' to end your comments."<< endl;
+	}
+      else if (a9 >= 3)
+	{
+		cout << "Do you want to type in command 'quit'?" << endl;
+	}
+      else if (a10 >= 4)
+	{
+		cout << "Do you want to type in command 'delete table'?" << endl;
 	}
 	cout << "Type in 'help' or 'h' for more help." << endl;
 }
