@@ -31,6 +31,7 @@ Our team consists of the following members, listed in the table below (the team 
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
 
 ## Project overall structure
+```bash
 . (root)
 ├── CMakeLists.txt
 ├── gui
@@ -102,6 +103,7 @@ Please refer to [task-allocation.md](task-allocation.md) for the detailed task a
         ├── README.md
         ├── test.cpp
         └── test.h
+```
 
 ## Building and running the project
 We use `CMake` to build our project, which allows our Databsse implementation to have cross-platform support. 
