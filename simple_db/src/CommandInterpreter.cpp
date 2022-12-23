@@ -67,7 +67,7 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 				vector<std::string> tmp_v_command;
 				tmp_v_command = tokenizer(command);
 				v_command.insert(v_command.end(), tmp_v_command.begin(), tmp_v_command.end());
-                        printf("The input must end with a semicolon(;). Please input again.\n");
+                        // printf("The input must end with a semicolon(;). Please input again.\n");
 				printf("> ");
 				getline(cin, command);
 			}
