@@ -7,75 +7,98 @@
 
 using namespace std;
 // #include <direct.h>
-//#include <stdlib.h>
-//#include <stdio.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 
-Database::Database(CommandInterpreter *interpreter){
+Database::Database(CommandInterpreter *interpreter)
+{
     this->interpreter = interpreter;
     this->interpreter->database = this;
     this->name = "default";
 }
 
-Database::Database(std::string name, CommandInterpreter *interpreter){
+Database::Database(std::string name, CommandInterpreter *interpreter)
+{
     this->name = name;
     this->interpreter = interpreter;
     this->interpreter->database = this;
 }
 
-void Database::execute(std::string command){
-    this->interpreter->execute(command, this);
+void Database::start()
+{
+    vector<std::string> v_command;
+    bool get_command = false;
+    bool command_continue = false; // if input a command in more than one line
+
+    while (true)
+    {
+        get_command = this->interpreter->getInputCommand(v_command, command_continue);
+        if (get_command)
+        {
+            execute(v_command);
+            v_command.clear();
+        }
+    }
 }
 
+void Database::execute(std::vector<std::string> v_command)
+{
+    this->interpreter->execute(v_command, this);
+}
 
-void Database::saveDatabase(){
+void Database::saveDatabase()
+{
     // TODO: first create the directory for the database,
     // then **change directory** to it
-//     const char * nm = this->name.c_str();
-//      if( _mkdir(strcat("\\",nm)) == 0 )
-//    {
-//       printf("Directory '\\%c' was successfully created\n",*nm );
-//       //system( "dir \\"+ this->name );
-//       for (int i = 0; i < this->tables.size(); i++)
-//     {
-//         std::string fname = this->tables[i].name;
-//         this->tables[i].saveToFile(fname);
-//     }
-//    }
-//    else
-//       printf( "Problem creating directory '\\%c'\n",*nm );
+    //     const char * nm = this->name.c_str();
+    //      if( _mkdir(strcat("\\",nm)) == 0 )
+    //    {
+    //       printf("Directory '\\%c' was successfully created\n",*nm );
+    //       //system( "dir \\"+ this->name );
+    //       for (int i = 0; i < this->tables.size(); i++)
+    //     {
+    //         std::string fname = this->tables[i].name;
+    //         this->tables[i].saveToFile(fname);
+    //     }
+    //    }
+    //    else
+    //       printf( "Problem creating directory '\\%c'\n",*nm );
 
     string cmd = "mkdir " + this->name;
-    system( cmd.c_str() );
+    system(cmd.c_str());
     string cmd2 = "cd " + this->name;
-    system( cmd2.c_str() );
+    system(cmd2.c_str());
     for (int i = 0; i < this->tables.size(); i++)
     {
         std::string fname = this->tables[i].name;
         this->tables[i].saveToFile(fname);
     }
     string cmd3 = "cd ..";
-    system( cmd3.c_str() );
-    
-    
+    system(cmd3.c_str());
 }
 
-Table* Database::getTable(std::string tableName){
+Table *Database::getTable(std::string tableName)
+{
     // TODO
     int idx = -1;
 
     for (int i = 0; i < this->tables.size(); i++)
     {
-        if(this->tables[i].name == tableName){
+        if (this->tables[i].name == tableName)
+        {
             idx = i;
         }
     }
-    if (idx != -1){      //the table we search is found
+    if (idx != -1)
+    { // the table we search is found
         return &this->tables[idx];
     }
-    else{       //the table we search is not found
+    else
+    { // the table we search is not found
         return NULL;
     }
 }
+
 // void Database::switchTable(std::string tableName){
 //     int idx = -1;
 
@@ -88,26 +111,28 @@ Table* Database::getTable(std::string tableName){
 //     currentTable = &this->tables[idx];
 // }
 
-void Database::addTable(Table table){
+void Database::addTable(Table table)
+{
     table.database = this;
     this->tables.push_back(table);
-    
 }
 
-void Database::removeTable(std::string tableName){
+void Database::removeTable(std::string tableName)
+{
     int idx = -1;
 
     for (int i = 0; i < this->tables.size(); i++)
     {
-        if(this->tables[i].name == tableName){
+        if (this->tables[i].name == tableName)
+        {
             idx = i;
         }
     }
-    this->tables.erase(this->tables.begin()+idx);
-
+    this->tables.erase(this->tables.begin() + idx);
 }
 
-void Database::removeTableAtIdx(int idx){
+void Database::removeTableAtIdx(int idx)
+{
 
-    this->tables.erase(this->tables.begin()+idx);
+    this->tables.erase(this->tables.begin() + idx);
 }

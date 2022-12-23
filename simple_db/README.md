@@ -1,14 +1,11 @@
 # Our Database
 How to build: 
 
-First ensure you've cd into this folder.
+To run the executable file, goto the `../build/simple_db` folder, run:
 
 ```bash
-cd build
-cmake ..
 make
+./simple_db
 ```
-
-How to run: 
 
 Inside the `build/` folder there would be a simple_db file, launch that file by `./simple_db` would be ok.

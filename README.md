@@ -33,15 +33,22 @@ Please refer to [task-allocation.md](task-allocation.md) for the detailed task a
 ## Building and running the project
 We use `CMake` to build our project, which allows our Databse implementation to have cross-platform support. 
 
-To build from the source, first ensure you've changed into the `simple_db` directory where the `CMakeLists.txt` is located.
+- To build from the source, run:
+    ```bash
+    mkdir build && cd build
+    cmake ..
+    ```
 
-```bash
-cd build
-cmake ..
-make
-```
-
-To run the executable file, inside the `build/` folder there would be a simple_db file, launch that file by typing `./simple_db` would launch the command-line program.
+- To run the executable file, goto the `build/simple_db` folder, run:
+    ```bash
+    make
+    ./simple_db
+    ```
+- To run the unit test, go to the `build/testing/unit_test` folder, run:
+    ```bash
+    make
+    ./simple_db_test
+    ```
 
 ## Project File structure
 

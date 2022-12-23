@@ -17,10 +17,10 @@ public:
 
     CommandInterpreter();
 
-    void execute(std::string command, Database *db);
+    void execute(std::vector<std::string> v_command, Database *db);
+    bool getInputCommand(std::vector<std::string> &v_command, bool command_continue);
 
     // recursive function
-    Table parse(std::string command);
 
     void createTable(std::vector<std::string> *v_command);
     void deleteTable(std::vector<std::string> *v_command);
@@ -35,14 +35,15 @@ public:
     void guessUserInput(std::vector<std::string> v_command);
     void spellingErrorCorrection(std::vector<std::string> *v_command);
     int lcs(std::string a, std::string b);
+    int findTable(std::string tableName);
 
     Table naturalInnerProduct(std::string tableName1, std::string tableName2);
     bool testCondition(std::vector<SchemaItem> schema ,Row theRow, std::vector<std::string> conditionVector);
 
+    std::vector<std::string> tokenizer(std::string str);
 
 private:
     // split the command into tokens for better processing
     std::vector<std::string> command_tokens;
 
-    std::vector<std::string> tokenizer(std::string str);
 };
