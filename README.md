@@ -33,10 +33,13 @@ Please refer to [task-allocation.md](task-allocation.md) for the detailed task a
 ## Building and running the project
 We use `CMake` to build our project, which allows our Databsse implementation to have cross-platform support. 
 
-- To build from the source, run:
+- To build from the source, please go to the root directory, then run:
     ```bash
     mkdir build && cd build
     cmake ..
+    make
+    cd simple_db
+    ./simple_db
     ```
 
 - To run the executable file, goto the `build/simple_db` folder, run:
