@@ -1,4 +1,4 @@
-CCN,Dept,Name,Sem,Year
+CCN,Dept,CName,Sem,Year
 21228,SDS,data-structures,F,2022
 21231,SDS,algorithms,S,2021
 21229,SDS,parallel-computing,F,2022
