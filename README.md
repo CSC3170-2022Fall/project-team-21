@@ -127,6 +127,9 @@ We could verify this by restarting the application and load the “department”
 
 ![Untitled](presentation/images/Untitled%206.png)
 
+Because a `select` clause returns a table, we could also utilize the returned table as a part of the `select`:
+
+
 # Additional Features
 
 Besides the handling of query commands, we develop additional features in our database system.
@@ -141,7 +144,7 @@ Implementation detail:
 2. the function `lcs(string a, string b)` obtains the length of longest common substring between 2 strings
 3. the SQL command with lcs() value larger than threshold will be the possible input, and give user a hint
 
-![Untitled](presentation/images/Untitled%207.png)
+![Untitled](presentation/images/lcs.png)
 
 ## Crash prevention
 
@@ -151,8 +154,8 @@ Our database can identify erroreous cases and print error messages instead of cr
 2. user “insert” values with numbers that does not match the number of columns
 
 The following screenshots illustrates the above features: 
-[ill](presentation/images/no_table.png)
-[ill1](presentation/images/col_exceed.png)
+![ill](presentation/images/no_table.png)
+![ill1](presentation/images/col_exceed.png)
 
 ## Database GUI design
 
