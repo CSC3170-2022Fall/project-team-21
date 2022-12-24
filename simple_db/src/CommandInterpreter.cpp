@@ -92,10 +92,22 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	if (v_command[0] == "select")
 	{
 		// first find the index of "from"
-		int idx_of_from;
+		int cri = 0;
+		for(int i = 0; i< this->database->tables.size(); i++){
+			if(this->database->tables[i].name == v_command[3]){
+				cri = 1;
+				break;
+			}
+		}
 		printf("Search results:\n");
-		Table tb = select(v_command);
-		tb.printOut();
+
+		if(cri == 1){
+			Table tb = select(v_command);
+			tb.printOut();
+		}
+		else{
+			printf("Error: This table does not exist\n");
+		}
 	}
 	else if (v_command[0] == "create")
 	{
