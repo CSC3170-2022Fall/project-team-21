@@ -1,1 +1,2 @@
-This is a simple testing framework, this is revised from ...
+This is a simple testing framework.
+Under construction due to Covid-19.
