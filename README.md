@@ -23,7 +23,7 @@ Our team consists of the following members, listed in the table below (the team 
 | 120090027  | 刘起            |    120090027@link.cuhk.edu.cn  | LittleShaco      |
 | 119030043  | 连珈玮          | 119030043@link.cuhk.edu.cn     | jlianxm          |
 | 120090874  | 杨亮            | 120090874@link.cuhk.edu.cn     | yangbright-2001 |
-| 120040022  | Darren Boesono | 120040022@link.cuhk.edu.cn     | dboesono        |
+| 120040022  | Darren Boesono | darrenboesono28@gmail.com     | dboesono        |
 | 120040006  |Yohanes James   | 120040006@link.cuhk.edu.cn     | YohanesJames    |
 | 120090231  |王茗萱           | 3096968424@qq.com              | helloworldlgu   |
 
