@@ -101,12 +101,13 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		}
 		printf("Search results:\n");
 
-		if(cri == 1){
-			Table tb = select(v_command);
-			tb.printOut();
+		if((cri == 0) && (v_command.size() == 4)){
+			
+			printf("Error: This table does not exist\n");
 		}
 		else{
-			printf("Error: This table does not exist\n");
+			Table tb = select(v_command);
+			tb.printOut();
 		}
 	}
 	else if (v_command[0] == "create")
