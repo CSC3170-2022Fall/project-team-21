@@ -77,6 +77,37 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 	return get_command;
 }
 
+// Segment string into tokens, split by " "
+std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
+{
+	std::stringstream ss(str);
+	std::vector<std::string> tokens;
+	std::string word;
+	while (ss >> word)
+	{
+		if (word != " ")
+			tokens.push_back(word);
+	}
+	ss.clear();
+	// we've removed the ; in main.cpp, so we don't need to remove it here
+	// tokens[tokens.size()-1] = tokens[tokens.size()-1].substr(0, tokens[tokens.size()-1].length()-1);
+	return (tokens);
+}
+
+int CommandInterpreter::findTable(string tableName)
+{
+	Table *target_table = this->database->getTable(tableName);
+	if (target_table == NULL)
+	{ // 找不到这个table
+		//printf("Error: The name of the table you want to search does not exist in this database.\n", tableName.c_str());
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
 void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 {
 	this->database = db;
@@ -92,20 +123,70 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	if (v_command[0] == "select")
 	{
 		// first find the index of "from"
-		int cri = 0;
-		for(int i = 0; i< this->database->tables.size(); i++){
-			if(this->database->tables[i].name == v_command[3]){
-				cri = 1;
-				break;
-			}
-		}
-		printf("Search results:\n");
+		// int cri = 0;
+		// for(int i = 0; i< this->database->tables.size(); i++){
+		// 	if(this->database->tables[i].name == v_command[3]){
+		// 		cri = 1;
+		// 		break;
+		// 	}
+		// }
+            
+            //detect whether the table does not exist
+            int cri = 1;   //有没错误
+            int fromIndex;  //from
+            for (int i = 1; i < v_command.size(); i++)
+            {
+                  if (v_command[i].find("from") != string::npos)
+                  {
+                        fromIndex = i;
+                        break;
+                  }
+            }
+            int whereIndex = -1; //where
+            for (int i = v_command.size() - 1; i >= 0; i--)
+            {
+                  if(v_command[i].find(")") != string::npos){
+                        break;
+                  }
+                  if (v_command[i].find("where") != string::npos)
+                  {
+                        whereIndex = i;
+                        break;
+                  }
+            }
+            int table_num;
+            if (whereIndex == -1){  //select语句中没有where
+                  table_num = v_command.size() - fromIndex - 1;
+            }
+            else{
+                  table_num = whereIndex - fromIndex - 1; 
+            }
+            string tableName;
+            int find;
+            for (int i = 0; i < table_num; i++){
+                  tableName = v_command[fromIndex + i + 1];
+                  // if (tableName.find(',') != string::npos)
+                  if (   tableName[tableName.length() - 1] == ',' )
+                  {
+                        tableName = tableName.substr(0, tableName.length() - 1);
+                  }
+                  find = findTable(tableName);
+                  if (find == 0){  //找不到这个表
+                        cout << "Error: cannot find the table " << tableName << " in the database." << endl;
+                        cri = 0;
+                        break;
+                  }
 
-		if((cri == 0) && (v_command.size() == 4)){
+            }
+            
+
+		// if((cri == 0) && (v_command.size() == 4)){
 			
-			printf("Error: This table does not exist\n");
-		}
-		else{
+		// 	printf("Error: This table does not exist\n");
+		// }
+		// else{
+            if (cri == 1){
+                  printf("Search results:\n");
 			Table tb = select(v_command);
 			tb.printOut();
 		}
@@ -196,23 +277,6 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		// guessUserInput(v_command); // guess the input of the user
 		// 也可以使用spellingErrorCorrection实现拼写错误的改正与纠错。
 	}
-}
-
-// Segment string into tokens, split by " "
-std::vector<std::string> CommandInterpreter::tokenizer(std::string str)
-{
-	std::stringstream ss(str);
-	std::vector<std::string> tokens;
-	std::string word;
-	while (ss >> word)
-	{
-		if (word != " ")
-			tokens.push_back(word);
-	}
-	ss.clear();
-	// we've removed the ; in main.cpp, so we don't need to remove it here
-	// tokens[tokens.size()-1] = tokens[tokens.size()-1].substr(0, tokens[tokens.size()-1].length()-1);
-	return (tokens);
 }
 
 void CommandInterpreter::store(std::vector<std::string> *v_command)
@@ -464,7 +528,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		Table tb = select(v_command_copy);
 		tb.name = tableName;
 		this->database->tables.push_back(tb);
-            printf("Table has been created.\n");
+            cout << "Table " << tableName << " has been created." << endl;
 		return;
 	}
 
@@ -539,20 +603,6 @@ void CommandInterpreter::printTable(std::vector<std::string> *v_command)
 	else
 	{
 		cout << "Error: Please give the name of the table" << endl;
-	}
-}
-
-int CommandInterpreter::findTable(string tableName)
-{
-	Table *target_table = this->database->getTable(tableName);
-	if (target_table == NULL)
-	{ // 找不到这个table
-		//printf("Error: The name of the table you want to search does not exist in this database.\n", tableName.c_str());
-		return 0;
-	}
-	else
-	{
-		return 1;
 	}
 }
 
