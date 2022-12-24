@@ -154,7 +154,7 @@ Our database can identify error cases and print error messages instead of crashi
 
 GUI(Graphical User Interface) is a feature for many modern Database Management Systems. This includes the MongoDB Compass for MongoDB, MySQL Workbench for MySQL, etc. Database GUIs provide simple, intuitive ways for users and developers to interact with the databases. 
 
-In this project, we also seek to explore more possibilities out of our original command-line implementation. Thus, we have also designed two GUI windows using Qt for interacting with our database. While we only designed the front-end GUI, we expect that it can be smoothly integrated with our command-line sources and can be a further improvement of this project. The source codes of the two GUI windows we have designed is located in the `gui/` directory, with detailed report and demo at its [README.md](http://README.md) file.
+In this project, we also seek to explore more possibilities out of our original command-line implementation. Thus, we have also designed two GUI windows using Qt for interacting with our database. While we only designed the front-end GUI, we expect that it can be smoothly integrated with our command-line sources and can be a further improvement of this project. The source codes of the two GUI windows we have designed is located in the `gui/` directory, with detailed report and demo at its [README.md](gui/README.md) file.
 
 # Summary
 
