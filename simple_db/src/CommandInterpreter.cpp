@@ -575,6 +575,9 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 	int whereIndex = -1;
 	for (int i = v_command.size() - 1; i >= 0; i--)
 	{
+		if(v_command[i].find(")") != string::npos){
+			break;
+		}
 		if (v_command[i].find("where") != string::npos)
 		{
 			whereIndex = i;
@@ -605,15 +608,29 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 	else if ((whereIndex - fromIndex > 3) || ((v_command.size() - fromIndex > 3) && (whereIndex == -1)))
 	{ // recursive
 		vector<string> input;
-		for (int i = fromIndex + 1; i < whereIndex; i++)
-		{
-			string temp = v_command[i];
-			if (temp.find(')') != string::npos)
+		if(whereIndex != -1){
+			for (int i = fromIndex + 1; i < whereIndex; i++)
 			{
-				temp = temp.substr(0, temp.length() - 1);
+				string temp = v_command[i];
+				if (temp.find(')') != string::npos)
+				{
+					temp = temp.substr(0, temp.length() - 1);
+				}
+				input.push_back(temp);
 			}
-			input.push_back(temp);
 		}
+		else{
+			for (int i = fromIndex + 1; i < v_command.size(); i++)
+			{
+				string temp = v_command[i];
+				if (temp.find(')') != string::npos)
+				{
+					temp = temp.substr(0, temp.length() - 1);
+				}
+				input.push_back(temp);
+			}
+		}
+		
 		tableSource = select(input);
 	}
 
@@ -690,6 +707,7 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 
 	return result;
 }
+
 
 bool CommandInterpreter::testCondition(vector<SchemaItem> schema, Row theRow, std::vector<std::string> conditionVector)
 {
