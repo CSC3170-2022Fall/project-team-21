@@ -8,7 +8,7 @@ This is our implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ
 - [ ] **Application with Database System(s)**
 - [x] **Implementation of a Database System**
 
-In this project, our group chooses Option 3 and creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original Java language templates in the [CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for the files and use different data structures as we see fit in the C++ language. 
+In this project, our group chooses Option 3 and creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original [Java templates in the CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for the organizing the repository and use different data structures as we see fit in the C++ language. 
 
 
 ## Team Members
@@ -145,10 +145,14 @@ Implementation detail:
 
 ## Crash prevention
 
-Our database can identify error cases and print error messages instead of crashing, adding robustness to our database. Such scenarios include:
+Our database can identify erroreous cases and print error messages instead of crashing, adding robustness to our database. Such scenarios include:
 
 1. user operates(select, print, store…) on a table that does not exist
 2. user “insert” values with numbers that does not match the number of columns
+
+The following screenshots illustrates the above features: 
+[ill](presentation/images/no_table.png)
+[ill1](presentation/images/col_exceed.png)
 
 ## Database GUI design
 
