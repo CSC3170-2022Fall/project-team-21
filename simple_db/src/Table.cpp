@@ -83,7 +83,6 @@ void  Table::printOut(){
 void Table::saveToFile(std::string fileName){
     // well, just find a way to make the database name as a directory,
     // and store the table in the directory
-    // string path = this->database->name + "_" + this->name + ".db";
     string path = "../../testing/database/" + this->database->name + "_" + this->name + ".db";
 
     ofstream onFile(path);

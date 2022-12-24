@@ -39,18 +39,14 @@ We use `CMake` to build our project, which allows our Databsse implementation to
     mkdir build && cd build
     cmake ..
     make
-    cd simple_db
-    ./simple_db
     ```
 
 - To run the executable file, goto the `build/simple_db` folder, run:
     ```bash
-    make
     ./simple_db
     ```
 - To run the unit test, go to the `build/testing/unit_test` folder, run:
     ```bash
-    make
     ./simple_db_test
     ```
 
