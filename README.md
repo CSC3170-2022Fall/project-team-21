@@ -30,6 +30,8 @@ Our team consists of the following members, listed in the table below (the team 
 ### Task allocation for team members
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
 
+### Project Presentation
+Our team members have presented on our database's implementations and additional functions. The full video is publicly available at [this Bilibili link](https://www.bilibili.com/video/BV1jM41117Lt/). As a supplement, the pdf version of the slides is available at [presentation.pdf](presentation/presentation.pdf). Because all our domestic team members are currently under COVID-19, after careful consideration about the condition of our presenters, we decided that all presenters in the zoom presenation can keep their camera off.
 
 ## Building and running the project
 We use `CMake` to build our project, which allows our Databsse implementation to have cross-platform support. (Ignore those warnings)
