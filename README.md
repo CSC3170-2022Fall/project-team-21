@@ -8,7 +8,7 @@ This is our implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ
 - [ ] **Application with Database System(s)**
 - [x] **Implementation of a Database System**
 
-In this project, our group creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original Java language templates in the [CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for the files and use different data structures as we see fit in the C++ language. 
+In this project, our group chooses Option 3 and creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original Java language templates in the [CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for the files and use different data structures as we see fit in the C++ language. 
 
 
 ## Team Members
@@ -30,80 +30,6 @@ Our team consists of the following members, listed in the table below (the team 
 ### Task allocation for team members
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
 
-## Project overall structure
-```bash
-. (root)
-├── CMakeLists.txt
-├── gui
-│   ├── Query_GUI
-│   │   ├── CMakeLists.txt
-│   │   ├── CMakeLists.txt.user
-│   │   ├── main.cpp
-│   │   ├── mainwindow.cpp
-│   │   ├── mainwindow.h
-│   │   └── mainwindow.ui
-│   ├── README.md
-│   ├── database_gui
-│   │   ├── CMakeLists.txt
-│   │   ├── CMakeLists.txt.user
-│   │   ├── main.cpp
-│   │   ├── mainwindow.cpp
-│   │   ├── mainwindow.h
-│   │   └── mainwindow.ui
-│   └── screenshots
-│       ├── ss_load_student.jpg
-│       ├── ss_qt_widget_app.jpg
-│       └── ss_query_tab.jpg
-├── project-description.md
-├── report
-│   ├── 3170proj_2.pptx
-│   └── images
-│       └── schemas_demo.png
-├── simple_db
-│   ├── CMakeLists.txt
-│   ├── README.md
-│   ├── include
-│   │   ├── CommandInterpreter.h
-│   │   ├── Conditions.h
-│   │   ├── Database.h
-│   │   ├── Row.h
-│   │   ├── SchemaItem.h
-│   │   └── Table.h
-│   └── src
-│       ├── CommandInterpreter.cpp
-│       ├── Conditions.cpp
-│       ├── Database.cpp
-│       ├── Row.cpp
-│       ├── SchemaItem.cpp
-│       ├── Table.cpp
-│       └── main.cpp
-├── task-allocation.md
-└── testing
-    ├── README.md
-    ├── create_table.sql
-    ├── database
-    │   ├── db_enrolled.db
-    │   ├── db_schedule.db
-    │   └── db_students.db
-    ├── delete_row.sql
-    ├── delete_table.sql
-    ├── demo_script.sql
-    ├── insert_into.sql
-    ├── load_table.sql
-    ├── print_table.sql
-    ├── select_table.sql
-    ├── store_table.sql
-    └── unit_test
-        ├── CMakeLists.txt
-        ├── Lib
-        │   └── redbud
-        │       ├── io
-        │       │   └── color.h
-        │       └── platform.h
-        ├── README.md
-        ├── test.cpp
-        └── test.h
-```
 
 ## Building and running the project
 We use `CMake` to build our project, which allows our Databsse implementation to have cross-platform support. (Ignore those warnings)
@@ -140,9 +66,16 @@ The source codes for our Database Command-line implementation is located in the 
 `main.cpp`: This is the driver code for the application.
 
 ## Implementation details
-Each class has some functionalities. First of all, the class Row consists of getValues and setValues. SchemaItem consists of getName, getType, and getTypeFromString. Class Table will use both row and SchemaItem class. The class table will consist of row operations like getting, removing, and inserting the row. Furthermore, it is also used to print, load, and save the table. This table class will be used to construct the database class. The database class has several functionalities: add, remove, and get a table. Moreover, it also has functions to execute and save the database. For the CommandInterpreter, it is used to interpret the user input and execute the command to produce the desired result. It covers some standard syntaxes similar to SQL, such as create, delete, insert, load, store, print, and many more. Furthermore, it also has some additional features like guessing the user input.
 
-In the end, our database management system will realize two-way data transfer with .db file , create tables, insert rows into existing tables, print tables and other functions. In addition to this, we will implement Select clauses, which are used in select statements and in create statements. They denote tables whose information is selected from other tables. 
+We adopt the object-oriented approach for our implementation.
+The following figure show the workflow of our database. 
+![Untitled](presentation/images/Untitled.png)
+To implement the specific database and related methods, we divide it into a number of classes, such as `Row` class, `SchemaItem` class, `Table` class, `CommandInterpreter` class and `Database` class.
+
+The `Row` class serves as the underlying storage unit for information about tables in the database, and it records row information. `SchemaItem` class is used to Records tables’ schemas. Its structure and methods are similar to `Row` class. The class `Table` consists of row operations including getting, removing, and inserting the row. Furthermore, it is also used to print, load, and save the table. This table class will be used to construct the database class. The `database` class has several functionalities: add, remove, and get a table. Moreover, it also has functions to execute and save the database. For the `CommandInterpreter`, it is used to interpret the user input and execute the command to produce the desired result. It covers some standard syntaxes similar to SQL, such as create, delete, insert, select, load, store, print, and many more. it first decomposes the command using the token variable with the `tokenizer`, and then processes the parsed commands case by case. 
+
+
+
 
 ## Command Specifications
 
@@ -167,7 +100,6 @@ In the end, our database management system will realize two-way data transfer wi
     - `help`: print out help message
 
 
-![Untitled](presentation/images/Untitled.png)
 
 # Project Demo
 
@@ -241,9 +173,4 @@ As we finish the journey, we want to thank our instructor in the CSC3170 course,
 | Darren Boesono | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
 
 This project deepens our knowledge of a database system. There is indeed something that needs to be improved, such as the efficiency and still needs better support of larger-scale databases. Hopefully, we can make it better in the future.
-
-![Untitled](presentation/images/Untitled%208.png)
-
-![Untitled](presentation/images/Untitled%209.png)
-
 
