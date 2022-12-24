@@ -167,22 +167,83 @@ In the end, our database management system will realize two-way data transfer wi
     - `help`: print out help message
 
 
-### Additional commands
-Switch database
+![Untitled](presentation/images/Untitled.png)
 
-## Project Demo
-<!-- include screenshots -->
-![schemas](images/schemas_demo.png)
+# Project Demo
 
-## Additional Features
-### Errorneous command correction
-### Crash prevention
-When a file is not present when loaded, 
-When a table is not present
-### GUI
-<!-- Please fill in  -->
+Consider a scenario where we want to use our database to record information about students and courses in our university. We have already provided three sample tables with information and can be directly loaded: `students1`, `enrolled1`, and `schedule1`.
 
+![Untitled](presentation/images/Untitled%201.png)
 
+We could use the following query to extract all recorded courses taught by SDS (School of Data Science):
 
+![Untitled](presentation/images/Untitled%202.png)
+
+From the above table, we could extract the courses taught in Year 2022:
+
+![Untitled](presentation/images/Untitled%203.png)
+
+We could try a more complicated command by extracting the grades of the studens who took the above course, “data-structures”:
+
+![Untitled](presentation/images/Untitled%204.png)
+
+We could create a new table and insert data into it, store it to the disk so that the next time we could restore the contents we have added.
+
+![Untitled](presentation/images/Untitled%205.png)
+
+We could verify this by restarting the application and load the “department” table. Here we can also delete specific row in a way similar to the `select` clause.
+
+![Untitled](presentation/images/Untitled%206.png)
+
+# Additional Features
+
+Besides the handling of query commands, we develop additional features in our database system.
+
+## Spelling error corrections
+
+Our database can provide “hints” for the user‘s command if the user gives a wrong one.
+
+Implementation detail:
+
+1. compare the user input with each of the standard SQL commands (select, create, print…)
+2. the function `lcs(string a, string b)` obtains the length of longest common substring between 2 strings
+3. the SQL command with lcs() value larger than threshold will be the possible input, and give user a hint
+
+![Untitled](presentation/images/Untitled%207.png)
+
+## Crash prevention
+
+Our database can identify error cases and print error messages instead of crashing, adding robustness to our database. Such scenarios include:
+
+1. user operates(select, print, store…) on a table that does not exist
+2. user “insert” values with numbers that does not match the number of columns
+
+## Database GUI design
+
+GUI(Graphical User Interface) is a feature for many modern Database Management Systems. This includes the MongoDB Compass for MongoDB, MySQL Workbench for MySQL, etc. Database GUIs provide simple, intuitive ways for users and developers to interact with the databases. 
+
+In this project, we also seek to explore more possibilities out of our original command-line implementation. Thus, we have also designed two GUI windows using Qt for interacting with our database. While we only designed the front-end GUI, we expect that it can be smoothly integrated with our command-line sources and can be a further improvement of this project. The source codes of the two GUI windows we have designed is located in the `gui/` directory, with detailed report and demo at its [README.md](http://README.md) file.
+
+# Summary
+
+The implementation of this project is an unforgettable and successful one, where we collaborately utilized our own strengths to finish implementing most of the SQL functions ourselves in C++. 
+
+As we finish the journey, we want to thank our instructor in the CSC3170 course, Clement Leung, and our kind TA Whiskey Cai for giving us such opportunity and their substantial help during our implementation. We want to thank every team member for actively contributing to this project. Here is a summary of their major contributions: 
+
+| Student Name | Major contributions |
+| --- | --- |
+| 李珈祺 | Team leader, provided initial project structure and header files, implemented the codes for create table, insert, and pretty-printing the table. Tested the database and helped with writing the README.md |
+| 刘起 | Implemented the codes for select clause, implemented the load and store and print features, helped with testing and adding robustness support |
+| 连珈玮 | Implemented theDatabase class and helped with implementing load and store features, organized our repository structure neatly, wrote CMake script to build the whole project, added unit test module for testing |
+| 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
+| 杨亮 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
+| Yohanes James | Designed and implemented the two GUI windows in Qt, finished a detailed report on that |
+| Darren Boesono | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
+
+This project deepens our knowledge of a database system. There is indeed something that needs to be improved, such as the efficiency and still needs better support of larger-scale databases. Hopefully, we can make it better in the future.
+
+![Untitled](presentation/images/Untitled%208.png)
+
+![Untitled](presentation/images/Untitled%209.png)
 
 
