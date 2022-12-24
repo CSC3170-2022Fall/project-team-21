@@ -169,8 +169,8 @@ As we finish the journey, we want to thank our instructor in the CSC3170 course,
 | 连珈玮 | Implemented theDatabase class and helped with implementing load and store features, organized our repository structure neatly, wrote CMake script to build the whole project, added unit test module for testing |
 | 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
 | 杨亮 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
-| Yohanes James | Designed and implemented the two GUI windows in Qt, finished a detailed report on that |
-| Darren Boesono | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
+| Darren Boesono | Designed and implemented the two GUI windows in Qt, finished a detailed report on that |
+| Yohanes James | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
 
 This project deepens our knowledge of a database system. There is indeed something that needs to be improved, such as the efficiency and still needs better support of larger-scale databases. Hopefully, we can make it better in the future.
 
