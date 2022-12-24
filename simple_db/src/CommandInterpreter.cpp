@@ -108,6 +108,92 @@ int CommandInterpreter::findTable(string tableName)
 	}
 }
 
+int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
+      //判断table是否存在
+      int cri = 1;   //有没错误
+      int fromIndex;  //from
+      for (int i = 1; i < v_command.size(); i++)
+      {
+            if (v_command[i].find("from") != string::npos)
+            {
+                  fromIndex = i;
+                  break;
+            }
+      }
+      int whereIndex = -1; //where
+      for (int i = v_command.size() - 1; i >= 0; i--)
+      {
+            if(v_command[i].find(")") != string::npos){
+                  break;
+            }
+            if (v_command[i].find("where") != string::npos)
+            {
+                  whereIndex = i;
+                  break;
+            }
+      }
+      int tableNum;
+      if (whereIndex == -1){  //select语句中没有where
+            tableNum = v_command.size() - fromIndex - 1;
+      }
+      else{
+            tableNum = whereIndex - fromIndex - 1; 
+      }
+      string tableName;
+      // int find;
+      vector<SchemaItem> allSchema;
+      //vector<string> allSchema;
+
+      for (int i = 0; i < tableNum; i++){
+            tableName = v_command[fromIndex + i + 1];
+            // if (tableName.find(',') != string::npos)
+            if (   tableName[tableName.length() - 1] == ',' )
+            {
+                  tableName = tableName.substr(0, tableName.length() - 1);
+            }
+            Table *target_table = this->database->getTable(tableName);
+            if (target_table == NULL){  //找不到这个表
+                  cout << "Error: cannot find the table " << tableName << " in the database." << endl;
+                  cri = 0;
+                  return cri;
+            }
+            else{
+                  allSchema.insert(allSchema.end(), (target_table->schema).begin(), (target_table->schema).end());
+            }
+      }
+
+      //判断列名是否存在
+      string columnName;
+      bool find;
+      if (v_command[1] != "*"){
+            //逐个逐个列名找
+            for (int i = 1; i < fromIndex; i++){
+                  find = false;
+                  columnName = v_command[i];
+                  // cout << columnName << endl;
+                  if (   columnName[columnName.length() - 1] == ',' )
+                  {
+                        columnName = columnName.substr(0, columnName.length() - 1);
+                  }
+                  for (int j = 0; j < allSchema.size(); j++){
+                        if (columnName == allSchema[j].name){
+                              find = true;
+                              break;
+                        }
+                  }
+                  if (find == false){
+                        cri = 0;
+                        cout << "Error: cannot find the column name " << columnName << " in the table you want to search." << endl;
+                        return cri;
+                  }
+                  
+            }
+      }
+
+      return cri;
+
+}
+
 void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 {
 	this->database = db;
@@ -130,61 +216,13 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		// 		break;
 		// 	}
 		// }
-            
-            //detect whether the table does not exist
-            int cri = 1;   //有没错误
-            int fromIndex;  //from
-            for (int i = 1; i < v_command.size(); i++)
-            {
-                  if (v_command[i].find("from") != string::npos)
-                  {
-                        fromIndex = i;
-                        break;
-                  }
-            }
-            int whereIndex = -1; //where
-            for (int i = v_command.size() - 1; i >= 0; i--)
-            {
-                  if(v_command[i].find(")") != string::npos){
-                        break;
-                  }
-                  if (v_command[i].find("where") != string::npos)
-                  {
-                        whereIndex = i;
-                        break;
-                  }
-            }
-            int table_num;
-            if (whereIndex == -1){  //select语句中没有where
-                  table_num = v_command.size() - fromIndex - 1;
-            }
-            else{
-                  table_num = whereIndex - fromIndex - 1; 
-            }
-            string tableName;
-            int find;
-            for (int i = 0; i < table_num; i++){
-                  tableName = v_command[fromIndex + i + 1];
-                  // if (tableName.find(',') != string::npos)
-                  if (   tableName[tableName.length() - 1] == ',' )
-                  {
-                        tableName = tableName.substr(0, tableName.length() - 1);
-                  }
-                  find = findTable(tableName);
-                  if (find == 0){  //找不到这个表
-                        cout << "Error: cannot find the table " << tableName << " in the database." << endl;
-                        cri = 0;
-                        break;
-                  }
-
-            }
-            
 
 		// if((cri == 0) && (v_command.size() == 4)){
 			
 		// 	printf("Error: This table does not exist\n");
 		// }
 		// else{
+            int cri = judgeSelect(v_command);   //validity check for whether the table and column exists
             if (cri == 1){
                   printf("Search results:\n");
 			Table tb = select(v_command);
@@ -714,6 +752,8 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 					sctemp = tableSource.schema[j];
 					schemaRusult.push_back(sctemp);
 				}
+
+
 			}
 		}
 	}
@@ -1172,50 +1212,3 @@ int CommandInterpreter::lcs(string a, string b)
 	return arr[n - 1][m - 1]; // 返回最长公共子字符串长度.
 }
 
-/*
-guess the input of the user,
-for example, if user make a typo: "crate table",
-the databse system will ask the user whether he/she means "create table"
-*/
-// void CommandInterpreter::guessUserInput(std::vector<std::string> v_command)
-// {
-//       string input;
-//       input = v_command[0].substr(0, 2);
-//       if (input == "cr")
-//       {
-//             printf("Do you mean command 'create table'?\n");
-//       }
-//       else if (input == "lo")
-//       {
-//             printf("Do you mean command 'load'?\n");
-//       }
-//       else if (input == "st")
-//       {
-//             printf("Do you mean command 'store'?\n");
-//       }
-//       else if (input == "in")
-//       {
-//             printf("Do you mean command 'insert into'?\n");
-//       }
-//       else if (input == "pr")
-//       {
-//             printf("Do you mean command 'print'?\n");
-//       }
-//       else if (input == "qu")
-//       {
-//             printf("Do you mean command 'quit'?\n");
-//       }
-//       else if (input == "ex")
-//       {
-//             printf("Do you mean command 'exit'?\n");
-//       }
-//       else if (input == "se")
-//       {
-//             printf("Do you mean command 'select'?\n");
-//       }
-//       else if (input == "//")
-//       {
-//             printf("Do you want to make comments? Please use '/*' to begin with your commands.\n");
-//       }
-//       printf("Type in 'help' or 'h' for more help.\n");
-// }
