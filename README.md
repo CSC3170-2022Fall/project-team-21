@@ -8,7 +8,7 @@ This is our implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ
 - [ ] **Application with Database System(s)**
 - [x] **Implementation of a Database System**
 
-In this project, our group chooses Option 3 and creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original [Java templates in the CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for the organizing the repository and use different data structures as we see fit in the C++ language. 
+In this project, our group chooses Option 3 and creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original [Java templates in the CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for organizing the repository and use different data structures as we see fit in the C++ language. 
 
 
 ## Team Members
