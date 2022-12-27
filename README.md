@@ -10,6 +10,8 @@ This is our implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ
 
 In this project, our group chooses Option 3 and creates a miniature relational database management system (DBMS) similar to [UCB CS61B, Fall 2014 project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/proj1.pdf). Moreover, we adopt identical commands with the SQL language to achieve CRUD (Create, read, update and delete) operations on the tables. Our group decided to use C++ language instead of the original [Java templates in the CS61B project](https://inst.eecs.berkeley.edu/~cs61b/fa14/hw/code/proj1/). This means we have built our project from the ground up and make our own structure for organizing the repository and use different data structures as we see fit in the C++ language. 
 
+## Project Presentation
+Our team members have presented on our database's implementations and additional functions. The full video is publicly available at [this Bilibili link](https://www.bilibili.com/video/BV1jM41117Lt/). As a supplement, the pdf version of the slides is available at [this link](presentation/presentation.pdf). Because all our domestic team members are currently under COVID-19, after careful consideration about the condition of our presenters, we decided that all presenters in the zoom presentation can keep their camera off.
 
 ## Team Members
 
@@ -29,9 +31,6 @@ Our team consists of the following members, listed in the table below (the team 
 
 ### Task allocation for team members
 Please refer to [task-allocation.md](task-allocation.md) for the detailed task allocation throughout the process of building our project.
-
-### Project Presentation
-Our team members have presented on our database's implementations and additional functions. The full video is publicly available at [this Bilibili link](https://www.bilibili.com/video/BV1jM41117Lt/). As a supplement, the pdf version of the slides is available at [this link](presentation/presentation.pdf). Because all our domestic team members are currently under COVID-19, after careful consideration about the condition of our presenters, we decided that all presenters in the zoom presentation can keep their camera off.
 
 ## Building and running the project
 We use `CMake` to build our project, which allows our Database implementation to have cross-platform support. First, please make sure your computer has `CMake` installed or install it [here](https://cmake.org/install/). If you're on a Windows machine, we recommand additionally installing MinGW following [this link](https://www.ics.uci.edu/~pattis/common/handouts/mingweclipse/mingw.html).
