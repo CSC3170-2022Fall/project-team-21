@@ -10,6 +10,7 @@
 class Table
 {
 public:
+    std::string name;
     std::vector<Row> rows;
     std::vector<SchemaItem> schema;   
     Database *database; // the db it belongs to
@@ -20,7 +21,6 @@ public:
 
     // Function to pretty-print the table in the console
     void printOut();
-    void saveToFile(std::string fileName);
     Row getRowAt(int idx);
     void removeRowAt(int idx);
     // insert new row
@@ -29,8 +29,8 @@ public:
     int getSize();  // just return the size of the rows vector
 
     static Table loadFromFile(std::string fileName, std::string databaseName);
+    void saveToFile(std::string fileName);
 
-    std::string name;
     std::string getSchema();
 private:
 
