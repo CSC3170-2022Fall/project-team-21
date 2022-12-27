@@ -3,22 +3,28 @@
 
 #include <string>
 
-// maybe need to support more. 
+// maybe need to support more.
 
-enum DataType {
+enum DataType
+{
     DB_INT,
     DB_FLOAT,
     DB_STRING
 };
 
 // A column in a table
-class SchemaItem {
-    public:
-        std::string getName();
-        std::string getType();  // convert the enum to string
-        std::string name;
-        DataType type;
-        std::string length_restriction; // well maybe we don't need this
+class SchemaItem
+{
+public:
 
-        static DataType getTypeFromString(std::string type);
+    SchemaItem();
+    SchemaItem(std::string name, DataType type);
+
+    std::string getName();
+    std::string getType(); // convert the enum to string
+    static DataType getTypeFromString(std::string type);
+
+    std::string name;
+    DataType type;
+    std::string length_restriction; // well maybe we don't need this
 };
