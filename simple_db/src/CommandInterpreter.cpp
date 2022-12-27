@@ -181,7 +181,7 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
             {
                   tableName = tableName.substr(0, tableName.length() - 1);
             }
-			if (tableName.find(')') != string::npos)
+			while (tableName.find(')') != string::npos)  //没有where跟在后面的话，可能会嵌套很多个）括号,所以要删掉好几个）号
             // if (   tableName[tableName.length() - 1] == ',' )
             {
                   tableName = tableName.substr(0, tableName.length() - 1);
