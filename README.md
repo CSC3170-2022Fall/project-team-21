@@ -42,10 +42,11 @@ We use `CMake` to build our project, which allows our Database implementation to
     make
     ```
 
-- To build from source on Windows machines with MinGW installed, first go to the project root directory, then type the following commands on PowerShell:
+- To build from source on Windows machines with MinGW installed, first go to the project root directory by `cd` into it, then type the following commands on PowerShell:
 
     ```bash
-    mkdir build && cd build
+    mkdir build
+    cd build
     cmake -G "MinGW Makefiles" ..
     mingw32-make
     ```
