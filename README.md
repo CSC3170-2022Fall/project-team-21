@@ -34,14 +34,26 @@ Please refer to [task-allocation.md](task-allocation.md) for the detailed task a
 Our team members have presented on our database's implementations and additional functions. The full video is publicly available at [this Bilibili link](https://www.bilibili.com/video/BV1jM41117Lt/). As a supplement, the pdf version of the slides is available at [this link](presentation/presentation.pdf). Because all our domestic team members are currently under COVID-19, after careful consideration about the condition of our presenters, we decided that all presenters in the zoom presentation can keep their camera off.
 
 ## Building and running the project
-We use `CMake` to build our project, which allows our Databsse implementation to have cross-platform support. (Ignore those warnings)
+We use `CMake` to build our project, which allows our Database implementation to have cross-platform support. First, please make sure your computer has `CMake` installed or install it [here](https://cmake.org/install/). If you're on a Windows machine, we recommand additionally installing MinGW following [this link](https://www.ics.uci.edu/~pattis/common/handouts/mingweclipse/mingw.html).
 
-- To build from the source, please go to the root directory, then run:
+- To build from the source, please go to the project root directory, then, on macOS and linux, the commands are:
     ```bash
     mkdir build && cd build
     cmake ..
     make
     ```
+
+On Windows machines with MinGW installed, first go to the project root directory, then you could build with:
+    ```bash
+    mkdir build && cd build
+    cmake -G "MinGW Makefiles" ..
+    mingw32-make
+    ```
+
+For Windows users, alternatively, if you have Visual Studio with Visual C++ installed, you could set the CMake to output a Visual Studio Solution file and open and build with Visual Studio. Here we do not illustrate this method further.
+
+
+
 
 - To run the executable file, go to the `build/simple_db` folder, run:
     ```bash
