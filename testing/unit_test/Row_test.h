@@ -35,24 +35,36 @@ namespace row_test
 
     }
 
-    void check_setValue()
+    void check_setValue(Row row)
     {
+        std::vector<std::string> new_value = {"this", "is", "a", "test"};
+        row.setValues(new_value);
+        std::vector<std::string> after_set_row_value = row.getValues();
+        
+        COUT(new_value);
+        COUT(after_set_row_value);
+
+        EXPECT_CON_EQ(new_value, after_set_row_value);
+
     }
 
     void row_test()
     {
 
         std::cout << "[===============================================================]" << std::endl;
-        std::cout << "[----------------- Run container test : deque ------------------]" << std::endl;
+        std::cout << "[------------------------ Run row test -------------------------]" << std::endl;
 
+        std::cout << "====================" << std::endl;
         std::cout << "Check row size" << std::endl;
         check_size(row, row_value);
 
+        std::cout << "====================" << std::endl;
         std::cout << "Check row values" << std::endl;
         check_value(row, row_value);
 
+        std::cout << "====================" << std::endl;
         std::cout << "Check Row::setValues" << std::endl;
-        check_setValue();
+        check_setValue(row);
 
         PASSED;
     }
