@@ -43,7 +43,7 @@ We use `CMake` to build our project, which allows our Databsse implementation to
     make
     ```
 
-- To run the executable file, goto the `build/simple_db` folder, run:
+- To run the executable file, go to the `build/simple_db` folder, run:
     ```bash
     ./simple_db
     ```
@@ -174,7 +174,7 @@ As we finish the journey, we want to thank our instructor in the CSC3170 course,
 | 李珈祺 | Team leader, provided initial project structure and header files, implemented the codes for create table, insert, and pretty-printing the table. Tested the database and helped with writing the README.md |
 | 刘起 | Implemented the codes for select clause, implemented the load and store and print features, helped with testing and adding robustness support |
 | 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
-| 杨亮 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
+| 杨亮 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the spelling error corrections and helped enhance crash prevention features |
 | Darren Boesono | Designed and implemented the two GUI windows in Qt, finished a detailed report on that |
 | Yohanes James | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
 | 连珈玮 | Implemented the Database class and helped with implementing load and store features, organized our repository structure neatly, wrote CMake script to build the whole project, added unit test module for testing |
