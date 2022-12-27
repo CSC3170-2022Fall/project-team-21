@@ -148,7 +148,7 @@ Table Table::loadFromFile(std::string tableName, std::string databaseName){
             if(line == 0){
                 SchemaItem item;
                 item.name = stringIntoTable;
-                item.type = STRING;
+                item.type = DB_STRING;
                 schema.push_back(item);
             }
             else{
@@ -165,7 +165,7 @@ Table Table::loadFromFile(std::string tableName, std::string databaseName){
             if(line == 0){
                 SchemaItem item;
                 item.name = stringIntoTable;
-                item.type = STRING;
+                item.type = DB_STRING;
                 schema.push_back(item);
             }
             else{
