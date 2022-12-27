@@ -111,30 +111,60 @@ int CommandInterpreter::findTable(string tableName)
 int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
       //判断table是否存在
       int cri = 1;   //有没错误
+	  int selectIndex;  //select
+    
+	  for (int i = v_command.size() - 1; i >= 0; i--)
+      {
+            if (v_command[i].find("select") != string::npos) //考虑到可能有“（select”这种情况出现
+            {
+                  selectIndex = i;	 //找最后一次出现select的位置索引
+                  break;
+            }
+      }
+	  //cout << selectIndex << " ";
       int fromIndex;  //from
-      for (int i = 1; i < v_command.size(); i++)
+   
+	  for (int i = v_command.size() - 1; i >= 0; i--)
       {
             if (v_command[i].find("from") != string::npos)
             {
-                  fromIndex = i;
+                  fromIndex = i;	 //找最后一次出现from的位置索引
                   break;
             }
       }
-      int whereIndex = -1; //where
-      for (int i = v_command.size() - 1; i >= 0; i--)
+	  //cout << fromIndex << " ";
+
+	  int parenthesisIndex = -1;
+	  for (int i = (fromIndex + 1); i < v_command.size(); i++)
       {
             if(v_command[i].find(")") != string::npos){
-                  break;
-            }
-            if (v_command[i].find("where") != string::npos)
-            {
-                  whereIndex = i;
+				  parenthesisIndex = i;
                   break;
             }
       }
+	  //cout << parenthesisIndex << " ";
+
+	  if (parenthesisIndex == -1)   //当然，并不是每个select命令都有括号（即不是嵌套select时）
+	  {
+			parenthesisIndex = v_command.size() - 1;
+	  }
+
+      int whereIndex = -1; //where
+      //for (int i = v_command.size() - 1; i >= 0; i--)
+	  for (int i = (fromIndex + 1); i < parenthesisIndex; i++)
+      {
+            if (v_command[i].find("where") != string::npos)
+            {
+                  whereIndex = i;	 //找与最后一个select在同一个括号内的where的位置索引
+                  break;
+            }
+      }
+	  //cout << whereIndex << " ";
+	  
       int tableNum;
       if (whereIndex == -1){  //select语句中没有where
-            tableNum = v_command.size() - fromIndex - 1;
+            // tableNum = parenthesisIndex - fromIndex - 1;
+			tableNum = parenthesisIndex - fromIndex;
       }
       else{
             tableNum = whereIndex - fromIndex - 1; 
@@ -146,8 +176,13 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
 
       for (int i = 0; i < tableNum; i++){
             tableName = v_command[fromIndex + i + 1];
-            // if (tableName.find(',') != string::npos)
-            if (   tableName[tableName.length() - 1] == ',' )
+            if (tableName.find(',') != string::npos)
+            // if (   tableName[tableName.length() - 1] == ',' )
+            {
+                  tableName = tableName.substr(0, tableName.length() - 1);
+            }
+			if (tableName.find(')') != string::npos)
+            // if (   tableName[tableName.length() - 1] == ',' )
             {
                   tableName = tableName.substr(0, tableName.length() - 1);
             }
@@ -161,13 +196,22 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
                   allSchema.insert(allSchema.end(), (target_table->schema).begin(), (target_table->schema).end());
             }
       }
+	//   cout << tableNum << " ";
+	//   cout << tableName << " ";
+
+	//   for (int i = 0; i < allSchema.size(); i++){
+	// 		cout << allSchema[i].name << " ";
+	//   }
+
+	  //cout << tableName << " ";
 
       //判断列名是否存在
       string columnName;
       bool find;
-      if (v_command[1] != "*"){
+	  //select 列名 from
+      if (v_command[selectIndex + 1] != "*"){
             //逐个逐个列名找
-            for (int i = 1; i < fromIndex; i++){
+            for (int i = (selectIndex + 1); i < fromIndex; i++){
                   find = false;
                   columnName = v_command[i];
                   // cout << columnName << endl;
