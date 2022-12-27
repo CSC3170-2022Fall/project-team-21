@@ -6,9 +6,9 @@
 // maybe need to support more. 
 
 enum DataType {
-    INT,
-    FLOAT,
-    STRING
+    DB_INT,
+    DB_FLOAT,
+    DB_STRING
 };
 
 // A column in a table
