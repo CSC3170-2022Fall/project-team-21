@@ -6,6 +6,10 @@
 #include "SchemaItem.h"
 #include "Table.h"
 #include "test.h"
+#include "unittest.h"
+
+
+#include "Lib/redbud/io/color.h"
 
 int main()
 {
