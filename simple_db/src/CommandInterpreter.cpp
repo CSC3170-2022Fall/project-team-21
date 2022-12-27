@@ -108,25 +108,39 @@ int CommandInterpreter::findTable(string tableName)
 	}
 }
 
+//只能判别最后一个select子查询
 int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
       //判断table是否存在
       int cri = 1;   //有没错误
 	  int selectIndex;  //select
-    
+      
+	  string temp;
 	  for (int i = v_command.size() - 1; i >= 0; i--)
       {
-            if (v_command[i].find("select") != string::npos) //考虑到可能有“（select”这种情况出现
+		    temp = v_command[i];
+			for (int j = 0; j < temp.length(); j++){
+				temp[j] = tolower(temp[j]);
+			}
+			if (temp.find("select") != string::npos) //考虑到可能有“（select”这种情况出现
+            // if (v_command[i].find("select") != string::npos) //考虑到可能有“（select”这种情况出现
             {
                   selectIndex = i;	 //找最后一次出现select的位置索引
+				  //cout << temp << " ";
                   break;
             }
       }
 	  //cout << selectIndex << " ";
+	
       int fromIndex;  //from
    
 	  for (int i = v_command.size() - 1; i >= 0; i--)
       {
-            if (v_command[i].find("from") != string::npos)
+			temp = v_command[i];
+			for (int j = 0; j < temp.length(); j++){
+				temp[j] = tolower(temp[j]);
+			}
+			// if (v_command[i].find("from") != string::npos)
+            if (temp.find("from") != string::npos)
             {
                   fromIndex = i;	 //找最后一次出现from的位置索引
                   break;
@@ -153,8 +167,14 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
       //for (int i = v_command.size() - 1; i >= 0; i--)
 	  for (int i = (fromIndex + 1); i < parenthesisIndex; i++)
       {
-            if (v_command[i].find("where") != string::npos)
+			temp = v_command[i];
+			for (int j = 0; j < temp.length(); j++){
+				temp[j] = tolower(temp[j]);
+			}
+            // if (v_command[i].find("where") != string::npos)
+			if (temp.find("where") != string::npos)
             {
+				  //cout << temp << " ";
                   whereIndex = i;	 //找与最后一个select在同一个括号内的where的位置索引
                   break;
             }
@@ -289,6 +309,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	}
 	else if (v_command[0] == "delete")
 	{
+		std::transform(v_command[1].begin(), v_command[1].end(), v_command[1].begin(), ::tolower);
 		if (v_command[1] == "table")
 		{
 			deleteTable(&v_command);
@@ -345,7 +366,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		printf("    print <table name>;'\n");
 		printf("    quit;\n");
 		printf("    exit;\n");
-            printf("    delete from <table name> (<conditional clause>)\n");
+    	printf("    delete from <table name> (<conditional clause>)\n");
 		printf("    select <column name> from <table name> <conditional clause>;\n");
 		printf("    select <column name> from <table name1>,<table name2> <conditional clause>;\n");
 	}
@@ -441,11 +462,17 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 
 	vector<string> values;
 
-	// get the pos of "values" or "VALUES"
+	// get the pos of "values" or "VALUES"...(regardless of arbitrary upper cases or lower cases)
 	int pos = 0;
+	string temp;
 	for (int i = 0; i < v_command->size(); i++)
 	{
-		if (v_command->at(i) == "values" || v_command->at(i) == "VALUES")
+		temp = v_command->at(i);
+		for (int j = 0; j < temp.length(); j++){
+			temp[j] = tolower(temp[j]);
+		}
+		// if (v_command->at(i) == "values" || v_command->at(i) == "VALUES")
+		if (temp == "values")
 		{
 			pos = i;
 			break;
@@ -508,7 +535,7 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 		return;
 	}
 	target_table->insertLast(newRow);
-      printf("Insert process completed.\n");
+    printf("Insert process completed.\n");
 }
 
 void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
@@ -550,13 +577,13 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 
 	string tableName = v_command->at(2);
 
-	// name already exists
-	Table *target_table = this->database->getTable(tableName);
-	if (target_table != NULL)
-	{
-	      cout << "Error: The name of the table (" << tableName << ") already exists in this database."<< endl;
-		return;
-	}
+	//name already exists
+	// Table *target_table = this->database->getTable(tableName);
+	// if (target_table != NULL)
+	// {
+	//     cout << "Error: The name of the table (" << tableName << ") already exists in this database."<< endl;
+	// 	return;
+	// }
 
 	vector<SchemaItem> schema;
 
@@ -593,13 +620,23 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 	//       }
 	// }
 
-	// delete the "as"
-	if (v_command->at(3) == "as")
+	// delete the "as"'
+	string temp;
+	temp = v_command->at(3);
+	for (int i = 0; i < temp.length(); i++){
+		temp[i] = tolower(temp[i]);
+	}
+	// if ((v_command->at(3) == "as") || (v_command->at(3) == "AS"))
+	if (temp == "as")
 	{
 		v_command->erase(v_command->begin() + 3);
 	}
-
-	if (v_command->at(3) == "select")
+	temp = v_command->at(3);
+	for (int i = 0; i < temp.length(); i++){
+		temp[i] = tolower(temp[i]);
+	}
+	// if ((v_command->at(3) == "select") || (v_command->at(3) == "SELECT"))
+	if (temp == "select")
 	{
 		// create v_command copy starting from 4
 		vector<string> v_command_copy;
@@ -610,7 +647,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		Table tb = select(v_command_copy);
 		tb.name = tableName;
 		this->database->tables.push_back(tb);
-            cout << "Table " << tableName << " has been created." << endl;
+        cout << "Table " << tableName << " has been created." << endl;
 		return;
 	}
 
@@ -641,7 +678,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 	}
 	Table newTable = Table(tableName, schema);
 	this->database->addTable(newTable);
-      cout << "Table " << tableName << " has been created." << endl;
+    cout << "Table " << tableName << " has been created." << endl;
 }
 void CommandInterpreter::exitCommand()
 {
@@ -695,10 +732,16 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 	vector<Row> rowsRusult;
 	vector<SchemaItem> schemaRusult;
 
+	string tmp;
 	int fromIndex;
 	for (int i = 1; i < v_command.size(); i++)
 	{
-		if (v_command[i].find("from") != string::npos)
+		tmp = v_command[i];
+		for (int j = 0; j < tmp.length(); j++){
+			tmp[j] = tolower(tmp[j]);
+		}
+		if (tmp.find("from") != string::npos)
+		// if (v_command[i].find("from") != string::npos)
 		{
 			fromIndex = i;
 			break;
@@ -710,7 +753,12 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 		if(v_command[i].find(")") != string::npos){
 			break;
 		}
-		if (v_command[i].find("where") != string::npos)
+		tmp = v_command[i];
+		for (int j = 0; j < tmp.length(); j++){
+			tmp[j] = tolower(tmp[j]);
+		}
+		// if (v_command[i].find("where") != string::npos)
+		if (tmp.find("where") != string::npos)
 		{
 			whereIndex = i;
 			break;
@@ -1070,9 +1118,15 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 	tableSours = *(this->database->getTable(tableName));
 
 	int whereIndex = -1;
+	string temp;
 	for (int i = v_command.size() - 1; i >= 0; i--)
 	{
-		if (v_command[i].find("where") != string::npos)
+		temp = v_command[i];
+		for (int j = 0; j < temp.length(); j++){
+			temp[j] = tolower(temp[j]);
+		}
+		// if (v_command[i].find("where") != string::npos)
+		if (temp.find("where") != string::npos)
 		{
 			whereIndex = i;
 			break;
@@ -1110,7 +1164,7 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 
 	this->database->removeTable(tableName);
 	this->database->addTable(tableSours);
-      printf("Delete row process completed.\n");
+    printf("Delete row process completed.\n");
 }
 
 /*
@@ -1133,7 +1187,7 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	// 有新的操作时就再往后加
 	std::string i = "/*";
 	std::string j = "quit";
-      std::string k = "delete";
+    std::string k = "delete";
 
 	int a1 = lcs(a, b);
 	int a2 = lcs(a, c);
