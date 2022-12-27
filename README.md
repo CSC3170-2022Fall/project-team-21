@@ -184,7 +184,7 @@ In this project, we also seek to explore more possibilities out of our original 
 
 The implementation of this project is an unforgettable and successful one. In this project, we collaboratively utilized our own strengths to finish implementing the SQL functions ourselves in C++. 
 
-As we finish the journey, we want to thank our instructor in the CSC3170 course, Clement Leung, and our kind TA, Whiskey, for giving us such opportunity and their substantial help during our implementation. We want to thank every team member for actively contributing to this project. Here is a summary of their major contributions: 
+As we finish the journey, we want to thank our instructor in the CSC3170 course, Clement Leung, and our kind TA, Whisky, for giving us such opportunity and their substantial help during our implementation. We want to thank every team member for actively contributing to this project. Here is a summary of their major contributions: 
 
 | Student Name | Major contributions |
 | --- | --- |
