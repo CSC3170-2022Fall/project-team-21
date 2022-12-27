@@ -72,7 +72,7 @@ The source codes for our Database Command-line implementation is located in the 
 - `Row` class: serves as the underlying storage unit for information about tables in the database, recording row information.
 - `SchemaItem` class: records tables’ schemas in the database.
 - `Table` class: A data structure that stores tables in a database. It contains three attributes, the rows (`Row` class) to record the row information, the schema (`SchemaItem` class) to record the schema, and the database (`Database` class) to record the database which the table belongs. It also contains some methods, such as insert, print, delete.
-- `CommandInterpreter` class: Used to accept and execute commands. Contains the specific implementation method of the command. (exit, select, help…)
+- `CommandInterpreter` class: Used to accept and execute commands. Contains the specific implementation method of the command. (create, load, store, insert, print, select, delete, quit/exit…)
 - `Database` class: As a whole database, which contains instances of the Table and CommandInterpreter classes as attributes.
 `main.cpp`: This is the driver code for the application.
 
@@ -83,7 +83,7 @@ The following figure show the workflow of our database.
 ![Untitled](presentation/images/Untitled.png)
 To implement the specific database and related methods, we divide it into a number of classes, such as `Row` class, `SchemaItem` class, `Table` class, `CommandInterpreter` class and `Database` class.
 
-The `Row` class serves as the underlying storage unit for information about tables in the database, and it records row information. `SchemaItem` class is used to Records tables’ schemas. Its structure and methods are similar to `Row` class. The class `Table` consists of row operations including getting, removing, and inserting the row. Furthermore, it is also used to print, load, and save the table. This table class will be used to construct the database class. The `database` class has several functionalities: add, remove, and get a table. Moreover, it also has functions to execute and save the database. For the `CommandInterpreter`, it is used to interpret the user input and execute the command to produce the desired result. It covers some standard syntaxes similar to SQL, such as create, delete, insert, select, load, store, print, and many more. it first decomposes the command using the token variable with the `tokenizer`, and then processes the parsed commands case by case. 
+The `Row` class serves as the underlying storage unit for information about tables in the database, and it records row information. `SchemaItem` class is used to record tables’ schemas. Its structure and methods are similar to `Row` class. The class `Table` consists of row operations including getting, removing, and inserting the row. Furthermore, it is also used to print, load, and save the table. This table class will be used to construct the database class. The `database` class has several functionalities: add, remove, and get a table. Moreover, it also has functions to execute and save the database. For the `CommandInterpreter`, it is used to interpret the user input and execute the command to produce the desired result. It covers some standard syntaxes similar to SQL, such as create, delete, insert, select, load, store, print, etc. It first decomposes the command using the token variable with the function `tokenizer()`,(like the split() function in python), and then processes the parsed commands case by case. 
 
 
 
@@ -91,7 +91,9 @@ The `Row` class serves as the underlying storage unit for information about tabl
 ## Command Specifications
 
 - SQL
-    - create new table: `create table <table_name> <attr1>(<type1>), <attr2>(<type2>...)`
+    - create new table: 
+        - create an empty table with the given name and column name: `create table <table_name> <attr1>(<type1>), <attr2>(<type2>...)`
+        - create a table with columns and contents produced by the select clause: `create table <table_name> as <select clause>`
     - insert data into table: `insert into <table_name> values ...`
     - query: 
         - select all attributes from table: `select * from <table_name>`
@@ -99,8 +101,9 @@ The `Row` class serves as the underlying storage unit for information about tabl
         - select with conditions: `select <attr1>, <attr2>... from <table_name> where <condition>`
         - select with and/on connected conditions: `select <attr1>, <attr2>... from <table_name> where <condition1> and/or <condition2>`
         - select from multiple tables (achieving natural inner join): `select <attr1>, <attr2>... from <table_name1>, <table_name2>... where <condition1> and/or <condition2>`
+        - select with nesting of subqueries: `select <attr1>, <attr2>... from (select <attr3>, <attr4>... from <table_name1>, <table_name2> where <condition1> and/or <condition2>...)`
     - delete table: `delete table <table_name>`
-    - delete row: `delete from <table_name> where <condition>`
+    - delete specific rows: `delete from <table_name> where <condition>`
     - delete all rows but preserve the empty table: `delete from <table_name>`
 - IO
     - `load <table_name>`: load the table from disk storage to the database. If the table is not availble on disk, print out error.
@@ -149,13 +152,14 @@ Besides the handling of query commands, we develop additional features in our da
 
 ## Spelling error corrections
 
-Our database can provide “hints” for the user‘s command if the user gives a wrong one.
+Our database can provide “hints” for the user‘s command if the user gives a wrong one, that is, predict the command that the user may want to type in.
 
 Implementation detail:
 
-1. compare the user input with each of the standard SQL commands (select, create, print…)
-2. the function `lcs(string a, string b)` obtains the length of longest common substring between 2 strings
-3. the SQL command with lcs() value larger than threshold will be the possible input, and give user a hint
+1. function achieved by the `spellingErrorCorrection()` function
+2. compare the user input with each of the standard SQL commands (select, create, print…) by invoking the `lcs()` function
+3. the function `lcs(string a, string b)` obtains the length of longest common substring between 2 strings
+4. the SQL command with lcs() value larger than threshold will be the possible input command that the user may want, and give user a hint 
 
 ![Untitled](presentation/images/lcs.png)
 
@@ -178,9 +182,9 @@ In this project, we also seek to explore more possibilities out of our original 
 
 # Summary
 
-The implementation of this project is an unforgettable and successful one, where we collaborately utilized our own strengths to finish implementing most of the SQL functions ourselves in C++. 
+The implementation of this project is an unforgettable and successful one. In this project, we collaboratively utilized our own strengths to finish implementing the SQL functions ourselves in C++. 
 
-As we finish the journey, we want to thank our instructor in the CSC3170 course, Clement Leung, and our kind TA Whiskey Cai for giving us such opportunity and their substantial help during our implementation. We want to thank every team member for actively contributing to this project. Here is a summary of their major contributions: 
+As we finish the journey, we want to thank our instructor in the CSC3170 course, Clement Leung, and our kind TA, Whiskey, for giving us such opportunity and their substantial help during our implementation. We want to thank every team member for actively contributing to this project. Here is a summary of their major contributions: 
 
 | Student Name | Major contributions |
 | --- | --- |
@@ -192,5 +196,5 @@ As we finish the journey, we want to thank our instructor in the CSC3170 course,
 | Yohanes James | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
 | 连珈玮 | Implemented the Database class and helped with implementing load and store features, organized our repository structure neatly, wrote CMake script to build the whole project, added unit test module for testing |
 
-This project deepens our knowledge of a database system. There is indeed something that needs to be improved, such as the efficiency and still needs better support of larger-scale databases. Hopefully, we can make it better in the future.
+This project deepens our knowledge of a database system. There is indeed something that needs to be improved in our project, such as the efficiency issue, and we still need better support for larger-scale databases. Hopefully, we can make it better in the future.
 
