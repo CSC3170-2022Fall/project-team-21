@@ -6,9 +6,7 @@
 #include "CommandInterpreter.h"
 
 using namespace std;
-// #include <direct.h>
-// #include <stdlib.h>
-// #include <stdio.h>
+
 
 Database::Database(CommandInterpreter *interpreter)
 {
@@ -48,21 +46,6 @@ void Database::execute(std::vector<std::string> v_command)
 
 void Database::saveDatabase()
 {
-    // TODO: first create the directory for the database,
-    // then **change directory** to it
-    //     const char * nm = this->name.c_str();
-    //      if( _mkdir(strcat("\\",nm)) == 0 )
-    //    {
-    //       printf("Directory '\\%c' was successfully created\n",*nm );
-    //       //system( "dir \\"+ this->name );
-    //       for (int i = 0; i < this->tables.size(); i++)
-    //     {
-    //         std::string fname = this->tables[i].name;
-    //         this->tables[i].saveToFile(fname);
-    //     }
-    //    }
-    //    else
-    //       printf( "Problem creating directory '\\%c'\n",*nm );
 
     string cmd = "mkdir " + this->name;
     system(cmd.c_str());
@@ -98,18 +81,6 @@ Table *Database::getTable(std::string tableName)
         return NULL;
     }
 }
-
-// void Database::switchTable(std::string tableName){
-//     int idx = -1;
-
-//     for (int i = 0; i < this->tables.size(); i++)
-//     {
-//         if(this->tables[i].name == tableName){
-//             idx = i;
-//         }
-//     }
-//     currentTable = &this->tables[idx];
-// }
 
 void Database::addTable(Table table)
 {
