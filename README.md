@@ -35,14 +35,15 @@ Please refer to [task-allocation.md](task-allocation.md) for the detailed task a
 ## Building and running the project
 We use `CMake` to build our project, which allows our Database implementation to have cross-platform support. First, please make sure your computer has `CMake` installed or install it [here](https://cmake.org/install/). If you're on a Windows machine, we recommand additionally installing MinGW following [this link](https://www.ics.uci.edu/~pattis/common/handouts/mingweclipse/mingw.html).
 
-- To build from the source, please go to the project root directory, then, on macOS and linux, the commands are:
+- To build from source on macOS or linux, please go to the project root directory, then type the following commands on any terminal:
     ```bash
     mkdir build && cd build
     cmake ..
     make
     ```
 
-On Windows machines with MinGW installed, first go to the project root directory, then you could build with:
+- To build from source on Windows machines with MinGW installed, first go to the project root directory, then type the following commands on PowerShell:
+
     ```bash
     mkdir build && cd build
     cmake -G "MinGW Makefiles" ..
