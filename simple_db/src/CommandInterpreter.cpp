@@ -266,9 +266,9 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		// 	printf("Error: This table does not exist\n");
 		// }
 		// else{
-            int cri = judgeSelect(v_command);   //validity check for whether the table and column exists
-            if (cri == 1){
-                  printf("Search results:\n");
+		int cri = judgeSelect(v_command);   //validity check for whether the table and column exists
+		if (cri == 1){
+			printf("Search results:\n");
 			Table tb = select(v_command);
 			tb.printOut();
 		}
