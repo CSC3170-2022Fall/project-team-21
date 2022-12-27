@@ -13,8 +13,6 @@ FILE(GLOB SOURCES src/*.cpp)
 add_executable(simple_db ${SOURCES})
 
 # Set the directories that should be included in the build command for this target
-# when running g++ these will be included as -I/directory/path/
-
 target_include_directories(simple_db
     PRIVATE 
     ${PROJECT_SOURCE_DIR}/simple_db/include

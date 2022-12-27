@@ -40,6 +40,7 @@ We use `CMake` to build our project, which allows our Database implementation to
     mkdir build && cd build
     cmake ..
     make
+    cd ..
     ```
 
 - To build from source on Windows machines with MinGW installed, first go to the project root directory by `cd` into it, then type the following commands on PowerShell:
@@ -49,6 +50,7 @@ We use `CMake` to build our project, which allows our Database implementation to
     cd build
     cmake -G "MinGW Makefiles" ..
     mingw32-make
+    cd ..
     ```
 
 For Windows users, alternatively, if you have Visual Studio with Visual C++ installed, you could set the CMake to output a Visual Studio Solution file and open and build with Visual Studio. Here we do not illustrate this method further.
@@ -56,13 +58,17 @@ For Windows users, alternatively, if you have Visual Studio with Visual C++ inst
 
 
 
-- To run the executable file, go to the `build/simple_db` folder, run:
+- To run the executable file, first ensure your current directory is the project root directory, then run:
     ```bash
+    cd build/simple_db
     ./simple_db
+    cd ../..
     ```
-- To run the unit test, go to the `build/testing/unit_test` folder, run:
+- To run the unit test, first ensure your current directory is the project root directory, then run:
     ```bash
+    cd build/testing/unit_test
     ./simple_db_test
+    cd ../..
     ```
 
 ## Project File structure
