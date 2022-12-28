@@ -4,10 +4,10 @@ This is a simple framework for unit test. The components in test.h are modified 
 [MyTinySTL](https://github.com/Alinshans/MyTinySTL/blob/master/Test/test.h)
 
 ## Output
-![row_test](../../presentation/images/row_test.jpg)
-![schemaitem_test](../../presentation/images/schemaitem_test.jpg)
-![table_test](../../presentation/images/table_test.jpg)
-![database_test](../../presentation/images/database_test.jpg)
+![row_test](../../presentation/images/row_test.jpg) <br>
+![schemaitem_test](../../presentation/images/schemaitem_test.jpg) <br>
+![table_test](../../presentation/images/table_test.jpg) <br>
+![database_test](../../presentation/images/database_test.jpg) <br>
 
 <!-- ## What we have tested
 - [x] [Row class](Row_test.h)
