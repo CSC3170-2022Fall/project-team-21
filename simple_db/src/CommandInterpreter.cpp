@@ -115,39 +115,44 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
 	  int selectIndex;  //select
       
 	  string temp;
-	  for (int i = v_command.size() - 1; i >= 0; i--)
+	  vector<int> selectFrom;
+	  int leftParenthesis = 0;   //左括号的数量
+	  int rightParenthesis = 0;  //右括号的数量
+	  for (int i = 0; i < v_command.size(); i++)
       {
 		    temp = v_command[i];
 			for (int j = 0; j < temp.length(); j++){
 				temp[j] = tolower(temp[j]);
+				if (temp[j] == '('){    
+					leftParenthesis += 1;
+				}
+				if (temp[j] == ')'){
+					rightParenthesis += 1;
+				}
 			}
 			if (temp.find("select") != string::npos) //考虑到可能有“（select”这种情况出现
             // if (v_command[i].find("select") != string::npos) //考虑到可能有“（select”这种情况出现
             {
-                  selectIndex = i;	 //找最后一次出现select的位置索引
-				  //cout << temp << " ";
-                  break;
+				  selectFrom.push_back(i);
+                  //break;
             }
-      }
-	  //cout << selectIndex << " ";
-	
-      int fromIndex;  //from
-   
-	  for (int i = v_command.size() - 1; i >= 0; i--)
-      {
-			temp = v_command[i];
-			for (int j = 0; j < temp.length(); j++){
-				temp[j] = tolower(temp[j]);
-			}
-			// if (v_command[i].find("from") != string::npos)
-            if (temp.find("from") != string::npos)
+			if (temp.find("from") != string::npos) //考虑到可能有“（select”这种情况出现
+            // if (v_command[i].find("select") != string::npos) //考虑到可能有“（select”这种情况出现
             {
-                  fromIndex = i;	 //找最后一次出现from的位置索引
-                  break;
+				  selectFrom.push_back(i);
+                  //break;
             }
-      }
-	  //cout << fromIndex << " ";
 
+      }
+	 
+	//左/右括号的数量应该等于select的数量 - 1
+	  if ( (leftParenthesis != rightParenthesis) || ( leftParenthesis != (selectFrom.size()/2 - 1) ) || ( rightParenthesis != (selectFrom.size()/2 - 1) )  ){
+			printf("Error: Please write the correct number of left-parentheses('(') and right-parentheses(')') in your input command.\n");
+			cri = 0;
+			return cri;
+	  }
+	  //cout << fromIndex << " ";
+	  int fromIndex = selectFrom[selectFrom.size() - 1];   //最后一个from
 	  int parenthesisIndex = -1;
 	  for (int i = (fromIndex + 1); i < v_command.size(); i++)
       {
@@ -156,7 +161,6 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
                   break;
             }
       }
-	  //cout << parenthesisIndex << " ";
 
 	  if (parenthesisIndex == -1)   //当然，并不是每个select命令都有括号（即不是嵌套select时）
 	  {
@@ -179,8 +183,7 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
                   break;
             }
       }
-	  //cout << whereIndex << " ";
-	  
+
       int tableNum;
       if (whereIndex == -1){  //select语句中没有where
             // tableNum = parenthesisIndex - fromIndex - 1;
@@ -192,7 +195,6 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
       string tableName;
       // int find;
       vector<SchemaItem> allSchema;
-      //vector<string> allSchema;
 
       for (int i = 0; i < tableNum; i++){
             tableName = v_command[fromIndex + i + 1];
@@ -216,43 +218,41 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
                   allSchema.insert(allSchema.end(), (target_table->schema).begin(), (target_table->schema).end());
             }
       }
-	//   cout << tableNum << " ";
-	//   cout << tableName << " ";
-
-	//   for (int i = 0; i < allSchema.size(); i++){
-	// 		cout << allSchema[i].name << " ";
-	//   }
-
-	  //cout << tableName << " ";
-
+	
       //判断列名是否存在
       string columnName;
       bool find;
+
 	  //select 列名 from
-      if (v_command[selectIndex + 1] != "*"){
-            //逐个逐个列名找
-            for (int i = (selectIndex + 1); i < fromIndex; i++){
-                  find = false;
-                  columnName = v_command[i];
-                  // cout << columnName << endl;
-                  if (   columnName[columnName.length() - 1] == ',' )
-                  {
-                        columnName = columnName.substr(0, columnName.length() - 1);
-                  }
-                  for (int j = 0; j < allSchema.size(); j++){
-                        if (columnName == allSchema[j].name){
-                              find = true;
-                              break;
-                        }
-                  }
-                  if (find == false){
-                        cri = 0;
-                        cout << "Error: cannot find the column name " << columnName << " in the table you want to search." << endl;
-                        return cri;
-                  }
-                  
-            }
-      }
+	  for (int k = 0; k < selectFrom.size()/2; k++)
+	  {
+			selectIndex = selectFrom[k * 2];
+			fromIndex = selectFrom[k * 2 + 1];
+			if (v_command[selectIndex + 1] != "*"){
+				//逐个逐个列名找
+				for (int i = (selectIndex + 1); i < fromIndex; i++){
+					find = false;
+					columnName = v_command[i];
+					// cout << columnName << endl;
+					if (   columnName[columnName.length() - 1] == ',' )
+					{
+							columnName = columnName.substr(0, columnName.length() - 1);
+					}
+					for (int j = 0; j < allSchema.size(); j++){
+							if (columnName == allSchema[j].name){
+								find = true;
+								break;
+							}
+					}
+					if (find == false){
+							cri = 0;
+							cout << "Error: cannot find the column name " << columnName << " in the table you want to search." << endl;
+							return cri;
+					}
+					
+				}
+			}
+	  }
 
       return cri;
 
@@ -272,20 +272,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 
 	if (v_command[0] == "select")
 	{
-		// first find the index of "from"
-		// int cri = 0;
-		// for(int i = 0; i< this->database->tables.size(); i++){
-		// 	if(this->database->tables[i].name == v_command[3]){
-		// 		cri = 1;
-		// 		break;
-		// 	}
-		// }
-
-		// if((cri == 0) && (v_command.size() == 4)){
-			
-		// 	printf("Error: This table does not exist\n");
-		// }
-		// else{
+		
 		int cri = judgeSelect(v_command);   //validity check for whether the table and column exists
 		if (cri == 1){
 			printf("Search results:\n");
@@ -376,9 +363,6 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 	else
 	{
 		spellingErrorCorrection(&v_command);
-		// printf("Invalid command, please try again.\n");
-		// guessUserInput(v_command); // guess the input of the user
-		// 也可以使用spellingErrorCorrection实现拼写错误的改正与纠错。
 	}
 }
 
@@ -636,7 +620,8 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		temp[i] = tolower(temp[i]);
 	}
 	// if ((v_command->at(3) == "select") || (v_command->at(3) == "SELECT"))
-	if (temp == "select")
+	// if (temp == "select")
+	if (temp.find("select") != string::npos)
 	{
 		// create v_command copy starting from 4
 		vector<string> v_command_copy;
@@ -644,10 +629,13 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		{
 			v_command_copy.push_back(v_command->at(i));
 		}
-		Table tb = select(v_command_copy);
-		tb.name = tableName;
-		this->database->tables.push_back(tb);
-        cout << "Table " << tableName << " has been created." << endl;
+		int cri = judgeSelect(v_command_copy);   //validity check for whether the table and column exists in the select clause
+		if (cri == 1){
+			Table tb = select(v_command_copy);
+			tb.name = tableName;
+			this->database->tables.push_back(tb);
+			cout << "Table " << tableName << " has been created." << endl;
+		}
 		return;
 	}
 
@@ -1205,42 +1193,34 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	if (a1 >= 4)
 	{
 		cout << "Do you want to type in command 'select table'?" << endl;
-		// first find the index of "from"
-		int idx_of_from;
-		// parse(command[idx_of_from:])  // TODO
+		
 	}
 	else if (a2 >= 4)
 	{
 		cout << "Do you want to type in command 'create table'?" << endl;
-		// createTable(&v_command);
 	}
 	else if (a3 >= 3)
 	{
 		cout << "Do you want to type in command 'exit'?" << endl;
-		// exitCommand();
 	}
 	else if (a4 >= 4)
 	{
 		cout << "Do you want to type in command 'insert into'?" << endl;
-		// insertCommand(&v_command);
 	}
 	else if (a5 >= 3)
 	{
 		cout << "Do you want to type in command 'load'?" << endl;
-		// this->load(v_command);
 	}
 	else if (a6 >= 3)
 	{
 		cout << "Do you want to type in command 'print'?" << endl;
-		// printTable(&v_command);
 	}
 	else if (a7 >= 3)
 	{
 		cout << "Do you want to type in command 'help'?" << endl;
-		// printf("Help message here\n");
 	}
 	// else if ((a == "/") || (a == "//") || (a == "#"))
-      else if (a8 >= 1)
+    else if (a8 >= 1)
 	{
 		cout << "Do you want to write comments? Please use '/*' to begin with your comments, and '*/' to end your comments."<< endl;
 	}
