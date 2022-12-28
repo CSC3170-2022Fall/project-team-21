@@ -67,7 +67,7 @@ bool CommandInterpreter::getInputCommand(vector<std::string> &v_command, bool co
 				vector<std::string> tmp_v_command;
 				tmp_v_command = tokenizer(command);
 				v_command.insert(v_command.end(), tmp_v_command.begin(), tmp_v_command.end());
-                        // printf("The input must end with a semicolon(;). Please input again.\n");
+				// printf("The input must end with a semicolon(;). Please input again.\n");
 				printf("> ");
 				getline(cin, command);
 			}
@@ -99,7 +99,7 @@ int CommandInterpreter::findTable(string tableName)
 	Table *target_table = this->database->getTable(tableName);
 	if (target_table == NULL)
 	{ // 找不到这个table
-		//printf("Error: The name of the table you want to search does not exist in this database.\n", tableName.c_str());
+		// printf("Error: The name of the table you want to search does not exist in this database.\n", tableName.c_str());
 		return 0;
 	}
 	else
@@ -108,94 +108,101 @@ int CommandInterpreter::findTable(string tableName)
 	}
 }
 
-int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
-      //判断table是否存在
-      int cri = 1;   //有没错误
-	  int selectIndex;  //select
-    
-	  for (int i = v_command.size() - 1; i >= 0; i--)
-      {
-            if (v_command[i].find("select") != string::npos) //考虑到可能有“（select”这种情况出现
-            {
-                  selectIndex = i;	 //找最后一次出现select的位置索引
-                  break;
-            }
-      }
-	  //cout << selectIndex << " ";
-      int fromIndex;  //from
-   
-	  for (int i = v_command.size() - 1; i >= 0; i--)
-      {
-            if (v_command[i].find("from") != string::npos)
-            {
-                  fromIndex = i;	 //找最后一次出现from的位置索引
-                  break;
-            }
-      }
-	  //cout << fromIndex << " ";
+int CommandInterpreter::judgeSelect(std::vector<std::string> v_command)
+{
+	// 判断table是否存在
+	int cri = 1;	 // 有没错误
+	int selectIndex; // select
 
-	  int parenthesisIndex = -1;
-	  for (int i = (fromIndex + 1); i < v_command.size(); i++)
-      {
-            if(v_command[i].find(")") != string::npos){
-				  parenthesisIndex = i;
-                  break;
-            }
-      }
-	  //cout << parenthesisIndex << " ";
+	for (int i = v_command.size() - 1; i >= 0; i--)
+	{
+		if (v_command[i].find("select") != string::npos) // 考虑到可能有“（select”这种情况出现
+		{
+			selectIndex = i; // 找最后一次出现select的位置索引
+			break;
+		}
+	}
+	// cout << selectIndex << " ";
+	int fromIndex; // from
 
-	  if (parenthesisIndex == -1)   //当然，并不是每个select命令都有括号（即不是嵌套select时）
-	  {
-			parenthesisIndex = v_command.size() - 1;
-	  }
+	for (int i = v_command.size() - 1; i >= 0; i--)
+	{
+		if (v_command[i].find("from") != string::npos)
+		{
+			fromIndex = i; // 找最后一次出现from的位置索引
+			break;
+		}
+	}
+	// cout << fromIndex << " ";
 
-      int whereIndex = -1; //where
-      //for (int i = v_command.size() - 1; i >= 0; i--)
-	  for (int i = (fromIndex + 1); i < parenthesisIndex; i++)
-      {
-            if (v_command[i].find("where") != string::npos)
-            {
-                  whereIndex = i;	 //找与最后一个select在同一个括号内的where的位置索引
-                  break;
-            }
-      }
-	  //cout << whereIndex << " ";
-	  
-      int tableNum;
-      if (whereIndex == -1){  //select语句中没有where
-            // tableNum = parenthesisIndex - fromIndex - 1;
-			tableNum = parenthesisIndex - fromIndex;
-      }
-      else{
-            tableNum = whereIndex - fromIndex - 1; 
-      }
-      string tableName;
-      // int find;
-      vector<SchemaItem> allSchema;
-      //vector<string> allSchema;
+	int parenthesisIndex = -1;
+	for (int i = (fromIndex + 1); i < v_command.size(); i++)
+	{
+		if (v_command[i].find(")") != string::npos)
+		{
+			parenthesisIndex = i;
+			break;
+		}
+	}
+	// cout << parenthesisIndex << " ";
 
-      for (int i = 0; i < tableNum; i++){
-            tableName = v_command[fromIndex + i + 1];
-            if (tableName.find(',') != string::npos)
-            // if (   tableName[tableName.length() - 1] == ',' )
-            {
-                  tableName = tableName.substr(0, tableName.length() - 1);
-            }
-			while (tableName.find(')') != string::npos)  //没有where跟在后面的话，可能会嵌套很多个）括号,所以要删掉好几个）号
-            // if (   tableName[tableName.length() - 1] == ',' )
-            {
-                  tableName = tableName.substr(0, tableName.length() - 1);
-            }
-            Table *target_table = this->database->getTable(tableName);
-            if (target_table == NULL){  //找不到这个表
-                  cout << "Error: cannot find the table " << tableName << " in the database." << endl;
-                  cri = 0;
-                  return cri;
-            }
-            else{
-                  allSchema.insert(allSchema.end(), (target_table->schema).begin(), (target_table->schema).end());
-            }
-      }
+	if (parenthesisIndex == -1) // 当然，并不是每个select命令都有括号（即不是嵌套select时）
+	{
+		parenthesisIndex = v_command.size() - 1;
+	}
+
+	int whereIndex = -1; // where
+	// for (int i = v_command.size() - 1; i >= 0; i--)
+	for (int i = (fromIndex + 1); i < parenthesisIndex; i++)
+	{
+		if (v_command[i].find("where") != string::npos)
+		{
+			whereIndex = i; // 找与最后一个select在同一个括号内的where的位置索引
+			break;
+		}
+	}
+	// cout << whereIndex << " ";
+
+	int tableNum;
+	if (whereIndex == -1)
+	{ // select语句中没有where
+		// tableNum = parenthesisIndex - fromIndex - 1;
+		tableNum = parenthesisIndex - fromIndex;
+	}
+	else
+	{
+		tableNum = whereIndex - fromIndex - 1;
+	}
+	string tableName;
+	// int find;
+	vector<SchemaItem> allSchema;
+	// vector<string> allSchema;
+
+	for (int i = 0; i < tableNum; i++)
+	{
+		tableName = v_command[fromIndex + i + 1];
+		if (tableName.find(',') != string::npos)
+		// if (   tableName[tableName.length() - 1] == ',' )
+		{
+			tableName = tableName.substr(0, tableName.length() - 1);
+		}
+		while (tableName.find(')') != string::npos) // 没有where跟在后面的话，可能会嵌套很多个）括号,所以要删掉好几个）号
+		// if (   tableName[tableName.length() - 1] == ',' )
+		{
+			tableName = tableName.substr(0, tableName.length() - 1);
+		}
+		Table *target_table = this->database->getTable(tableName);
+		if (target_table == NULL)
+		{ // 找不到这个表
+			cout << "Error: cannot find the table " << tableName << " in the database." << endl;
+			cri = 0;
+			return cri;
+		}
+		else
+		{
+			allSchema.insert(allSchema.end(), (target_table->schema).begin(), (target_table->schema).end());
+		}
+	}
 	//   cout << tableNum << " ";
 	//   cout << tableName << " ";
 
@@ -203,39 +210,42 @@ int CommandInterpreter::judgeSelect(std::vector<std::string> v_command){
 	// 		cout << allSchema[i].name << " ";
 	//   }
 
-	  //cout << tableName << " ";
+	// cout << tableName << " ";
 
-      //判断列名是否存在
-      string columnName;
-      bool find;
-	  //select 列名 from
-      if (v_command[selectIndex + 1] != "*"){
-            //逐个逐个列名找
-            for (int i = (selectIndex + 1); i < fromIndex; i++){
-                  find = false;
-                  columnName = v_command[i];
-                  // cout << columnName << endl;
-                  if (   columnName[columnName.length() - 1] == ',' )
-                  {
-                        columnName = columnName.substr(0, columnName.length() - 1);
-                  }
-                  for (int j = 0; j < allSchema.size(); j++){
-                        if (columnName == allSchema[j].name){
-                              find = true;
-                              break;
-                        }
-                  }
-                  if (find == false){
-                        cri = 0;
-                        cout << "Error: cannot find the column name " << columnName << " in the table you want to search." << endl;
-                        return cri;
-                  }
-                  
-            }
-      }
+	// 判断列名是否存在
+	string columnName;
+	bool find;
+	// select 列名 from
+	if (v_command[selectIndex + 1] != "*")
+	{
+		// 逐个逐个列名找
+		for (int i = (selectIndex + 1); i < fromIndex; i++)
+		{
+			find = false;
+			columnName = v_command[i];
+			// cout << columnName << endl;
+			if (columnName[columnName.length() - 1] == ',')
+			{
+				columnName = columnName.substr(0, columnName.length() - 1);
+			}
+			for (int j = 0; j < allSchema.size(); j++)
+			{
+				if (columnName == allSchema[j].name)
+				{
+					find = true;
+					break;
+				}
+			}
+			if (find == false)
+			{
+				cri = 0;
+				cout << "Error: cannot find the column name " << columnName << " in the table you want to search." << endl;
+				return cri;
+			}
+		}
+	}
 
-      return cri;
-
+	return cri;
 }
 
 void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
@@ -262,12 +272,13 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		// }
 
 		// if((cri == 0) && (v_command.size() == 4)){
-			
+
 		// 	printf("Error: This table does not exist\n");
 		// }
 		// else{
-		int cri = judgeSelect(v_command);   //validity check for whether the table and column exists
-		if (cri == 1){
+		int cri = judgeSelect(v_command); // validity check for whether the table and column exists
+		if (cri == 1)
+		{
 			printf("Search results:\n");
 			Table tb = select(v_command);
 			tb.printOut();
@@ -293,7 +304,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		{
 			deleteTable(&v_command);
 		}
-            else if (v_command[1] == "from")
+		else if (v_command[1] == "from")
 		{
 			deleteRow(v_command);
 		}
@@ -345,7 +356,7 @@ void CommandInterpreter::execute(vector<std::string> v_command, Database *db)
 		printf("    print <table name>;'\n");
 		printf("    quit;\n");
 		printf("    exit;\n");
-            printf("    delete from <table name> (<conditional clause>)\n");
+		printf("    delete from <table name> (<conditional clause>)\n");
 		printf("    select <column name> from <table name> <conditional clause>;\n");
 		printf("    select <column name> from <table name1>,<table name2> <conditional clause>;\n");
 	}
@@ -374,7 +385,7 @@ void CommandInterpreter::store(std::vector<std::string> *v_command)
 			return;
 		}
 		tb->saveToFile(tb->name);
-            printf("Store process completed.\n");
+		printf("Store process completed.\n");
 	}
 	else
 	{
@@ -508,7 +519,7 @@ void CommandInterpreter::insertCommand(std::vector<std::string> *v_command)
 		return;
 	}
 	target_table->insertLast(newRow);
-      printf("Insert process completed.\n");
+	printf("Insert process completed.\n");
 }
 
 void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
@@ -524,7 +535,7 @@ void CommandInterpreter::deleteTable(std::vector<std::string> *v_command)
 		{
 			idx = i;
 			this->database->tables.erase(this->database->tables.begin() + idx);
-                  cout << "Table " << tableName << " has been deleted" << endl;
+			cout << "Table " << tableName << " has been deleted" << endl;
 			return;
 		}
 	}
@@ -546,7 +557,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		  Address varchar(255),
 		  City varchar(255)
 		  );
-	*/	
+	*/
 
 	string tableName = v_command->at(2);
 
@@ -554,7 +565,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 	Table *target_table = this->database->getTable(tableName);
 	if (target_table != NULL)
 	{
-	      cout << "Error: The name of the table (" << tableName << ") already exists in this database."<< endl;
+		cout << "Error: The name of the table (" << tableName << ") already exists in this database." << endl;
 		return;
 	}
 
@@ -610,7 +621,7 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		Table tb = select(v_command_copy);
 		tb.name = tableName;
 		this->database->tables.push_back(tb);
-            cout << "Table " << tableName << " has been created." << endl;
+		cout << "Table " << tableName << " has been created." << endl;
 		return;
 	}
 
@@ -639,9 +650,11 @@ void CommandInterpreter::createTable(std::vector<std::string> *v_command)
 		schema.push_back(newSchemaItem);
 		i++;
 	}
+
+
 	Table newTable = Table(tableName, schema);
 	this->database->addTable(newTable);
-      cout << "Table " << tableName << " has been created." << endl;
+	cout << "Table " << tableName << " has been created." << endl;
 }
 void CommandInterpreter::exitCommand()
 {
@@ -707,7 +720,8 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 	int whereIndex = -1;
 	for (int i = v_command.size() - 1; i >= 0; i--)
 	{
-		if(v_command[i].find(")") != string::npos){
+		if (v_command[i].find(")") != string::npos)
+		{
 			break;
 		}
 		if (v_command[i].find("where") != string::npos)
@@ -740,7 +754,8 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 	else if ((whereIndex - fromIndex > 3) || ((v_command.size() - fromIndex > 3) && (whereIndex == -1)))
 	{ // recursive
 		vector<string> input;
-		if(whereIndex != -1){
+		if (whereIndex != -1)
+		{
 			for (int i = fromIndex + 1; i < whereIndex; i++)
 			{
 				string temp = v_command[i];
@@ -751,7 +766,8 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 				input.push_back(temp);
 			}
 		}
-		else{
+		else
+		{
 			for (int i = fromIndex + 1; i < v_command.size(); i++)
 			{
 				string temp = v_command[i];
@@ -762,7 +778,7 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 				input.push_back(temp);
 			}
 		}
-		
+
 		tableSource = select(input);
 	}
 
@@ -796,8 +812,6 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 					sctemp = tableSource.schema[j];
 					schemaRusult.push_back(sctemp);
 				}
-
-
 			}
 		}
 	}
@@ -841,7 +855,6 @@ Table CommandInterpreter::select(std::vector<std::string> v_command)
 
 	return result;
 }
-
 
 bool CommandInterpreter::testCondition(vector<SchemaItem> schema, Row theRow, std::vector<std::string> conditionVector)
 {
@@ -1060,12 +1073,13 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 	string tableName = v_command[2];
 	Table tableSours;
 
-      int find = findTable(tableName);
+	int find = findTable(tableName);
 
-      if (find == 0){ //找不到这个表
-            cout << "Error: The table " << tableName <<  " does not exist in the database" << endl;
-            return;
-      }
+	if (find == 0)
+	{ // 找不到这个表
+		cout << "Error: The table " << tableName << " does not exist in the database" << endl;
+		return;
+	}
 
 	tableSours = *(this->database->getTable(tableName));
 
@@ -1110,7 +1124,7 @@ void CommandInterpreter::deleteRow(std::vector<std::string> v_command)
 
 	this->database->removeTable(tableName);
 	this->database->addTable(tableSours);
-      printf("Delete row process completed.\n");
+	printf("Delete row process completed.\n");
 }
 
 /*
@@ -1133,7 +1147,7 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	// 有新的操作时就再往后加
 	std::string i = "/*";
 	std::string j = "quit";
-      std::string k = "delete";
+	std::string k = "delete";
 
 	int a1 = lcs(a, b);
 	int a2 = lcs(a, c);
@@ -1143,8 +1157,8 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 	int a6 = lcs(a, g);
 	int a7 = lcs(a, h);
 	int a8 = lcs(a, i);
-      int a9 = lcs(a, j);
-      int a10 = lcs(a, k);
+	int a9 = lcs(a, j);
+	int a10 = lcs(a, k);
 
 	printf("Error: Invalid command. Please try again.\n");
 
@@ -1186,15 +1200,15 @@ void CommandInterpreter::spellingErrorCorrection(std::vector<std::string> *v_com
 		// printf("Help message here\n");
 	}
 	// else if ((a == "/") || (a == "//") || (a == "#"))
-      else if (a8 >= 1)
+	else if (a8 >= 1)
 	{
-		cout << "Do you want to write comments? Please use '/*' to begin with your comments, and '*/' to end your comments."<< endl;
+		cout << "Do you want to write comments? Please use '/*' to begin with your comments, and '*/' to end your comments." << endl;
 	}
-      else if (a9 >= 3)
+	else if (a9 >= 3)
 	{
 		cout << "Do you want to type in command 'quit'?" << endl;
 	}
-      else if (a10 >= 4)
+	else if (a10 >= 4)
 	{
 		cout << "Do you want to type in command 'delete table' or 'delete from'?" << endl;
 	}
@@ -1255,4 +1269,3 @@ int CommandInterpreter::lcs(string a, string b)
 
 	return arr[n - 1][m - 1]; // 返回最长公共子字符串长度.
 }
-

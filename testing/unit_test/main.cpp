@@ -1,18 +1,21 @@
 #include <iostream>
-#include "CommandInterpreter.h"
-#include "Conditions.h"
-#include "Database.h"
-#include "Row.h"
-#include "SchemaItem.h"
-#include "Table.h"
+// #include "CommandInterpreter.h"
+// #include "Conditions.h"
+// #include "Database.h"
+// #include "SchemaItem.h"
+// #include "Table.h"
+
+#include "Row_test.h"
+#include "Table_test.h"
 #include "test.h"
-#include "unittest.h"
-
-
-#include "Lib/redbud/io/color.h"
 
 int main()
 {
-    std::cout << "this is the testing!!" << std::endl;
+    std::cout << green << "RUNNING UNIT TEST FOR SIMPLE DATABASE" << std::endl;
 
+    row_test::row_test();
+    table_test::table_test();
+
+    // database_test::database_test();
+    // ci_test::ci_test();
 }
