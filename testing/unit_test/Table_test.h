@@ -72,8 +72,9 @@ namespace table_test
         table.printOut();
     }
 
-    void check_getSchema(Row row)
+    void check_getSchema(Table table)
     {
+        std::cout << table.getSchema() << std::endl;
     }
 
     void table_test()
@@ -122,6 +123,9 @@ namespace table_test
         std::vector<std::string> new_value_insertAt = {"insertAt", "5", "5.0"};
         check_insertAt(table, new_value_insertAt, 2);
 
+        std::cout << "====================" << std::endl;
+        std::cout << "Check Table::getSchema" << std::endl;
+        check_getSchema(table);
 
         PASSED;
     }
