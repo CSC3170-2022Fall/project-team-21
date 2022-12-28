@@ -36,23 +36,38 @@ namespace database_test
         return rows;
     }
 
-    void check_addTable(Database &db, Table table)
+    void check_addTable(Database &db, Table table, bool verbose)
     {
         db.addTable(table);
-        std::cout << "------------------" << std::endl;
-        std::cout << "the table added: " << table.name << std::endl;
         Table* check_table = db.getTable(table.name);
-        check_table->printOut();
+        if (verbose)
+        {
+            std::cout << "------------------" << std::endl;
+            std::cout << "the table added: " << table.name << std::endl;
+            check_table->printOut();
+        }
     }
 
     void check_removeTableAtIdx(Database &db, int idx)
     {
 
         std::cout << "------------------" << std::endl;
-        std::cout << "Before removing: Number of tables in database: " << std::to_string(db.tables.size()) << "; Remove table at index: " << std::to_string(idx) << std::endl;
-        
+        std::cout << "Before removing: Number of tables in database: " << std::to_string(db.tables.size()) << std::endl;
+        std::cout << "Remove table at index: " << std::to_string(idx) << std::endl;
         
         db.removeTableAtIdx(idx);
+
+        std::cout << "After removing: Number of tables in database: " << std::to_string(db.tables.size()) << std::endl;
+    }
+
+    void check_removeTable(Database &db, std::string tableName)
+    {
+
+        std::cout << "------------------" << std::endl;
+        std::cout << "Before removing: Number of tables in database: " << std::to_string(db.tables.size()) << std::endl;
+        std::cout << "Remove table name: " << tableName << std::endl;
+        
+        db.removeTable(tableName);
 
         std::cout << "After removing: Number of tables in database: " << std::to_string(db.tables.size()) << std::endl;
     }
@@ -105,14 +120,21 @@ namespace database_test
 
         std::cout << "====================" << std::endl;
         std::cout << "Check Database::addTable; Database::getTable" << std::endl;
-        check_addTable(db, table_1);
-        check_addTable(db, table_2);
+        check_addTable(db, table_1, true);
+        check_addTable(db, table_2, true);
         
         std::cout << "====================" << std::endl;
         std::cout << "Check Database::removeTableAtIdx" << std::endl;
         check_removeTableAtIdx(db, 1);
         check_removeTableAtIdx(db, 0);
 
+        std::cout << "====================" << std::endl;
+        std::cout << "Check Database::removeTable" << std::endl;
+        check_addTable(db, table_1, false);
+        check_addTable(db, table_2, false);
+
+        check_removeTable(db, "table_1");
+        check_removeTable(db, "table_2");
         // PASSED;
     }
 
