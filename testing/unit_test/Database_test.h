@@ -45,7 +45,17 @@ namespace database_test
         check_table->printOut();
     }
 
+    void check_removeTableAtIdx(Database &db, int idx)
+    {
 
+        std::cout << "------------------" << std::endl;
+        std::cout << "Before removing: Number of tables in database: " << std::to_string(db.tables.size()) << "; Remove table at index: " << std::to_string(idx) << std::endl;
+        
+        
+        db.removeTableAtIdx(idx);
+
+        std::cout << "After removing: Number of tables in database: " << std::to_string(db.tables.size()) << std::endl;
+    }
 
     void database_test()
     {
