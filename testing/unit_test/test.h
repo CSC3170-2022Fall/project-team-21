@@ -30,9 +30,8 @@
     std::cout << red << " Actual:" << *first2 << "\n";              \
 }} while(0)
 
-#define COUT(container) do {                             \
-  std::string con_name = #container;                     \
-  std::cout << " " << con_name << " :";                  \
+#define COUT(container, container_name) do {                             \
+  std::cout << " " << container_name << " :";                  \
   for (auto it : container)                              \
     std::cout << " " << it;                              \
   std::cout << "\n";                                     \
