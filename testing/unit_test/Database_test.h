@@ -36,9 +36,13 @@ namespace database_test
         return rows;
     }
 
-    void check_getRowAt(Table table)
+    void check_addTable(Database &db, Table table)
     {
-
+        db.addTable(table);
+        std::cout << "------------------" << std::endl;
+        std::cout << "the table added: " << table.name << std::endl;
+        Table* check_table = db.getTable(table.name);
+        check_table->printOut();
     }
 
 
@@ -86,8 +90,18 @@ namespace database_test
         table_2.rows = rows_2;
 
         // Testing database
+        CommandInterpreter ci;
+        Database db = Database(&ci);
 
-
+        std::cout << "====================" << std::endl;
+        std::cout << "Check Database::addTable; Database::getTable" << std::endl;
+        check_addTable(db, table_1);
+        check_addTable(db, table_2);
+        
+        std::cout << "====================" << std::endl;
+        std::cout << "Check Database::removeTableAtIdx" << std::endl;
+        check_removeTableAtIdx(db, 1);
+        check_removeTableAtIdx(db, 0);
 
         // PASSED;
     }
