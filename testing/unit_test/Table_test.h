@@ -66,8 +66,10 @@ namespace table_test
         table.printOut();
     }
 
-    void check_insertAt(Row row)
+    void check_insertAt(Table table, Row row_insert, int idx)
     {
+        table.insertAt(row_insert, idx);
+        table.printOut();
     }
 
     void check_getSchema(Row row)
@@ -112,10 +114,14 @@ namespace table_test
         std::cout << "====================" << std::endl;
         std::cout << "Check Table::insertLast" << std::endl;
 
-        std::vector<std::string> new_value_insert = {"inserted", "4", "4.0"};
-
-        check_insertLast(table, new_value_insert);
+        std::vector<std::string> new_value_insertLast = {"insertLast", "4", "4.0"};
+        check_insertLast(table, new_value_insertLast);
         
+        std::cout << "====================" << std::endl;
+        std::cout << "Check Table::insertAt" << std::endl;
+        std::vector<std::string> new_value_insertAt = {"insertAt", "5", "5.0"};
+        check_insertAt(table, new_value_insertAt, 2);
+
 
         PASSED;
     }
