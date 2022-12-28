@@ -1,6 +1,6 @@
 # Testing
 
-should include some SQL files to test our DB, we can first use the ones in Assignment2
+Here we provide a unit test module and SQL scripts for testing. For more about the unit test, please refer to [this link](unit_test/README.md)
 
 ## How to test
 Copy the contents of the .sql files into the command line where our app is running.
