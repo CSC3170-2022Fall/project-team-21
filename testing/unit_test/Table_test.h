@@ -60,8 +60,10 @@ namespace table_test
         }
     }
 
-    void check_insertLast(Row row)
+    void check_insertLast(Table table, Row row_insert)
     {
+        table.insertLast(row_insert);
+        table.printOut();
     }
 
     void check_insertAt(Row row)
@@ -96,22 +98,26 @@ namespace table_test
         table.rows = rows;
 
         std::cout << "====================" << std::endl;
-        std::cout << "Check Table::printOut()" << std::endl;
+        std::cout << "Check Table::printOut" << std::endl;
         table.printOut();
 
         std::cout << "====================" << std::endl;
-        std::cout << "Check Table::getRowAt()" << std::endl;
+        std::cout << "Check Table::getRowAt" << std::endl;
         check_getRowAt(table);
 
         std::cout << "====================" << std::endl;
-        std::cout << "Check Table::removeRowAt()" << std::endl;
+        std::cout << "Check Table::removeRowAt" << std::endl;
         check_removeRowAt(table);
 
-        // std::cout << "====================" << std::endl;
-        // std::cout << "Check Row::setValues" << std::endl;
-        // // check_setValue(row);
+        std::cout << "====================" << std::endl;
+        std::cout << "Check Table::insertLast" << std::endl;
 
-        // PASSED;
+        std::vector<std::string> new_value_insert = {"inserted", "4", "4.0"};
+
+        check_insertLast(table, new_value_insert);
+        
+
+        PASSED;
     }
 
 }
