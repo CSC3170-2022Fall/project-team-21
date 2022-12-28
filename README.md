@@ -153,6 +153,12 @@ Because a `select` clause returns a table, we could also utilize the returned ta
 
 ![Untitled](presentation/images/cascaded_select.png)
 
+# Testing the database
+We have thoroughly tested the correctness of the various commands of our database manually. If you wish to verify the correctness of our database implementation, we recommend first follow the input command sequence in the last section (Project Demo), where the result is straightforward to verify. 
+
+We have also provided some of our testing scripts in the `testing/` folder, which provides variations to test the robustness of our database. To utilize them, you could follow the sequence of `create_table.sql` -> `insert_into.sql` -> other `.sql` files. You could paste the commands in the files, modify them if you wish, and examine the results.
+
+There could still be some edge cases which our database does not cover, and we welcome any improvement suggestions in the form of Github Issues or Pull Requests.
 
 # Additional Features
 
