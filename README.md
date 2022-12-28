@@ -120,6 +120,7 @@ Here we list the commands our database supports. Like most Database Management S
     - `quit` or `q` or `exit`: quit the program
     - `help`: print out help message
     - Comments: if a line starts with `/*` and ends with `*/`, this line will be ignored by the database
+    - Multi-line content: if a line does not end with a semicolon (;), the database will recoginize it as an unfinished part of a command, concatenating all following lines to the command until an ending line with a semicolon (;). This feature is similar to those in MySQL command-line interface.
 
 
 
