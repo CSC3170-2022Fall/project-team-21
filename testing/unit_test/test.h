@@ -38,5 +38,3 @@
 } while(0)
 
 #define PASSED std::cout << "[ PASSED ]\n"
-
-#define EXPECT_EQUAL 1
