@@ -10,5 +10,4 @@ project(simple_db LANGUAGES CXX)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(./simple_db)
-# The unit test module is for our own testing purposes, many of which are still under development
-# add_subdirectory(./testing/unit_test)
+add_subdirectory(./testing/unit_test)
