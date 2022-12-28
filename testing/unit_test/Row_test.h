@@ -28,8 +28,8 @@ namespace row_test
     {
         auto row_value = row.getValues();
 
-        COUT(row_value);
-        COUT(actual_value);
+        COUT(row_value, "row_value");
+        COUT(actual_value, "actual_value");
 
         EXPECT_CON_EQ(row_value, actual_value);
 
@@ -41,8 +41,8 @@ namespace row_test
         row.setValues(new_value);
         std::vector<std::string> after_set_row_value = row.getValues();
         
-        COUT(new_value);
-        COUT(after_set_row_value);
+        COUT(new_value, "new_value");
+        COUT(after_set_row_value, "row value after set");
 
         EXPECT_CON_EQ(new_value, after_set_row_value);
 
