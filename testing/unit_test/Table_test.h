@@ -78,7 +78,11 @@ namespace table_test
         Table table = Table("test", schema_test);
         table.rows = rows;
 
+        std::cout << "====================" << std::endl;
+        std::cout << "Check table print out" << std::endl;
+        table.printOut();
 
+        std::cout << "====================" << std::endl;
         // std::cout << "Check row size" << std::endl;
         // // check_size(row, row_value);
 
