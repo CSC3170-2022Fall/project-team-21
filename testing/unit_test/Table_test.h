@@ -35,8 +35,15 @@ namespace table_test
         return rows;
     }
 
-    void check_getRowAt(Row row)
+    void check_getRowAt(Table table)
     {
+        int row_size = table.getSize();
+
+        for (int i = 0; i < row_size; ++i)
+        {
+            std::vector<std::string> row_value = table.getRowAt(i).getValues();
+            COUT(row_value, ("row "+std::to_string(i)));
+        }
     }
 
     void check_removeRowAt(Row row)
@@ -83,8 +90,8 @@ namespace table_test
         table.printOut();
 
         std::cout << "====================" << std::endl;
-        // std::cout << "Check row size" << std::endl;
-        // // check_size(row, row_value);
+        std::cout << "Check getRowAt" << std::endl;
+        check_getRowAt(table);
 
         // std::cout << "====================" << std::endl;
         // std::cout << "Check row values" << std::endl;
