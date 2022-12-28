@@ -206,7 +206,7 @@ As we finish the journey, we want to thank our instructor in the CSC3170 course,
 | 李珈祺 | Team leader, provided initial project structure and header files, implemented the codes for create table, insert, and pretty-printing the table. Tested the database and helped with writing the README.md |
 | 刘起 | Implemented the codes for select clause, implemented the load and store and print features, helped with testing and adding robustness support |
 | 杨亮 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the spelling error corrections and helped enhance crash prevention features |
-| 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
+| 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the spelling error corrections and helped enhance crash prevention features |
 | 连珈玮 | Implemented the Database class and helped with implementing load and store features, organized the repository structure, wrote CMake script to build the whole project, added unit test module |
 | Darren Boesono | Designed and implemented the two GUI windows in Qt, finished a detailed report on that |
 | Yohanes James | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
