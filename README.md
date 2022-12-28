@@ -64,12 +64,12 @@ For Windows users, alternatively, if you have Visual Studio with Visual C++ inst
     ./simple_db
     cd ../..
     ```
-- To run the unit test, first ensure your current directory is the project root directory, then run:
+<!-- - To run the unit test, first ensure your current directory is the project root directory, then run:
     ```bash
     cd build/testing/unit_test
     ./simple_db_test
     cd ../..
-    ```
+    ``` -->
 
 ## Project File structure
 
@@ -95,6 +95,7 @@ The `Row` class serves as the underlying storage unit for information about tabl
 
 
 ## Command Specifications
+Here we list the commands our database supports. Like most Database Management Systems, our database supports SQL keywords written in uppercase, and they will have the same effect as the lowercase ones as listed below.
 
 - SQL
     - create new table: 
@@ -116,8 +117,9 @@ The `Row` class serves as the underlying storage unit for information about tabl
     - `store <table_name>`: store the table onto disk, such that it could be brought back by using the load command. If there is no such table, print out error.
 - Miscellaneous
     - `print <table_name>`: print out all content of the table. If there is no such table, print out error.
-    - `quit` or `q` or `exit`
+    - `quit` or `q` or `exit`: quit the program
     - `help`: print out help message
+    - Comments: if a line starts with `/*` and ends with `*/`, this line will be ignored by the database
 
 
 
@@ -196,11 +198,11 @@ As we finish the journey, we want to thank our instructor in the CSC3170 course,
 | --- | --- |
 | 李珈祺 | Team leader, provided initial project structure and header files, implemented the codes for create table, insert, and pretty-printing the table. Tested the database and helped with writing the README.md |
 | 刘起 | Implemented the codes for select clause, implemented the load and store and print features, helped with testing and adding robustness support |
-| 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
 | 杨亮 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the spelling error corrections and helped enhance crash prevention features |
+| 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
+| 连珈玮 | Implemented the Database class and helped with implementing load and store features, organized our repository structure neatly, wrote CMake script to build the whole project, added unit test module for testing |
 | Darren Boesono | Designed and implemented the two GUI windows in Qt, finished a detailed report on that |
 | Yohanes James | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
-| 连珈玮 | Implemented the Database class and helped with implementing load and store features, organized our repository structure neatly, wrote CMake script to build the whole project, added unit test module for testing |
 
 This project deepens our knowledge of a database system. There is indeed something that needs to be improved in our project, such as the efficiency issue, and we still need better support for larger-scale databases. Hopefully, we can make it better in the future.
 

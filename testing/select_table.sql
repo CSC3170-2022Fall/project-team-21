@@ -20,7 +20,9 @@ SELECT Name, Grade, SID from students, enrolled where Major = "CSC";
 
 select CCN, Room from schedule where Name = "Math";
 
-select CCN, Room from enrolled, students where CCN = '22100';  /* test for robustness, no column name Room in both tables */
+/* test for robustness, no column name Room in both tables */
+select CCN, Room from enrolled, students where CCN = '22100';
 
 select SID, Name from students where Age >= 20;
+SELECT SID, Name FROM students WHERE Age >= 20;
 
