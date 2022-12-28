@@ -135,7 +135,8 @@ namespace database_test
 
         check_removeTable(db, "table_1");
         check_removeTable(db, "table_2");
-        // PASSED;
+        
+        PASSED;
     }
 
 }
