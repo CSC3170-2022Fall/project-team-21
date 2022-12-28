@@ -46,8 +46,18 @@ namespace table_test
         }
     }
 
-    void check_removeRowAt(Row row)
+    void check_removeRowAt(Table table)
     {
+
+        int row_size = table.getSize();
+
+        for (int i = row_size - 1; i >= 0; --i)
+        {
+            std::cout << "-------------" << std::endl;
+            std::cout << ("remove row at " + std::to_string(i)) << std::endl;
+            table.removeRowAt(i);
+            table.printOut();
+        }
     }
 
     void check_insertLast(Row row)
@@ -86,16 +96,16 @@ namespace table_test
         table.rows = rows;
 
         std::cout << "====================" << std::endl;
-        std::cout << "Check table print out" << std::endl;
+        std::cout << "Check Table::printOut()" << std::endl;
         table.printOut();
 
         std::cout << "====================" << std::endl;
-        std::cout << "Check getRowAt" << std::endl;
+        std::cout << "Check Table::getRowAt()" << std::endl;
         check_getRowAt(table);
 
-        // std::cout << "====================" << std::endl;
-        // std::cout << "Check row values" << std::endl;
-        // // check_value(row, row_value);
+        std::cout << "====================" << std::endl;
+        std::cout << "Check Table::removeRowAt()" << std::endl;
+        check_removeRowAt(table);
 
         // std::cout << "====================" << std::endl;
         // std::cout << "Check Row::setValues" << std::endl;
