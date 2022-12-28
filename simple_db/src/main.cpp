@@ -5,10 +5,6 @@
 #include "CommandInterpreter.h"
 #include "Database.h"
 
-using namespace std;
-
-
-
 // This is the driver function for our DB
 int main()
 {
