@@ -1,0 +1,2 @@
+# Our Database
+This is our command-line implementation for the course project of CSC3170, 2022 Fall, CUHK(SZ). For details of the project and how to build from source, you can refer to [project-description.md](../project-description.md) and [README.md](../README.md).
