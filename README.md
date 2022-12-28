@@ -64,12 +64,12 @@ For Windows users, alternatively, if you have Visual Studio with Visual C++ inst
     ./simple_db
     cd ../..
     ```
-<!-- - To run the unit test, first ensure your current directory is the project root directory, then run:
+- To run the unit test, first ensure your current directory is the project root directory, then run:
     ```bash
     cd build/testing/unit_test
     ./simple_db_test
     cd ../..
-    ``` -->
+    ```
 
 ## Project File structure
 
@@ -207,7 +207,7 @@ As we finish the journey, we want to thank our instructor in the CSC3170 course,
 | 刘起 | Implemented the codes for select clause, implemented the load and store and print features, helped with testing and adding robustness support |
 | 杨亮 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the spelling error corrections and helped enhance crash prevention features |
 | 王茗萱 | Wrote presentation script, Powerpoint and helped with writing the README.md, implemented the seplling error corrections and helped enhance crash prevention features |
-| 连珈玮 | Implemented the Database class and helped with implementing load and store features, organized our repository structure neatly, wrote CMake script to build the whole project, added unit test module for testing |
+| 连珈玮 | Implemented the Database class and helped with implementing load and store features, organized the repository structure, wrote CMake script to build the whole project, added unit test module |
 | Darren Boesono | Designed and implemented the two GUI windows in Qt, finished a detailed report on that |
 | Yohanes James | Implemented the Table and Database class, provided the SQL test cases to help testing the database, helped with report writing |
 
