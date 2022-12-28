@@ -105,8 +105,8 @@ Here we list the commands our database supports. Like most Database Management S
     - query: 
         - select all attributes from table: `select * from <table_name>`
         - select explicit attributes from table: `select <attr1>, <attr2>... from <table_name>`
-        - select with conditions: `select <attr1>, <attr2>... from <table_name> where <condition>`
-        - select with and/on connected conditions: `select <attr1>, <attr2>... from <table_name> where <condition1> and/or <condition2>`
+        - select with conditions: `select <attr1>, <attr2>... from <table_name> where <condition>`. The operator in the <condition> should be surrounded by whitespaces, for example, "a = 1" instead of "a=1".
+        - select with and/on connected conditions: `select <attr1>, <attr2>... from <table_name> where <condition1> and/or <condition2>`. The operator in the <condition> should be surrounded by whitespaces, for example, "a = 1" instead of "a=1".
         - select from multiple tables (achieving natural inner join): `select <attr1>, <attr2>... from <table_name1>, <table_name2>... where <condition1> and/or <condition2>`
         - select with nesting of subqueries: `select <attr1>, <attr2>... from (select <attr3>, <attr4>... from <table_name1>, <table_name2> where <condition1> and/or <condition2>...)`
     - delete table: `delete table <table_name>`
