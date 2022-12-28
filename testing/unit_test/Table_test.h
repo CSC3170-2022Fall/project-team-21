@@ -127,6 +127,7 @@ namespace table_test
         std::cout << "Check Table::getSchema" << std::endl;
         check_getSchema(table);
 
+
         PASSED;
     }
 
