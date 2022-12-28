@@ -1,20 +1,29 @@
 #pragma once
 
-// test Table class
+// test SchemaItem class
 
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Table.h"
 #include "SchemaItem.h"
 #include "Row.h"
 #include "test.h"
 
-namespace table_test
+namespace schemaitem_test
 {
 
     std::vector<std::string> schema_item_name = {"s_string", "s_int", "s_float"};
     std::vector<std::string> schema_item_type = {"string", "int", "float"};
+
+    void check_getTypeFromString(std::vector<std::string> schema_item_type, std::vector<SchemaItem> schema)
+    {
+        for (int i = 0; i < schema_item_type.size(); ++i)
+        {
+            std::cout << "the item type is: " << schema_item_type[i] << 
+                "; the corresponding DataType is " << SchemaItem::getTypeFromString(schema_item_type[i]) << 
+                "; DataType from getType is: " << schema[i].getType() << std::endl;
+        }
+    }
 
     // prepare for the test case
     std::vector<SchemaItem> prepare_testcase(std::vector<std::string> name, std::vector<std::string> type)
@@ -31,49 +40,17 @@ namespace table_test
         return schema;
     }
 
-    void check_table(Row row, std::vector<std::string> value)
-    {
-        auto row_size = row.getValues().size();
-        auto value_size = value.size();
-
-        std::cout << " The row size is " << row_size << std::endl;
-        std::cout << " The test value size is " << value_size << std::endl;
-
-        EXPECT_EQ(row_size, value_size);
-    }
-
-    void check_getRowAt(Row row)
-    {
-    }
-
-    // void check_getRowAt(Row row)
-    // {
-    // }
-
-    // void check_getRowAt(Row row)
-    // {
-    // }
-
-    void table_test()
+    void schemaitem_test()
     {
 
         std::cout << "[===============================================================]" << std::endl;
-        std::cout << "[----------------------- Run table test ------------------------]" << std::endl;
-        std::vector<SchemaItem> test = prepare_testcase(schema_item_name, schema_item_type);
+        std::cout << "[--------------------- Run schemaitem test ---------------------]" << std::endl;
 
-        // std::cout << "====================" << std::endl;
-        // std::cout << "Check row size" << std::endl;
-        // // check_size(row, row_value);
+        std::cout << "====================" << std::endl;
+        std::vector<SchemaItem> schema_test = prepare_testcase(schema_item_name, schema_item_type);
+        check_getTypeFromString(schema_item_type, schema_test);
 
-        // std::cout << "====================" << std::endl;
-        // std::cout << "Check row values" << std::endl;
-        // // check_value(row, row_value);
-
-        // std::cout << "====================" << std::endl;
-        // std::cout << "Check Row::setValues" << std::endl;
-        // // check_setValue(row);
-
-        // PASSED;
+        PASSED;
     }
 
 }
